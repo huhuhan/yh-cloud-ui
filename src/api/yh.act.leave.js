@@ -19,7 +19,7 @@ export function getDemo (params) {
 
 export function addLeave (data) {
   return request({
-    url: proxyPrefix + '/demo/user-leave/add',
+    url: proxyPrefix + '/user-leave/add',
     method: 'post',
     data
   })
@@ -27,7 +27,7 @@ export function addLeave (data) {
 
 export function userLeaveList (pageNum, pageSize) {
   return request({
-    url: proxyPrefix + '/demo/user-leave/list',
+    url: proxyPrefix + '/user-leave/list',
     method: 'get',
     params: {
       pageNum,
@@ -38,7 +38,7 @@ export function userLeaveList (pageNum, pageSize) {
 
 export function completeLeaveTask (data) {
   return request({
-    url: proxyPrefix + '/demo/user-leave/complete',
+    url: proxyPrefix + '/user-leave/complete',
     method: 'post',
     data
   })

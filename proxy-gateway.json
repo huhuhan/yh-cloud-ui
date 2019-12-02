@@ -6,22 +6,14 @@
       "serverName": ""
     },
     {
-      "proxyPrefix": "yh-act",
-      "serverName": "",
-      "gateway": "http://localhost:9205"
-    },
-    {
-      "proxyPrefix": "p-toilet",
-      "serverName": "YH-TOILET"
-    },
-    {
-      "proxyPrefix": "p-map",
-      "serverName": "YH-MAP"
-    },
-    {
       "proxyPrefix": "yh-act-leave",
       "serverName": "",
       "gateway": "http://localhost:9009"
+    },
+    {
+      "proxyPrefix": "yh-act",
+      "serverName": "",
+      "gateway": "http://localhost:9205"
     }
   ]
 }
