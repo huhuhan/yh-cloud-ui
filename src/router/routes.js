@@ -6,7 +6,8 @@ import charts from './modules/charts'
 import components from './modules/components'
 import element from './modules/element'
 import business from './modules/business'
-import fwActiviti from './modules/yh-activiti'
+import activiti from './modules/yh-activiti'
+import agileBPM from './modules/agilebpm'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -65,7 +66,8 @@ const frameIn = [
   components,
   element,
   business,
-  fwActiviti
+  activiti,
+  agileBPM
 ]
 
 /**

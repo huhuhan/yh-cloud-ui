@@ -69,6 +69,9 @@ service.interceptors.response.use(
     } else {
       // 有 code 代表这是一个后端接口 可以进行进一步的判断
       switch (code) {
+        case '200':
+          // agilebpm
+          return dataAxios
         case 0:
         case 'S200':
           // [ 示例 ] code === 0 代表没有错误
@@ -79,7 +82,8 @@ service.interceptors.response.use(
           break
         default:
           // 不是正确的 code
-          errorCreate(`[ code: ${dataAxios.code} ] ${dataAxios.message}`)
+          let msg = dataAxios.message || dataAxios.msg
+          errorCreate(`[ code: ${dataAxios.code} ] ${msg}`)
           break
       }
     }

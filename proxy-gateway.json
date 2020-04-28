@@ -14,6 +14,11 @@
       "proxyPrefix": "yh-act",
       "serverName": "",
       "gateway": "http://localhost:9205"
+    },
+    {
+      "proxyPrefix": "agile",
+      "serverName": "",
+      "gateway": "http://localhost:8877"
     }
   ]
 }
