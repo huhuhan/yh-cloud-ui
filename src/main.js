@@ -7,7 +7,7 @@ import d2Admin from '@/plugin/d2admin'
 // store
 import store from '@/store/index'
 
-// [ 可选组件 ]D2-Crud
+/*// [ 可选组件 ]D2-Crud
 import D2Crud from '@d2-projects/d2-crud'
 // [ 可选组件 ] 图表
 import VCharts from 'v-charts'
@@ -24,7 +24,7 @@ import SplitPane from 'vue-splitpane'
 import VueUeditorWrap from 'vue-ueditor-wrap'
 // [ 可选插件 ] 数据导入导出
 import pluginExport from '@d2-projects/vue-table-export'
-import pluginImport from '@d2-projects/vue-table-import'
+import pluginImport from '@d2-projects/vue-table-import'*/
 
 // 菜单和路由设置
 import router from './router'
@@ -35,7 +35,7 @@ import { frameInRoutes } from '@/router/routes'
 Vue.use(d2Admin)
 
 // 可选插件组件
-Vue.use(D2Crud)
+/*Vue.use(D2Crud)
 Vue.use(VCharts)
 Vue.use(contentmenu)
 Vue.use(vueJsonTreeView)
@@ -44,7 +44,7 @@ Vue.use(pluginImport)
 Vue.component('d2-grid-layout', GridLayout)
 Vue.component('d2-grid-item', GridItem)
 Vue.component('SplitPane', SplitPane)
-Vue.component('VueUeditorWrap', VueUeditorWrap)
+Vue.component('VueUeditorWrap', VueUeditorWrap)*/
 
 new Vue({
   router,

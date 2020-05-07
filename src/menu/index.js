@@ -1,4 +1,4 @@
-// 插件
+/*// 插件
 import demoPlugins from './modules/demo-plugins'
 // 组件
 import demoComponents from './modules/demo-components'
@@ -13,7 +13,7 @@ import demoBusiness from './modules/demo-business'
 // CRUD
 import demoD2Crud from './modules/demo-d2-crud'
 // 第三方网页
-import demoFrame from './modules/demo-frame'
+import demoFrame from './modules/demo-frame'*/
 // 工作流
 import activiti from './modules/yh-activiti'
 // agileBPM
@@ -21,14 +21,14 @@ import agileBPM from './modules/agilebpm'
 
 // 菜单 侧边栏
 export const menuAside = [
-  demoComponents,
+  /*demoComponents,
   demoPlugins,
   demoCharts,
   demoElement,
   demoPlayground,
   demoBusiness,
   demoD2Crud,
-  demoFrame,
+  demoFrame,*/
   activiti,
   agileBPM
 ]
@@ -44,12 +44,12 @@ export const menuHeader = [
     title: '功能',
     icon: 'puzzle-piece',
     children: [
-      demoD2Crud,
+      /*demoD2Crud,
       demoComponents,
       demoElement,
       demoCharts,
       demoPlugins,
-      demoFrame,
+      demoFrame,*/
       {
         title: '新窗口打开链接',
         icon: 'link',
@@ -64,8 +64,8 @@ export const menuHeader = [
       }
     ]
   },
-  demoPlayground,
-  demoBusiness,
+  /*demoPlayground,
+  demoBusiness,*/
   activiti,
   agileBPM
 ]
