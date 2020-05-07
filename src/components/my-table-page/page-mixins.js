@@ -9,6 +9,7 @@ export default {
     return {
       //分页查询数据对象
       table: {
+        key: -1,
         listLoading: false,
         list: [],
         total: null,
