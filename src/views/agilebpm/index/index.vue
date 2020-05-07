@@ -27,6 +27,7 @@
 <script>
   import menu from '@/menu/modules/agilebpm'
   import { BpmLogin, BpmLogout, BpmUserInfo } from '@/api/agilebpm'
+  import util from '@/libs/util'
 
   export default {
     data () {
@@ -54,6 +55,7 @@
           // 登录表单校验失败
           this.$message.success(res.msg)
           if (res.isOk) {
+            util.cookies.set('token', `Bearer-${res.data}`)
             this.initUser()
           }
         })
