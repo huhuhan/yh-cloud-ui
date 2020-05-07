@@ -188,10 +188,12 @@
         })
       },
       handleEdit (id, name) {
-        // this.$open(BpmModelerUrl(id))
-        this.modelerSrc = BpmModelerUrl(id)
-        this.modelerTitle = name || ''
-        this.dialogDefModelerVisible = true
+        //改用新窗口加载设计器（另外静态项目）
+        this.$open(BpmModelerUrl(id))
+        //内置存在多层嵌套窗口交互跨域或获取不到窗口对象等问题
+        // this.modelerSrc = BpmModelerUrl(id)
+        // this.modelerTitle = name || ''
+        // this.dialogDefModelerVisible = true
       },
 
     }
