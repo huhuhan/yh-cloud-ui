@@ -1,6 +1,7 @@
 import request from '@/plugin/axios'
 
 const proxyPrefix = 'agile'
+const agileBPMUI = process.env.VUE_APP_AGILEBPM_UI ? process.env.VUE_APP_AGILEBPM_UI : ""
 
 /**
  * 登录接口
@@ -212,7 +213,7 @@ export function BpmGetInstanceData (defId, flowKey, instanceId, readonly) {
  * @constructor
  */
 export function BpmModelerUrl (modelId) {
-  return `/flow-editor/modeler.html?modelId=${modelId}`
+  return `${agileBPMUI}/flow-editor/modeler.html?modelId=${modelId}`
 }
 
 /**

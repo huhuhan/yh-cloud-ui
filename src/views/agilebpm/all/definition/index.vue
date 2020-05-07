@@ -188,6 +188,7 @@
         })
       },
       handleEdit (id, name) {
+        // this.$open(BpmModelerUrl(id))
         this.modelerSrc = BpmModelerUrl(id)
         this.modelerTitle = name || ''
         this.dialogDefModelerVisible = true
