@@ -111,7 +111,7 @@
 </template>
 
 <script>
-  import { BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete } from '../../../../api/agilebpm'
+  import { BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete } from '@/api/agilebpm'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {

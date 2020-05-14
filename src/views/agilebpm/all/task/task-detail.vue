@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import { BpmTaskData, BpmImgUrl, BpmStart } from '../../../../api/agilebpm'
+  import { BpmTaskData, BpmImgUrl, BpmStart } from '@/api/agilebpm'
   import asyncPage from '../../form/async-page'
 
   export default {

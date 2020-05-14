@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import { BpmGetInstanceData } from '../../../../api/agilebpm'
+  import { BpmGetInstanceData } from '@/api/agilebpm'
   import asyncPage from '../../form/async-page'
 
   export default {

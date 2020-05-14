@@ -85,7 +85,7 @@
 </template>
 
 <script>
-  import { BpmUserList } from '../../../../api/agilebpm'
+  import { BpmUserList } from '@/api/agilebpm'
   import pageMixins from '@/components/my-table-page/page-mixins'
   import { mapState } from 'vuex'
 

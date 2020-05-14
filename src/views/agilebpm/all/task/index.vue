@@ -115,7 +115,7 @@
 </template>
 
 <script>
-  import { BpmTaskList, BpmAssignTask } from '../../../../api/agilebpm'
+  import { BpmTaskList, BpmAssignTask } from '@/api/agilebpm'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {

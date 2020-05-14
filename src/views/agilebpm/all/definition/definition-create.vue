@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { BpmDefinitionCreate } from '../../../../api/agilebpm'
+  import { BpmDefinitionCreate } from '@/api/agilebpm'
 
   export default {
     name: 'definition-create',

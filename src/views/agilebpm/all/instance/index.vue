@@ -120,7 +120,7 @@
 </template>
 
 <script>
-  import { BpmInstanceList, BpmInstanceForbidden, BpmInstanceDelete } from '../../../../api/agilebpm'
+  import { BpmInstanceList, BpmInstanceForbidden, BpmInstanceDelete } from '@/api/agilebpm'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
