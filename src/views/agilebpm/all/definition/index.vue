@@ -64,6 +64,7 @@
                 <template slot-scope="scope">
                     <el-button size="mini" type="primary" @click="dialogDefDetailVisible = true">启动
                     </el-button>
+                    <el-button size="mini" type="primary" @click="dialogDefAuthorizeVisible = true; authorizeTarget = scope.row.key">授权
                     <el-button size="mini" type="primary" @click="handleEdit(scope.row.actModelId, scope.row.name)">编辑
                     </el-button>
                     <el-button size="mini" type="primary" @click="handleDelete(scope.row)">删除
@@ -107,11 +108,13 @@
                             :title="modelerTitle"
                             :visible.sync="dialogDefModelerVisible"></definition-modeler>
 
+        <definition-authorize :target="authorizeTarget"
+                              :visible.sync="dialogDefAuthorizeVisible"></definition-authorize>
     </d2-container>
 </template>
 
 <script>
-  import { BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete } from '@/api/agilebpm'
+  import {BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete} from '../../../../api/agilebpm'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
@@ -119,12 +122,13 @@
     components: {
       definitionCreate: () => import('./definition-create'),
       definitionDetail: () => import('./definition-detail'),
-      definitionModeler: () => import('./definition-modeler')
+      definitionModeler: () => import('./definition-modeler'),
+      definitionAuthorize: () => import('./definition-authorize')
     },
     mixins: [
       pageMixins,
     ],
-    data () {
+    data() {
       return {
         queryForm: {
           id: undefined,
@@ -138,15 +142,18 @@
         dialogDefDetailVisible: false,
         dialogDefModelerVisible: false,
         modelerSrc: '#',
-        modelerTitle: ''
+        modelerTitle: '',
+
+        dialogDefAuthorizeVisible: false,
+        authorizeTarget: undefined
       }
     },
-    created () {
+    created() {
       this.getTableData()
     },
     computed: {},
     methods: {
-      getTableData () {
+      getTableData() {
         this.table.listLoading = true
         BpmDefinitionList(this.getTableDataParam()).then(res => {
           this.table.list = res.rows
@@ -158,7 +165,7 @@
         })
       },
       //其他参数
-      getTableDataParam () {
+      getTableDataParam() {
         //根据业务修改补充
         let otherParam = {}
         //时间区间字段，调整
@@ -170,7 +177,7 @@
           limit: this.table.pageSize
         }, newQueryForm/*this.queryForm*/, otherParam)
       },
-      handleDelete (row) {
+      handleDelete(row) {
         this.$confirm('确定删除?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -187,7 +194,7 @@
           })
         })
       },
-      handleEdit (id, name) {
+      handleEdit(id, name) {
         //改用新窗口加载设计器（另外静态项目）
         this.$open(BpmModelerUrl(id))
         //内置存在多层嵌套窗口交互跨域或获取不到窗口对象等问题
