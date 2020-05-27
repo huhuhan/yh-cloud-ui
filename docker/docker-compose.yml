@@ -1,0 +1,25 @@
+﻿version: '3'
+
+networks:
+  yh:
+    driver: bridge
+
+services:
+  cloud-ui:
+    # 容器名
+    container_name: cloud-ui
+    # 重启策略: 容器退出时总是重启容器
+    restart: always
+    # 构建镜像名称，没有build属性默认从远程仓库获取
+    image: cloud-ui
+    # 指定设定上下文根目录，然后以该目录为准指定Dockerfile
+    build:
+     context: ./
+     dockerfile: Dockerfile
+    environment:
+     TZ: Asia/Shanghai
+    ports:
+     - 7111:8700
+    networks:
+     - yh
+
