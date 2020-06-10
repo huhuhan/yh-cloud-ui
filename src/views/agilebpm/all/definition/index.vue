@@ -65,6 +65,7 @@
                     <el-button size="mini" type="primary" @click="dialogDefDetailVisible = true">启动
                     </el-button>
                     <el-button size="mini" type="primary" @click="dialogDefAuthorizeVisible = true; authorizeTarget = scope.row.key">授权
+                    </el-button>
                     <el-button size="mini" type="primary" @click="handleEdit(scope.row.actModelId, scope.row.name)">编辑
                     </el-button>
                     <el-button size="mini" type="primary" @click="handleDelete(scope.row)">删除
