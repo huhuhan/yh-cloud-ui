@@ -18,6 +18,7 @@ import demoFrame from './modules/demo-frame'*/
 import activiti from './modules/yh-activiti'
 // agileBPM
 import agileBPM from './modules/agilebpm'
+import bpm from './modules/bpm'
 
 // 菜单 侧边栏
 export const menuAside = [
@@ -30,7 +31,8 @@ export const menuAside = [
   demoD2Crud,
   demoFrame,*/
   activiti,
-  agileBPM
+  agileBPM,
+  bpm()
 ]
 
 // 菜单 顶栏
@@ -67,5 +69,6 @@ export const menuHeader = [
   /*demoPlayground,
   demoBusiness,*/
   activiti,
-  agileBPM
+  agileBPM,
+  bpm()
 ]
