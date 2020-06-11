@@ -179,7 +179,7 @@
         this.dialog_instanceId = row.id
       },
       durationM (duration) {
-        return duration > 0 ? this.$moment.duration(duration).humanize(true) : ''
+        return duration > 0 ? this.$moment.duration(duration).humanize() : ''
       },
       handleToForbidden (row) {
         let forbidden = row.isForbidden ? false : true

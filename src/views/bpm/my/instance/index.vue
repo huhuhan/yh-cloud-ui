@@ -162,7 +162,7 @@
         }, newQueryForm/*this.queryForm*/, otherParam)
       },
       durationM (duration) {
-        return duration > 0 ? this.$moment.duration(duration).humanize(true) : ''
+        return duration > 0 ? this.$moment.duration(duration).humanize() : ''
       },
       handleShowInstanceDetail (row) {
         this.currentInstanceId = row.id

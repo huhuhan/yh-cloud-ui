@@ -38,11 +38,11 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="流程名称">
+            <!--<el-table-column align="center" label="流程名称">
                 <template slot-scope="scope">
                     <span>{{scope.row.defName}}</span>
                 </template>
-            </el-table-column>
+            </el-table-column>-->
 
             <el-table-column align="center" label="任务节点">
                 <template slot-scope="scope">
@@ -52,18 +52,26 @@
 
             <el-table-column align="center" label="流程状态">
                 <template slot-scope="scope">
-                    <el-tag type="success" v-if="scope.row.status == 'running'">运行中</el-tag>
-                    <el-tag type="info" v-if="scope.row.status == 'end'">终止</el-tag>
-                    <el-tag type="warning" v-if="scope.row.status == 'draft'">草稿</el-tag>
-                    <el-tag type="danger" v-if="scope.row.status == 'back'">驳回</el-tag>
+                    <el-tag type="success" v-if="scope.row.status == instanceStatus.running.key">
+                        {{instanceStatus.running.value}}
+                    </el-tag>
+                    <el-tag type="info" v-if="scope.row.status == instanceStatus.end.key">
+                        {{instanceStatus.end.value}}
+                    </el-tag>
+                    <el-tag type="warning" v-if="scope.row.status == instanceStatus.draft.key">
+                        {{instanceStatus.draft.value}}
+                    </el-tag>
+                    <el-tag type="danger" v-if="scope.row.status == instanceStatus.back.key">
+                        {{instanceStatus.back.value}}
+                    </el-tag>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="发起人">
+            <!--<el-table-column align="center" label="发起人">
                 <template slot-scope="scope">
                     <span>{{scope.row.creator}}</span>
                 </template>
-            </el-table-column>
+            </el-table-column>-->
 
 
             <el-table-column align="center" label="办理时间">
@@ -72,11 +80,28 @@
                 </template>
             </el-table-column>
 
+
+            <el-table-column align="center" label="办理时长">
+                <template slot-scope="scope">
+                    <span>{{durationM(scope.row.durMs)}}</span>
+                </template>
+            </el-table-column>
+
             <el-table-column align="center" label="办理结果">
                 <template slot-scope="scope">
-                    <el-tag type="success" v-if="scope.row.approveStatus == actions.agree">同意</el-tag>
-                    <el-tag type="danger" v-if="scope.row.approveStatus == actions.reject">驳回</el-tag>
-                    <el-tag type="warning" v-if="scope.row.approveStatus == actions.turn">转办</el-tag>
+                    <el-tag type="success" v-if="scope.row.approveStatus == actions.agree.key">{{actions.agree.value}}
+                    </el-tag>
+                    <el-tag type="danger" v-if="scope.row.approveStatus == actions.reject.key">
+                        {{actions.reject.value}}
+                    </el-tag>
+                    <el-tag type="warning" v-if="scope.row.approveStatus == actions.turn.key">{{actions.turn.value}}
+                    </el-tag>
+                    <el-tag type="info" v-if="scope.row.approveStatus == actions.awaiting_check.key">
+                        {{actions.awaiting_check.value}}
+                    </el-tag>
+                    <el-tag type="info" v-if="scope.row.approveStatus == actions.start.key">{{actions.start.value}}
+                    </el-tag>
+                    <el-tag type="info" v-if="scope.row.approveStatus == actions.end.key">{{actions.end.value}}</el-tag>
                 </template>
             </el-table-column>
 
@@ -112,11 +137,11 @@
             <div slot="title" class="dialog-title">
                 <span>实例详情</span>
             </div>
-<!--            <instanceDetail ref="instanceDetail"-->
-<!--                            :instanceId="currentInstanceId"-->
-<!--                            @closeDialog="dialogInstanceDetailVisible = false"-->
-<!--                            @refresh="handleRefreshTable"-->
-<!--            ></instanceDetail>-->
+            <!--            <instanceDetail ref="instanceDetail"-->
+            <!--                            :instanceId="currentInstanceId"-->
+            <!--                            @closeDialog="dialogInstanceDetailVisible = false"-->
+            <!--                            @refresh="handleRefreshTable"-->
+            <!--            ></instanceDetail>-->
         </el-dialog>
 
     </d2-container>
@@ -124,7 +149,7 @@
 
 <script>
   import { MyApproveList } from '@/api/bpm/bpm'
-  import { BpmTaskAction } from '@/api/bpm/constant'
+  import { BpmTaskAction, BpmInstanceStatus } from '@/api/bpm/constant'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
@@ -138,6 +163,7 @@
     data () {
       return {
         actions: BpmTaskAction,
+        instanceStatus: BpmInstanceStatus,
         queryForm: {
           id: undefined,
           order: 'ASC', //DESC
@@ -174,6 +200,9 @@
           offset: (this.table.pageNum - 1) * this.table.pageSize,
           limit: this.table.pageSize
         }, newQueryForm/*this.queryForm*/, otherParam)
+      },
+      durationM(duration) {
+        return duration > 0 ? this.$moment.duration(duration).humanize() : ''
       },
       handleShowInstanceDetail (row) {
         this.currentInstanceId = row.id

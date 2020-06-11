@@ -26,6 +26,9 @@ import VueUeditorWrap from 'vue-ueditor-wrap'
 import pluginExport from '@d2-projects/vue-table-export'
 import pluginImport from '@d2-projects/vue-table-import'*/
 
+// 自身扩展的第三方插件
+import myPlugin from '@/plugin/mine'
+
 // 菜单和路由设置
 import router from './router'
 import { menuHeader, menuAside } from '@/menu'
@@ -33,6 +36,7 @@ import { frameInRoutes } from '@/router/routes'
 
 // 核心插件
 Vue.use(d2Admin)
+Vue.use(myPlugin)
 
 // 可选插件组件
 /*Vue.use(D2Crud)
