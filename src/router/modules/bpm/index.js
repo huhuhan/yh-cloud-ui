@@ -22,7 +22,7 @@ export default function () {
         component: _import(`${rootRoute}/index`),
         meta: {
           ...meta,
-          title: '我的应用'
+          title: '我的首页'
         }
       },
       myFlow(pre)

@@ -6,7 +6,7 @@ const emptyRoute = {
   component: () => import('@/components/my-empty-router')
 }
 /**
- * 作为某菜单左侧一级菜单
+ * 作为某菜单左侧一级菜单路由
  * path路径由VueRouter自动拼接完整相对地址，即不以【/】符号开头
  * @param prefix
  * @returns {{component}&{redirect: {name: string}, path: string, children: *, meta: ({auth}&{title: string}), name: string}}

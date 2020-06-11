@@ -11,6 +11,11 @@
 
 - 插件组件：src/main.js
 
+### 通用组件
+`src/components`目录
+- `src/components/my-async-page`：异步引入页面组件
+- `src/components/my-empty-router`：空页面，路由过渡使用
+- `src/components/my-table-page`：通用表格列表页面
 
 ### BPM
 bpm流程模块
