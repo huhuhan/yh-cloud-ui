@@ -36,3 +36,29 @@ switch (code) {
     - form/async-page.vue：业务表单引用通用组件
     - form/async-demo.vue：业务表单demo，实际业务扩展新建目录区分
   - `src/views/bpm/my`：个人流程
+#### 查询条件
+- 分页：使用`offset、limit`参数分页，默认不传不分页
+- 排序：使用`sort、order`参数排序，默认不排序
+- 过滤：使用`参数`+`$`+`类型`+`过滤条件`格式拼接过滤参数，eg：`name_^VEQ`
+    - 分割符：`^`或`$`
+    - 类型包含：字符串`V`、数字`N`、时间`D`
+    - 过滤条件常用：等于`EQ`、小于`LT`、大于`GT`、小于等于`LE`、大于等于`GE`、相似`LI`、左相似`LFK`
+>- 详情参考：ControllerTools类的getQueryFilter方法
+>- 过滤条件枚举QueryOP，前端参考接口：/sys/tools/getResultEnum?path=com.dstz.base.api.query.QueryOP
+>- 状态类型，参考`src/api/bpm/constant.js`
+- 我的待办、已办
+```
+流程名称def_name_
+发起时间create_time_
+状态status_ 
+```
+- 我的申请
+```
+流程名称def_name_
+任务名称task_name_
+办理时间approve_time_
+办理时长dur_ms_
+办理结果o.status_ []
+发起时间inst.create_time_
+发起人inst.create_by_
+```
