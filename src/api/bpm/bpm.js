@@ -196,13 +196,13 @@ export function BpmTaskData (taskId) {
  instanceId
  readonly: undefined
  */
-export function BpmGetInstanceData (defId, flowKey, instanceId, readonly) {
+export function BpmGetInstanceData (defId, nodeId, instanceId, readonly) {
   return request({
     url: proxyPrefix + '/bpm/instance/getInstanceData',
     method: 'get',
     params: {
       defId,
-      flowKey,
+      nodeId,
       instanceId,
       readonly
     }
@@ -241,34 +241,6 @@ export function BpmImgUrl (instId, defId) {
 }
 
 /**
- 启动流程
- action: "start"
- data: {test: "jeff"}
- test: "jeff"
- defId: "415390786290712577"
- formType: "FRAME"
- instanceId: ""
- nodeId: ""
-
- */
-export function BpmStart (defId) {
-  let data = {
-    action: 'start',
-    data: { test: 'd2admin Test' },
-    test: 'd2admin Test',
-    defId: defId,
-    formType: 'FRAME',
-    instanceId: '',
-    nodeId: ''
-  }
-  return request({
-    url: proxyPrefix + '/bpm/instance/doAction',
-    method: 'post',
-    data
-  })
-}
-
-/**
  * 流程实例挂起激活
  * @param id
  * @param forbidden
@@ -301,7 +273,30 @@ export function BpmInstanceDelete (id) {
 }
 
 /**
- * 任务处理事件
+ * 流程实例触发事件
+ * @param data
+ * @returns {AxiosPromise}
+ * @constructor
+ */
+export function BpmInstanceDoAction (data) {
+  let data_ = Object.assign({
+    formType: "FRAME",
+    nodeId: '',
+    data: {test: 'this is instance do action'},
+    extendConf: {},
+    defId: '',
+    instanceId: '',
+  }, data)
+  console.log("instance doAction", data_)
+  return request({
+    url: proxyPrefix + '/bpm/instance/doAction',
+    method: 'post',
+    data: data_
+  })
+}
+
+/**
+ * 流程任务触发事件
  * @param data
  * @constructor
  */
@@ -516,7 +511,8 @@ export function MyToDoTaskList (params) {
   return request({
     url: proxyPrefix + '/bpm/my/todoTaskList',
     method: 'post',
-    params
+    // params
+    data: Qs.stringify(params)
   })
 }
 
@@ -529,7 +525,8 @@ export function MyApproveList (params) {
   return request({
     url: proxyPrefix + '/bpm/my/approveList',
     method: 'post',
-    params
+    // params
+    data: Qs.stringify(params)
   })
 }
 
@@ -567,5 +564,30 @@ export function SaveAuthorizations (rightsTarget, rightsObject, authorizationJso
         rightsObject,
         authorizationJson
       })
+  })
+}
+
+/**
+ * 获取我的待办、我的已办、我的申请数量
+ * @param params
+ * @constructor
+ */
+export function GetMyFlowCounts () {
+  return request({
+    url: proxyPrefix + '/bpm/my/getMyFlowCounts',
+    method: 'post'
+  })
+}
+/**
+ * 根据定义流程的id获取流程节点数据
+ *
+ * @export
+ * @param {*} defId 流程定义时的id
+ * @returns
+ */
+export function getFlowElements (defId) {
+  return request({
+    url: proxyPrefix + `/bpm/definition/flowElements?defId=${defId}`,
+    method: 'get'
   })
 }

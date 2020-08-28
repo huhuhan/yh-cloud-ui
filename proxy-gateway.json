@@ -23,7 +23,7 @@
     {
       "proxyPrefix": "yh-bpm",
       "serverName": "",
-      "gateway": "http://101.91.199.54:8266/fw"
+      "gateway": "http://bpm-api:8271/fw"
     }
   ]
 }

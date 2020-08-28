@@ -1,183 +1,193 @@
 <template>
-    <d2-container>
-        <el-form
-                :inline="true"
-                :model="queryForm"
-                ref="queryForm"
-                size="mini"
-                style="margin-bottom: -25px;">
+  <d2-container>
+    <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini" style="margin-bottom: -25px;">
+
+      <!--<el-form-item label="流程标题" prop="subject_$VRHK">
+        <el-input v-model="queryForm['subject_$VRHK']" placeholder="请输入名称"></el-input>
+      </el-form-item>-->
+      <el-form-item label="项目编号" prop="biz_key_$VRHK">
+        <el-input v-model="queryForm['biz_key_$VRHK']" placeholder="请输入编号"></el-input>
+      </el-form-item>
+
+      <!-- <el-form-item label="任务节点" prop="task_name_$VRHK">
+        <el-input v-model="queryForm['task_name_$VRHK']" placeholder="请输入名称"></el-input>
+      </el-form-item> -->
+
+      <el-form-item label="办理时间大于" prop="approve_time_$VGE">
+        <el-date-picker v-model="queryForm['approve_time_$VGE']" type="datetime" placeholder="选择日期时间"
+                        value-format="yyyy-MM-dd HH:mm:ss" style="width:178px;"></el-date-picker>
+      </el-form-item>
+
+      <div style="float: right">
+        <el-form-item>
+          <el-button type="primary" @click="getTableData">
+            <d2-icon name="search"/>
+            查询
+          </el-button>
+          <el-button type="default" @click="handleFormReset('queryForm')">
+            <d2-icon name="refresh"/>
+          </el-button>
+        </el-form-item>
+      </div>
+    </el-form>
+
+    <!-- table表格 -->
+    <el-table :key='table.key' :data="table.list" v-loading="table.listLoading" element-loading-text="拼命加载中..."
+              @current-change="handleCurrentRow" highlight-current-row stripe style="width: 100%">
 
 
-            <div style="float: right">
-                <el-form-item>
-                    <el-button type="primary" @click="getTableData">
-                        <d2-icon name="search"/>
-                        查询
-                    </el-button>
-                    <el-button type="default" @click="handleFormReset('queryForm')">
-                        <d2-icon name="refresh"/>
-                    </el-button>
-                </el-form-item>
-            </div>
-        </el-form>
-
-        <!-- table表格 -->
-        <el-table :key='table.key'
-                  :data="table.list"
-                  v-loading="table.listLoading"
-                  element-loading-text="拼命加载中..."
-                  highlight-current-row
-                  @current-change="handleCurrentRow"
-                  stripe
-                  style="width: 100%">
-
-
-            <el-table-column align="center" label="流程标题">
-                <template slot-scope="scope">
-                    <span>{{scope.row.subject}}</span>
-                </template>
-            </el-table-column>
-
-            <!--<el-table-column align="center" label="流程名称">
-                <template slot-scope="scope">
-                    <span>{{scope.row.defName}}</span>
-                </template>
-            </el-table-column>-->
-
-            <el-table-column align="center" label="任务节点">
-                <template slot-scope="scope">
-                    <span>{{scope.row.nodeName}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="流程状态">
-                <template slot-scope="scope">
-                    <el-tag type="success" v-if="scope.row.status == instanceStatus.running.key">
-                        {{instanceStatus.running.value}}
-                    </el-tag>
-                    <el-tag type="info" v-if="scope.row.status == instanceStatus.end.key">
-                        {{instanceStatus.end.value}}
-                    </el-tag>
-                    <el-tag type="warning" v-if="scope.row.status == instanceStatus.draft.key">
-                        {{instanceStatus.draft.value}}
-                    </el-tag>
-                    <el-tag type="danger" v-if="scope.row.status == instanceStatus.back.key">
-                        {{instanceStatus.back.value}}
-                    </el-tag>
-                </template>
-            </el-table-column>
-
-            <!--<el-table-column align="center" label="发起人">
-                <template slot-scope="scope">
-                    <span>{{scope.row.creator}}</span>
-                </template>
-            </el-table-column>-->
-
-
-            <el-table-column align="center" label="办理时间">
-                <template slot-scope="scope">
-                    <span>{{scope.row.approveTime}}</span>
-                </template>
-            </el-table-column>
-
-
-            <el-table-column align="center" label="办理时长">
-                <template slot-scope="scope">
-                    <span>{{durationM(scope.row.durMs)}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="办理结果">
-                <template slot-scope="scope">
-                    <el-tag type="success" v-if="scope.row.approveStatus == actions.agree.key">{{actions.agree.value}}
-                    </el-tag>
-                    <el-tag type="danger" v-if="scope.row.approveStatus == actions.reject.key">
-                        {{actions.reject.value}}
-                    </el-tag>
-                    <el-tag type="warning" v-if="scope.row.approveStatus == actions.turn.key">{{actions.turn.value}}
-                    </el-tag>
-                    <el-tag type="info" v-if="scope.row.approveStatus == actions.awaiting_check.key">
-                        {{actions.awaiting_check.value}}
-                    </el-tag>
-                    <el-tag type="info" v-if="scope.row.approveStatus == actions.start.key">{{actions.start.value}}
-                    </el-tag>
-                    <el-tag type="info" v-if="scope.row.approveStatus == actions.end.key">{{actions.end.value}}</el-tag>
-                </template>
-            </el-table-column>
-
-
-            <el-table-column fixed="right" align="center" label="操作">
-                <template slot-scope="scope">
-                    <el-button size="mini" type="primary" @click="handleShowInstanceDetail(scope.row)">详情
-                    </el-button>
-                </template>
-            </el-table-column>
-
-        </el-table>
-
-        <!-- footer 分页条 -->
-        <template slot="footer">
-            <el-pagination
-                    background
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentPage"
-                    :current-page.sync="table.pageNum"
-                    :page-sizes="[10,20,30,50]"
-                    :page-size="table.pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="table.total"
-                    style="margin: -10px;">
-            </el-pagination>
+      <el-table-column align="center" label="业务编号" width="140">
+        <template slot-scope="scope">
+          <span>{{ scope.row.bizKey}}</span>
         </template>
+      </el-table-column>
+      <el-table-column align="center" label="流程标题">
+        <template slot-scope="scope">
+          <span>{{scope.row.subject}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" label="流程名称">
+        <template slot-scope="scope">
+          <span>{{scope.row.defName}}</span>
+        </template>
+      </el-table-column>
 
-        <el-dialog
-                :visible.sync="dialogInstanceDetailVisible"
-                :fullscreen="true"
-                custom-class="act-editor-dialog">
-            <div slot="title" class="dialog-title">
-                <span>实例详情</span>
-            </div>
-            <!--            <instanceDetail ref="instanceDetail"-->
-            <!--                            :instanceId="currentInstanceId"-->
-            <!--                            @closeDialog="dialogInstanceDetailVisible = false"-->
-            <!--                            @refresh="handleRefreshTable"-->
-            <!--            ></instanceDetail>-->
-        </el-dialog>
+      <el-table-column align="center" lab el="任务节点">
+        <template slot-scope="scope">
+          <span>{{scope.row.nodeName}}</span>
+        </template>
+      </el-table-column>
 
-    </d2-container>
+      <el-table-column align="center" label="流程状态">
+        <template slot-scope="scope">
+          <el-tag v-for="instStatus in instanceStatus" :type="instStatus.css" v-if="scope.row.status == instStatus.key">
+            {{instStatus.value}}
+          </el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="发起人">
+        <template slot-scope="scope">
+          <span>{{scope.row.creator}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="办理时间" show-overflow-tooltip>
+        <template slot-scope="scope">
+          <span>{{scope.row.approveTime}}</span>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" label="办理时长">
+        <template slot-scope="scope">
+          <span>{{durationM(scope.row.durMs)}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" label="办理结果">
+        <template slot-scope="scope">
+          <el-tag v-for="btAction in actions" :type="btAction.css" v-if="scope.row.approveStatus == btAction.key">
+            {{btAction.value}}
+          </el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column fixed="right" align="center" label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="dialogInstanceDetailVisible = true">详情</el-button>
+          <el-button size="mini" type="primary"
+                     @click="dialogTaskHistoryVisible = true; targetInstanceId = scope.row.id">历史
+          </el-button>
+        </template>
+      </el-table-column>
+
+    </el-table>
+
+    <!-- footer 分页条 -->
+    <template slot="footer">
+      <el-pagination background
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentPage"
+                     :current-page.sync="table.pageNum"
+                     :page-sizes="[10,20,30,50]"
+                     :page-size="table.pageSize"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="table.total" style="margin: -10px;">
+      </el-pagination>
+    </template>
+
+    <el-dialog :fullscreen="true"
+               :visible.sync="dialogInstanceDetailVisible"
+               custom-class="act-editor-dialog">
+      <div slot="title" class="dialog-title">
+        <!-- <span>实例详情</span> -->
+      </div>
+      <instanceDetail ref="instanceDetail"
+                      :doneTask="currentRow"
+                      @closeDialog="dialogInstanceDetailVisible = false"
+                      @refresh="handleRefreshTable"></instanceDetail>
+    </el-dialog>
+
+    <taskHistoryDialog :instanceId="targetInstanceId"
+                       :visible.sync="dialogTaskHistoryVisible"
+                       :isInnerDialog="true"></taskHistoryDialog>
+
+  </d2-container>
 </template>
 
 <script>
-  import { MyApproveList } from '@/api/bpm/bpm'
-  import { BpmTaskAction, BpmInstanceStatus } from '@/api/bpm/constant'
+  import {MyApproveList} from '@/api/bpm/bpm'
+  import {BpmTaskAction, BpmInstanceStatus} from '@/api/bpm/constant'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
-    name: 'my-task-history',
+    name: 'my-task-done-list',
     components: {
-      // instanceDetail: () => import('@/views/agilebpm/all/instance/instance-detail')
+      instanceDetail: () => import('./instance-detail'),
+      taskHistoryDialog: () => import("../../../components/bpm/task-history"),
     },
     mixins: [
       pageMixins,
     ],
-    data () {
+    data() {
       return {
         actions: BpmTaskAction,
         instanceStatus: BpmInstanceStatus,
+
         queryForm: {
-          id: undefined,
           order: 'ASC', //DESC
+          //业务筛选条件时，范围数量
+          zjdFilterCount: 999,
+          applier: '',
+          adName: ''
         },
         dialogInstanceDetailVisible: false,
-        currentInstanceId: undefined
+        dialogTaskHistoryVisible: false,
+        targetInstanceId: undefined
       }
     },
-    created () {
+    created() {
       this.getTableData()
     },
     computed: {},
     methods: {
-      getTableData () {
+
+      clickTaskHistory(row) {
+        this.dialogTaskHistoryVisible = !this.dialogTaskHistoryVisible
+        if (this.dialogTaskHistoryVisible) {
+          BpmGetInstanceData(
+            undefined,
+            undefined,
+            row.id
+          ).then(res => {
+            this.instanceData = res.data
+          })
+        }
+      },
+
+
+      getTableData() {
         this.table.listLoading = true
         MyApproveList(this.getTableDataParam()).then(res => {
           this.table.list = res.rows
@@ -189,27 +199,44 @@
         })
       },
       //其他参数
-      getTableDataParam () {
+      getTableDataParam() {
         //根据业务修改补充
         let otherParam = {}
-        //时间区间字段，调整
-        let newQueryForm = Object.assign({}, this.queryForm)
+        // 触发筛选条件
+        let zjdFilter = !!this.queryForm.applier || !!this.queryForm.adName
+        this.table.pageSize = zjdFilter ? this.queryForm.zjdFilterCount : this.table.pageSize
+        let newQueryForm = Object.assign({
+          zjdFilter: zjdFilter,
+        }, this.queryForm)
         //...
         return Object.assign({
           //参数重写
           offset: (this.table.pageNum - 1) * this.table.pageSize,
           limit: this.table.pageSize
-        }, newQueryForm/*this.queryForm*/, otherParam)
+        }, newQueryForm /*this.queryForm*/, otherParam)
       },
       durationM(duration) {
         return duration > 0 ? this.$moment.duration(duration).humanize() : ''
       },
-      handleShowInstanceDetail (row) {
-        this.currentInstanceId = row.id
-        this.dialogInstanceDetailVisible = true
+      jflxChange(jflx) {
+        switch (jflx) {
+          case "1":
+            return "原址新建"
+          case "2":
+            return "改扩建"
+          case "3":
+            return "异址新建"
+          case "4":
+            return "宅基地流转"
+          case "5":
+            return "宅基地退出"
+          default:
+            return ""
+        }
       }
     }
   }
+
 </script>
 
 <style lang="scss" scoped>

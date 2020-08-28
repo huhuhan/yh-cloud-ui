@@ -11,7 +11,7 @@
         </div>
 
         <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="意见">
+            <el-form-item label="备注">
                 <el-input type="textarea" v-model="form.opinion"></el-input>
             </el-form-item>
         </el-form>
@@ -55,7 +55,7 @@
     },
     watch: {
       task (newVal, oldVal) {
-        this.$log.primary(`流程驳回窗口-任务对象发生变化，new-id： ${newVal.id}`)
+        this.$log.primary(`流程驳回窗口-任务对象发生变化，new-id： ${newVal ? newVal.id : null}`)
       }
     },
     methods: {
@@ -81,6 +81,7 @@
           if (res.isOk) {
             this.$message.success(res.msg)
             this.close()
+            this.toCallBack()
             this.$parent.close()
             this.$parent.refresh()
           } else {
@@ -89,6 +90,9 @@
         }).finally(() => {
           this.loading = true
         })
+      },
+      toCallBack(){
+        this.$emit('callBack')
       }
     }
   }

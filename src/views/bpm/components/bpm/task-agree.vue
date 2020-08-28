@@ -3,13 +3,14 @@
                key="taskHistoryDialog"
                :visible.sync="visible"
                :before-close="close"
+               :title="title"
                @open="openInit">
-        <div slot="title" class="dialog-title">
+        <!--<div slot="title" class="dialog-title">
             <span>同意</span>
-        </div>
+        </div>-->
 
         <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="意见">
+            <el-form-item label="备注">
                 <el-input type="textarea" v-model="form.opinion"></el-input>
             </el-form-item>
         </el-form>
@@ -42,6 +43,10 @@
         type: Boolean,
         default: false
       },
+      title: {
+        type: String,
+        default: '同意'
+      }
     },
     data () {
       return {
@@ -52,7 +57,7 @@
     },
     watch: {
       task (newVal, oldVal) {
-        this.$log.primary(`流程同意窗口-任务对象发生变化，new-id： ${newVal.id}`)
+        this.$log.primary(`流程同意窗口-任务对象发生变化，new-id： ${newVal ? newVal.id : null}`)
       }
     },
     methods: {
@@ -76,6 +81,7 @@
         }).then(res => {
           if (res.isOk) {
             this.$message.success(res.msg)
+            this.toCallBack()
             this.close()
             this.$parent.close()
             this.$parent.refresh()
@@ -83,6 +89,9 @@
             this.$message.error(res.msg)
           }
         })
+      },
+      toCallBack(){
+        this.$emit('callBack')
       }
     }
   }

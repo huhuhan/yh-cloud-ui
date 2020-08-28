@@ -4,8 +4,8 @@
       <el-col :span="12">
         <el-button type="primary" size="mini" @click="dialogTaskHistoryVisible = true">历史</el-button>
         <el-button type="primary" size="mini" @click="dialogDefImgVisible = true">流程图</el-button>
-        <el-button type="primary" size="mini" @click="dialogInstanceReminderVisible = true">催办</el-button>
       </el-col>
+
     </el-row>
 
     <el-row>
@@ -20,8 +20,7 @@
     <taskHistoryDialog v-if="instanceData"
                        :instanceId="instanceData.instance.id"
                        :visible.sync="dialogTaskHistoryVisible"
-                       :isInnerDialog="true"
-                       :showAssign="true"></taskHistoryDialog>
+                       :isInnerDialog="true"></taskHistoryDialog>
 
     <def-img-dialog v-if="instanceData"
                     :instanceId="instanceData.instance.id"
@@ -29,44 +28,35 @@
                     :visible.sync="dialogDefImgVisible"
                     :isInnerDialog="true"></def-img-dialog>
 
-    <instance-reminder-dialog v-if="instanceData"
-                              :instance="instanceData.instance"
-                              :visible.sync="dialogInstanceReminderVisible"
-                              :isInnerDialog="true"></instance-reminder-dialog>
-
   </div>
 </template>
 
 <script>
-  import {BpmGetInstanceData} from '@/api/bpm/bpm'
-  import asyncPage from '../../components/form/async-page'
+  import {BpmGetInstanceData} from "@/api/bpm/bpm"
+  import asyncPage from "../../../components/form/async-page"
 
+  /**
+   * 通用流程组件，尽量不要加入业务相关代码、写死业务逻辑
+   */
   export default {
-    name: 'instance-detail',
+    name: "done-instance-detail",
     components: {
       asyncPage,
-      taskHistoryDialog: () => import('../../components/bpm/task-history'),
-      defImgDialog: () => import('../../components/bpm/definition-img'),
-      instanceReminderDialog: () => import('../../components/bpm/instance-reminder'),
+      taskHistoryDialog: () => import("../../../components/bpm/task-history"),
+      defImgDialog: () => import("../../../components/bpm/definition-img"),
     },
     mixins: [],
-    props: {
-      instance: {
-        type: Object,
-        default: undefined
-      },
-    },
+    props: ['doneTask'],
     data() {
       return {
         dialogTaskHistoryVisible: false,
         dialogDefImgVisible: false,
-        dialogInstanceReminderVisible: false,
         loading: false,
         instanceData: null,
 
         //传入异步表单组件的对象
         bizObj: {
-          id: '',//业务对象主键
+          id: '', //业务对象主键
           disabled: false, //默认可编辑
         },
         flowObj: {
@@ -84,34 +74,34 @@
       this.initData()
     },
     watch: {
-      instance(newVal, oldVal) {
-        this.$log.primary(`实例详情 instance 发生变化`)
+      'doneTask.nodeId'(newVal) {
+        this.$log.primary(`已办详情的任务节点发生变化，NODE_ID:  ${this.doneTask.nodeId}`)
         if (newVal) this.initData()
       }
     },
     methods: {
       async initData() {
         this.loading = true
-        if (this.instance) {
+        if (this.doneTask) {
           await BpmGetInstanceData(
             undefined,
-            undefined,
-            this.instance.id
+            this.doneTask.nodeId,
+            this.doneTask.id
           ).then(res => {
             this.instanceData = res.data
             this.$log.default("根据instanceId获取详情数据")
 
             this.bizObj = Object.assign({}, {
-              id: this.instanceData.form.id,//业务对象主键
+              id: this.instanceData.form.id, //业务对象主键
               disabled: true, //已办不可编辑
-              isDetail: true//标识为详情查看
+              isDetail: true //标识为详情查看
             })
             this.flowObj = {
               ...{
                 id: this.instanceData.instance.id,
-                taskId: undefined,
-                nodeId: undefined,
-                nodeName: undefined,
+                taskId: this.doneTask.taskId,
+                nodeId: this.doneTask.nodeId,
+                nodeName: this.doneTask.nodeName,
                 definitionId: this.instanceData.instance.defId,
                 instanceId: this.instanceData.instance.id,
                 nodes: this.instanceData.nodes || [],
@@ -120,15 +110,18 @@
           })
         }
         this.loading = false
-      },
+      }
+      ,
       handleDemoBtn() {
-        this.$emit('closeDialog')
-      },
+        this.$emit("closeDialog")
+      }
+      ,
       close() {
-        this.$emit('closeDialog')
-      },
+        this.$emit("closeDialog")
+      }
+      ,
       refresh() {
-        this.$emit('refresh')
+        this.$emit("refresh")
       }
     }
   }

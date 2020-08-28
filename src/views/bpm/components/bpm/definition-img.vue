@@ -4,11 +4,13 @@
                title="流程图"
                :visible.sync="visible"
                :before-close="close"
-               @open="openInit">
+               @open="openInit"
+               :width="width"
+                style="text-align: center">
         <div slot="title" class="dialog-title">
             <span>流程图</span>
         </div>
-        <el-image :src="imgRequest()">
+        <el-image :src="imgRequest()" >
             <div slot="error" class="image-slot">
                 <i class="el-icon-picture-outline"></i>
             </div>
@@ -38,14 +40,19 @@
       isInnerDialog: {
         type: Boolean,
         default: false
-      }
+      },
+        width: {
+            type: String,
+            default: '1200px'
+        },
+
     },
     data () {
       return {}
     },
     methods: {
       imgRequest () {
-        return BpmImgUrl(this.instanceId, this.definitionId)
+        return BpmImgUrl(this.instanceId, this.definitionId) + "&t=" + new Date().getTime()
       },
       close () {
         // el-dialog的关闭前调用，参考https://www.cnblogs.com/yeqrblog/p/9141701.html

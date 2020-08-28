@@ -5,7 +5,8 @@
                :fullscreen="fullscreen"
                :before-close="close"
                @open="openInit"
-               :width="width">
+               :width="width"
+               >
         <div slot="title" class="dialog-title">
             <span>任务历史</span>
         </div>
@@ -37,7 +38,7 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="待执行人">
+            <el-table-column align="center" label="待执行人" show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <span>{{getAssignInfoUser(scope.row.assignInfo)}}</span>
                 </template>
@@ -116,7 +117,7 @@
       },
       width: {
         type: String,
-        default: '800px'
+        default: '1000px'
       },
       showAssign: {
         type: Boolean,
