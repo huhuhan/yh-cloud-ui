@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import {BpmTaskData, BpmImgUrl, BpmStart} from '@/api/bpm/bpm'
+  import {BpmTaskData, BpmImgUrl, BpmStart} from '@/api/bpm/wf'
   import asyncPage from '../../components/form/async-page'
 
   export default {

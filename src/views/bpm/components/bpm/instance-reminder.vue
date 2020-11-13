@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import {BpmInstanceDoAction} from '@/api/bpm/bpm'
+  import {BpmInstanceDoAction} from '@/api/bpm/wf'
   import {BpmInstanceAction} from '@/api/bpm/constant'
 
   export default {

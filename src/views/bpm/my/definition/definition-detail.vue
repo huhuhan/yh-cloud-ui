@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import {BpmGetInstanceData, BpmInstanceDoAction} from '@/api/bpm/bpm'
+  import {BpmGetInstanceData, BpmInstanceDoAction} from '@/api/bpm/wf'
   import {BpmInstanceAction} from '@/api/bpm/constant'
   import asyncPage from '../../components/form/async-page'
 

@@ -1,13 +1,9 @@
 import request from '@/plugin/axios'
 
 /**
- * 保存授权信息
- * @param rightsTarget
- * @param rightsObject
- * @param authorizationJson
- * @returns {AxiosPromise}
- * @constructor
+ * 流程接口
  */
+
 import Qs from 'qs'
 
 import {proxyPrefix, vueAppBPM_UI} from './index'

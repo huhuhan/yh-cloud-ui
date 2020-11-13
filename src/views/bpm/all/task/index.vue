@@ -160,7 +160,7 @@
 </template>
 
 <script>
-  import {BpmTaskList, BpmAssignTask} from '@/api/bpm/bpm'
+  import {BpmTaskList, BpmAssignTask} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {

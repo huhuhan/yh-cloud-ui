@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import {TargetAuthorizations, BpmFormSelectorList, SaveAuthorizations} from '@/api/bpm/bpm'
+  import {TargetAuthorizations, BpmFormSelectorList, SaveAuthorizations} from '@/api/bpm/wf'
 
   export default {
     name: 'definition-authorize',

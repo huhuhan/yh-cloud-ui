@@ -137,7 +137,7 @@
 </template>
 
 <script>
-  import {MyApproveList} from '@/api/bpm/bpm'
+  import {MyApproveList} from '@/api/bpm/wf'
   import {BpmTaskAction, BpmInstanceStatus} from '@/api/bpm/constant'
   import pageMixins from '@/components/my-table-page/page-mixins'
 

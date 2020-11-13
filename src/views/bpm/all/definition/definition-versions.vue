@@ -59,7 +59,7 @@
 </template>
 
 <script>
-  import {BpmDefinitionList, BpmModelerUrl, SetMainVersion} from '@/api/bpm/bpm'
+  import {BpmDefinitionList, BpmModelerUrl, SetMainVersion} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {

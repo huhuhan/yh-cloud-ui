@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {BpmDefinitionCreate, BpmDefinitionCopy} from '@/api/bpm/bpm'
+  import {BpmDefinitionCreate, BpmDefinitionCopy} from '@/api/bpm/wf'
 
   export default {
     name: 'definition-create',

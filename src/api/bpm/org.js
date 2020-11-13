@@ -1,59 +1,13 @@
 import request from '@/plugin/axios'
 
+
 /**
- * 保存授权信息
- * @param rightsTarget
- * @param rightsObject
- * @param authorizationJson
- * @returns {AxiosPromise}
- * @constructor
+ * 用户组织接口
  */
+
 import Qs from 'qs'
 
 import {proxyPrefix} from './index'
-
-/**
- * 登录接口
- * @param params
- * @constructor
- */
-export function BpmLogin(account, password) {
-  return request({
-    url: proxyPrefix + '/org/login/valid',
-    method: 'post',
-    params: {
-      account,
-      password
-    }
-  })
-}
-
-/**
- * 退出登录
- * @param params
- * @constructor
- */
-export function BpmLogout(params) {
-  return request({
-    url: proxyPrefix + '/logout',
-    method: 'get',
-    params
-  })
-}
-
-/**
- * 当前登录用户信息
- * @param params
- * @constructor
- */
-export function BpmUserInfo(params) {
-  return request({
-    url: proxyPrefix + '/org/userResource/userMsg',
-    method: 'get',
-    params
-  })
-}
-
 
 /**
  * 用户列表

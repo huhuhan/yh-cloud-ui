@@ -184,7 +184,7 @@
 </template>
 
 <script>
-  import {BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete} from '@/api/bpm/bpm'
+  import {BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {

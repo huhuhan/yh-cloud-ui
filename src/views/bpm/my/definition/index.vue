@@ -82,7 +82,7 @@
 </template>
 
 <script>
-  import {MyDefinitionList} from '@/api/bpm/bpm'
+  import {MyDefinitionList} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
   import {mapActions} from "vuex"
 

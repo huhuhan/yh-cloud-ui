@@ -86,7 +86,7 @@
 </template>
 
 <script>
-  import { BpmInstanceOpinion, BpmAssignTask } from '@/api/bpm/bpm'
+  import { BpmInstanceOpinion, BpmAssignTask } from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
   import { BpmTaskAction } from '@/api/bpm/constant'
 

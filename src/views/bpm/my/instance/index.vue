@@ -121,7 +121,7 @@
 </template>
 
 <script>
-  import {MyApplyTaskList, BpmInstanceDelete, BpmInstanceForbidden} from '@/api/bpm/bpm'
+  import {MyApplyTaskList, BpmInstanceDelete, BpmInstanceForbidden} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
   import {BpmInstanceStatus} from '@/api/bpm/constant'
   import {mapActions} from "vuex"

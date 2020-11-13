@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { BpmImgUrl } from '@/api/bpm/bpm'
+  import { BpmImgUrl } from '@/api/bpm/wf'
 
   export default {
     name: 'definition-img',

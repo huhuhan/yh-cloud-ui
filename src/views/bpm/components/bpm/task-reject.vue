@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import { BpmTaskDoAction } from '@/api/bpm/bpm'
+  import { BpmTaskDoAction } from '@/api/bpm/wf'
   import { BpmTaskAction } from '@/api/bpm/constant'
 
   export default {

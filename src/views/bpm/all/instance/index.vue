@@ -174,7 +174,7 @@
 </template>
 
 <script>
-  import {BpmInstanceList, BpmInstanceForbidden, BpmInstanceDelete} from '@/api/bpm/bpm'
+  import {BpmInstanceList, BpmInstanceForbidden, BpmInstanceDelete} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {

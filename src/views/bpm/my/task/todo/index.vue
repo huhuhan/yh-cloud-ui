@@ -132,7 +132,7 @@
 </template>
 
 <script>
-  import {MyToDoTaskList} from '@/api/bpm/bpm'
+  import {MyToDoTaskList} from '@/api/bpm/wf'
   import {BpmTaskType} from '@/api/bpm/constant'
   import pageMixins from '@/components/my-table-page/page-mixins'
   import {mapActions} from "vuex"
