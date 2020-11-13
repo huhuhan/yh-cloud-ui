@@ -5,8 +5,9 @@ const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
 
 const meta = { auth: true }
 
-import myFlow from './my-flow'
 import allFlow from './all-flow'
+import myFlow from './my-flow'
+import flowFrom from './flow-form'
 
 export default function () {
   let rootRoute = 'bpm'
@@ -27,7 +28,8 @@ export default function () {
         }
       },
       allFlow(pre),
-      myFlow(pre)
+      myFlow(pre),
+      flowFrom(pre)
     ])(`${rootRoute}`)
   }
 }

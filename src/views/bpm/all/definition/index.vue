@@ -75,7 +75,7 @@
 
             <el-table-column fixed="right" align="center" label="操作" width="300">
               <template slot-scope="scope">
-                <!--<el-tooltip content="启动" placement="top" effect="light">
+                <el-tooltip content="启动" placement="top" effect="light">
                   <el-button
                           size="mini"
                           type="primary"
@@ -83,7 +83,7 @@
                           icon="el-icon-position"
                           plain
                   ></el-button>
-                </el-tooltip>-->
+                </el-tooltip>
                 <el-tooltip content="编辑" placement="top" effect="light">
                   <el-button
                           size="mini"

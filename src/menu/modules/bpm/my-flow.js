@@ -1,7 +1,7 @@
 /**
  * 个人流程，子菜单
  * path路径直接拼接完整相对地址，即以【/】符号开头
- * @param pre
+ * @param prefix
  * @returns {{path: string, children: *, icon: string, title: string}}
  */
 export default function (prefix = '') {
