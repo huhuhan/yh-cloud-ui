@@ -1,11 +1,8 @@
-import request from '@/plugin/axios'
-
 /**
  * 流程接口
  */
-
+import request from '@/plugin/axios'
 import Qs from 'qs'
-
 import {proxyPrefix, vueAppBPM_UI} from './index'
 
 /**
