@@ -6,6 +6,7 @@ const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
 const meta = { auth: true }
 
 import myFlow from './my-flow'
+import allFlow from './all-flow'
 
 export default function () {
   let rootRoute = 'bpm'
@@ -25,6 +26,7 @@ export default function () {
           title: '我的首页'
         }
       },
+      allFlow(pre),
       myFlow(pre)
     ])(`${rootRoute}`)
   }

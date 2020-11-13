@@ -18,7 +18,7 @@
     {
       "proxyPrefix": "agile",
       "serverName": "",
-      "gateway": "http://localhost:8877"
+      "gateway": "http://bpm-api:8271/fw"
     },
     {
       "proxyPrefix": "yh-bpm",
