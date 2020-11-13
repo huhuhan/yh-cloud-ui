@@ -10,57 +10,14 @@ import request from '@/plugin/axios'
  */
 import Qs from 'qs'
 
-// const proxyPrefix = 'bpm'
-import { proxyPrefix, vueAppBPM_UI } from './index'
-
-/**
- * 登录接口
- * @param params
- * @constructor
- */
-export function BpmLogin (account, password) {
-  return request({
-    url: proxyPrefix + '/org/login/valid',
-    method: 'post',
-    params: {
-      account,
-      password
-    }
-  })
-}
-
-/**
- * 退出登录
- * @param params
- * @constructor
- */
-export function BpmLogout (params) {
-  return request({
-    url: proxyPrefix + '/logout',
-    method: 'get',
-    params
-  })
-}
-
-/**
- * 当前登录用户信息
- * @param params
- * @constructor
- */
-export function BpmUserInfo (params) {
-  return request({
-    url: proxyPrefix + '/org/userResource/userMsg',
-    method: 'get',
-    params
-  })
-}
+import {proxyPrefix, vueAppBPM_UI} from './index'
 
 /**
  * 流程定义列表
  * @param params
  * @constructor
  */
-export function BpmDefinitionList (params) {
+export function BpmDefinitionList(params) {
   return request({
     url: proxyPrefix + '/bpm/definition/listJson',
     method: 'get',
@@ -90,7 +47,7 @@ export function SetMainVersion(definitionId) {
  * @param desc
  * @constructor
  */
-export function BpmDefinitionCreate (name, key, desc) {
+export function BpmDefinitionCreate(name, key, desc) {
   return request({
     url: proxyPrefix + '/bpm/definition/save',
     method: 'post',
@@ -131,7 +88,7 @@ export function BpmDefinitionCopy(originKey, newName, newKey, newDesc) {
  * @param id
  * @constructor
  */
-export function BpmDefinitionDelete (id) {
+export function BpmDefinitionDelete(id) {
   return request({
     url: proxyPrefix + '/bpm/definition/remove',
     method: 'post',
@@ -146,7 +103,7 @@ export function BpmDefinitionDelete (id) {
  * @param params
  * @constructor
  */
-export function BpmInstanceList (params) {
+export function BpmInstanceList(params) {
   return request({
     url: proxyPrefix + '/bpm/instance/listJson',
     method: 'get',
@@ -159,7 +116,7 @@ export function BpmInstanceList (params) {
  * @param params
  * @constructor
  */
-export function BpmInstanceOpinion (params) {
+export function BpmInstanceOpinion(params) {
   return request({
     url: proxyPrefix + '/bpm/instance/getOpinion',
     method: 'get',
@@ -172,7 +129,7 @@ export function BpmInstanceOpinion (params) {
  * @param params
  * @constructor
  */
-export function BpmTaskList (params) {
+export function BpmTaskList(params) {
   return request({
     url: proxyPrefix + '/bpm/task/listJson',
     method: 'get',
@@ -185,7 +142,7 @@ export function BpmTaskList (params) {
  * @param params
  * @constructor
  */
-export function BpmTaskUserList (params) {
+export function BpmTaskUserList(params) {
   return request({
     url: proxyPrefix + '/form/formCustDialog/listData_userSelector',
     method: 'post',
@@ -200,7 +157,7 @@ export function BpmTaskUserList (params) {
  * @param taskId
  * @constructor
  */
-export function BpmAssignTask (userId, userName, taskId) {
+export function BpmAssignTask(userId, userName, taskId) {
   return request({
     url: proxyPrefix + '/bpm/task/assignTask',
     method: 'post',
@@ -217,7 +174,7 @@ export function BpmAssignTask (userId, userName, taskId) {
  * @param taskId
  * @constructor
  */
-export function BpmTaskData (taskId) {
+export function BpmTaskData(taskId) {
   return request({
     url: proxyPrefix + '/bpm/task/getTaskData',
     method: 'get',
@@ -234,7 +191,7 @@ export function BpmTaskData (taskId) {
  instanceId
  readonly: undefined
  */
-export function BpmGetInstanceData (defId, nodeId, instanceId, readonly) {
+export function BpmGetInstanceData(defId, nodeId, instanceId, readonly) {
   return request({
     url: proxyPrefix + '/bpm/instance/getInstanceData',
     method: 'get',
@@ -263,7 +220,7 @@ export function BpmGetInstanceData (defId, nodeId, instanceId, readonly) {
  * @returns {string}
  * @constructor
  */
-export function BpmModelerUrl (modelId) {
+export function BpmModelerUrl(modelId) {
   return `${vueAppBPM_UI}/flow-editor/modeler.html?modelId=${modelId}`
 }
 
@@ -274,7 +231,7 @@ export function BpmModelerUrl (modelId) {
  * @returns {string}
  * @constructor
  */
-export function BpmImgUrl (instId, defId) {
+export function BpmImgUrl(instId, defId) {
   return `/api/${proxyPrefix}/bpm/instance/flowImage?instId=${instId}&defId=${defId}`
 }
 
@@ -312,7 +269,7 @@ export function BpmStart(defId) {
  * @param forbidden
  * @constructor
  */
-export function BpmInstanceForbidden (id, forbidden) {
+export function BpmInstanceForbidden(id, forbidden) {
   return request({
     url: proxyPrefix + '/bpm/instance/toForbidden',
     method: 'post',
@@ -328,7 +285,7 @@ export function BpmInstanceForbidden (id, forbidden) {
  * @param id
  * @constructor
  */
-export function BpmInstanceDelete (id) {
+export function BpmInstanceDelete(id) {
   return request({
     url: proxyPrefix + '/bpm/instance/remove',
     method: 'post',
@@ -344,7 +301,7 @@ export function BpmInstanceDelete (id) {
  * @returns {AxiosPromise}
  * @constructor
  */
-export function BpmInstanceDoAction (data) {
+export function BpmInstanceDoAction(data) {
   let data_ = Object.assign({
     formType: "FRAME",
     nodeId: '',
@@ -366,9 +323,9 @@ export function BpmInstanceDoAction (data) {
  * @param data
  * @constructor
  */
-export function BpmTaskDoAction (data) {
+export function BpmTaskDoAction(data) {
   let data_ = Object.assign({
-    data: { test: 'd2admin Test' },
+    data: {test: 'd2admin Test'},
     formType: 'FRAME'
   }, data)
   return request({
@@ -378,176 +335,13 @@ export function BpmTaskDoAction (data) {
   })
 }
 
-/**
- * 用户列表
- * @param params
- * @constructor
- */
-export function BpmUserList (params) {
-  return request({
-    url: proxyPrefix + '/org/user/listJson',
-    method: 'post',
-    params
-  })
-}
-
-/**
- * 下拉筛选表单列表
- * @param params
- * @constructor
- */
-export function BpmFormSelectorList (key, params) {
-  return request({
-    url: proxyPrefix + `/form/formCustDialog/listData_${key}`,
-    method: 'get',
-    params
-  })
-}
-
-/**
- * 用户详细信息
- * @param params
- * @constructor
- */
-export function BpmGetUserInfo (id) {
-  return request({
-    url: proxyPrefix + `/org/user/get?id=${id}`,
-    method: 'get'
-  })
-}
-
-/**
- * 保存用户
- * @param params
- * @constructor
- */
-export function BpmSaveUser (params) {
-  return request({
-    url: proxyPrefix + '/org/user/save',
-    method: 'post',
-    data: params
-  })
-}
-
-/**
- * 删除用户
- * @param params
- * @constructor
- */
-export function BpmDeleteUser (id) {
-  return request({
-    url: proxyPrefix + `/org/user/remove?id=${id}`,
-    method: 'post'
-  })
-}
-
-/**
- * 角色列表
- * @param params
- * @constructor
- */
-export function BpmRoleList (params) {
-  return request({
-    url: proxyPrefix + '/org/role/listJson',
-    method: 'post',
-    params
-  })
-}
-
-/**
- * 角色列表
- * @param params
- * @constructor
- */
-export function BpmRoleFormList (params) {
-  return request({
-    url: proxyPrefix + '/form/formCustDialog/listData_roleSelector',
-    method: 'post',
-    params
-  })
-}
-
-/**
- * 角色详细信息
- * @param params
- * @constructor
- */
-export function BpmGetRoleInfo (id) {
-  return request({
-    url: proxyPrefix + `/org/role/get?id=${id}`,
-    method: 'get'
-  })
-}
-
-/**
- * 保存角色
- * @param params
- * @constructor
- */
-export function BpmSaveRole (params) {
-  return request({
-    url: proxyPrefix + '/org/role/save',
-    method: 'post',
-    data: params
-  })
-}
-
-/**
- * 删除角色
- * @param params
- * @constructor
- */
-export function BpmDeleteRole (id) {
-  return request({
-    url: proxyPrefix + `/org/role/remove?id=${id}`,
-    method: 'post'
-  })
-}
-
-/**
- * 根据角色id查询角色相关的用户
- * @param params
- * @constructor
- */
-export function BpmOrgRelationList (params, id) {
-  return request({
-    url: proxyPrefix + `/org/orgRelation/roleJson?roleId=${id}`,
-    method: 'post',
-    params
-  })
-}
-
-/**
- * 向角色中添加用户
- * @param params
- * @constructor
- */
-export function BpmSaveUserByRole (params) {
-  return request({
-    url: proxyPrefix + '/org/orgRelation/saveRoleUsers',
-    method: 'post',
-    params
-  })
-}
-
-/**
- * 删除角色中的某个用户
- * @param params
- * @constructor
- */
-export function BpmDeleteUserByRole (id) {
-  return request({
-    url: proxyPrefix + `/org/orgRelation/remove?id=${id}`,
-    method: 'post'
-  })
-}
 
 /**
  * 我的流程定义列表
  * @param params
  * @constructor
  */
-export function MyDefinitionList (params) {
+export function MyDefinitionList(params) {
   return request({
     url: proxyPrefix + '/bpm/my/definitionList',
     method: 'post',
@@ -560,7 +354,7 @@ export function MyDefinitionList (params) {
  * @param params
  * @constructor
  */
-export function MyApplyTaskList (params) {
+export function MyApplyTaskList(params) {
   return request({
     url: proxyPrefix + '/bpm/my/applyTaskList',
     method: 'post',
@@ -573,7 +367,7 @@ export function MyApplyTaskList (params) {
  * @param params
  * @constructor
  */
-export function MyToDoTaskList (params) {
+export function MyToDoTaskList(params) {
   return request({
     url: proxyPrefix + '/bpm/my/todoTaskList',
     method: 'post',
@@ -587,7 +381,7 @@ export function MyToDoTaskList (params) {
  * @param params
  * @constructor
  */
-export function MyApproveList (params) {
+export function MyApproveList(params) {
   return request({
     url: proxyPrefix + '/bpm/my/approveList',
     method: 'post',
@@ -603,7 +397,7 @@ export function MyApproveList (params) {
  * @returns {AxiosPromise}
  * @constructor
  */
-export function TargetAuthorizations (rightsTarget, rightsObject) {
+export function TargetAuthorizations(rightsTarget, rightsObject) {
   return request({
     url: proxyPrefix + '/sys/authorization/getAuthorizations',
     method: 'post',
@@ -613,7 +407,8 @@ export function TargetAuthorizations (rightsTarget, rightsObject) {
     }
   })
 }
-export function SaveAuthorizations (rightsTarget, rightsObject, authorizationJson) {
+
+export function SaveAuthorizations(rightsTarget, rightsObject, authorizationJson) {
   /* let formData = new FormData();
   formData.append('rightsTarget',rightsTarget);
   formData.append('rightsObject',rightsObject);
@@ -638,12 +433,13 @@ export function SaveAuthorizations (rightsTarget, rightsObject, authorizationJso
  * @param params
  * @constructor
  */
-export function GetMyFlowCounts () {
+export function GetMyFlowCounts() {
   return request({
     url: proxyPrefix + '/bpm/my/getMyFlowCounts',
     method: 'post'
   })
 }
+
 /**
  * 根据定义流程的id获取流程节点数据
  *
@@ -651,7 +447,7 @@ export function GetMyFlowCounts () {
  * @param {*} defId 流程定义时的id
  * @returns
  */
-export function getFlowElements (defId) {
+export function getFlowElements(defId) {
   return request({
     url: proxyPrefix + `/bpm/definition/flowElements?defId=${defId}`,
     method: 'get'

@@ -1,13 +1,13 @@
 import request from '@/plugin/axios'
 
-import { proxyPrefix } from './index'
+import {proxyPrefix} from './index'
 
 /**
  * 登录接口
  * @param params
  * @constructor
  */
-export function BpmLogin (account, password) {
+export function BpmLogin(account, password) {
   return request({
     url: proxyPrefix + '/org/login/valid',
     method: 'post',
@@ -23,7 +23,7 @@ export function BpmLogin (account, password) {
  * @param params
  * @constructor
  */
-export function BpmLogout (params) {
+export function BpmLogout(params) {
   return request({
     url: proxyPrefix + '/logout',
     method: 'get',
@@ -36,7 +36,7 @@ export function BpmLogout (params) {
  * @param params
  * @constructor
  */
-export function BpmUserInfo (params) {
+export function BpmUserInfo(params) {
   return request({
     url: proxyPrefix + '/org/userResource/userMsg',
     method: 'get',
