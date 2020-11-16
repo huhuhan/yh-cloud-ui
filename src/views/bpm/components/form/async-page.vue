@@ -63,7 +63,7 @@
           return new Promise(resolve => resolve({
             ok: true,
             data: {
-              businessKey: new Date(),
+              businessKey: new Date().getTime(),
               info: '流程发起表单测试数据'
             }
           }))
