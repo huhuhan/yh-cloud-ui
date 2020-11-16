@@ -103,6 +103,13 @@
           this.$log.warning('流程任务【驳回】成功后的回调方法[rejectCallBack]：失败或未实现！')
         }
       },
+      toManualEndCallBack() {
+        try {
+          this.$refs.formPage.manualEndCallBack()
+        } catch (e) {
+          this.$log.warning('流程任务【人工终止】成功后的回调方法[manualEndCallBack]：失败或未实现！')
+        }
+      },
       /**
        * 流程任务【同意】请求前的前置方法
        * @returns {Promise<any>|*}

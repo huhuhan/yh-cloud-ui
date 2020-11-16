@@ -32,7 +32,13 @@ export const BpmTaskAction = {
     key: 'turn',
     value: '转办',
     css: 'warning'
-  }
+  },
+  manualEnd: {
+    key: 'manualEnd',
+    value: '人工终止',
+    css: 'danger',
+    defaultOpinion: '流程人工终止，不可再操作'
+  },
 }
 
 /**
@@ -50,6 +56,12 @@ export const BpmInstanceAction = {
     value: '催办',
     css: 'info',
     defaultOpinion: '您好，请您尽快处理任务：subject ！'
+  },
+  revoke: {
+    key: 'revoke',//recover
+    value: '撤销',
+    css: 'info',
+    defaultOpinion: '流程撤销，不再运行：subject ！'
   },
 }
 
@@ -77,6 +89,11 @@ export const BpmInstanceStatus = {
   back: {
     key: 'back',
     value: '驳回中',
+    css: 'danger'
+  },
+  manualend: {
+    key: 'manualend',
+    value: '人工终止',
     css: 'danger'
   }
 }

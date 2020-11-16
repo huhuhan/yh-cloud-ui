@@ -8,6 +8,7 @@
         <!--        <el-button type="warning" size="mini" @click="dialogTaskTurnVisible = true">转办</el-button>-->
         <el-button type="primary" size="mini" @click="dialogTaskHistoryVisible = true">历史</el-button>
         <el-button type="primary" size="mini" @click="dialogDefImgVisible = true">流程图</el-button>
+        <el-button type="danger" size="mini" @click="dialogTaskManualEndVisible = true">人工终止</el-button>
       </el-col>
 
     </el-row>
@@ -18,20 +19,34 @@
                  :flowObj="flowObj"></asyncPage>
     </el-row>
 
-    <agreeDialog :task="task" :title="isLastTaskNode ? '归档' : '同意'" @callBack="handleAgreeCallBack"
-                 :visible.sync="dialogTaskAgreeVisible" :isInnerDialog="true"></agreeDialog>
+    <agreeDialog :task="task"
+                 :title="isLastTaskNode ? '归档' : '同意'"
+                 @callBack="handleAgreeCallBack"
+                 :visible.sync="dialogTaskAgreeVisible"
+                 :isInnerDialog="true"></agreeDialog>
 
-    <rejectDialog :task="task" @callBack="handleRejectCallBack" :visible.sync="dialogTaskRejectVisible"
+    <rejectDialog :task="task"
+                  @callBack="handleRejectCallBack"
+                  :visible.sync="dialogTaskRejectVisible"
                   :isInnerDialog="true"></rejectDialog>
 
-    <turnDialog :task="task" :visible.sync="dialogTaskTurnVisible" :isInnerDialog="true"></turnDialog>
+    <turnDialog :task="task"
+                :visible.sync="dialogTaskTurnVisible"
+                :isInnerDialog="true"></turnDialog>
 
-    <taskHistoryDialog :instanceId="flowObj.instanceId" :visible.sync="dialogTaskHistoryVisible"
+    <taskHistoryDialog :instanceId="flowObj.instanceId"
+                       :visible.sync="dialogTaskHistoryVisible"
                        :isInnerDialog="true"></taskHistoryDialog>
 
-    <def-img-dialog :instanceId="flowObj.instanceId" :definitionId="flowObj.definitionId"
-                    :visible.sync="dialogDefImgVisible" :isInnerDialog="true"></def-img-dialog>
+    <def-img-dialog :instanceId="flowObj.instanceId"
+                    :definitionId="flowObj.definitionId"
+                    :visible.sync="dialogDefImgVisible"
+                    :isInnerDialog="true"></def-img-dialog>
 
+    <task-manual-end-dialog :task="task"
+                            @callBack="handleManualEndCallBack"
+                            :visible.sync="dialogTaskManualEndVisible"
+                            :isInnerDialog="true"></task-manual-end-dialog>
 
   </div>
 </template>
@@ -52,6 +67,7 @@
       turnDialog: () => import('../../../components/bpm/task-turn'),
       taskHistoryDialog: () => import('../../../components/bpm/task-history'),
       defImgDialog: () => import('../../../components/bpm/definition-img'),
+      taskManualEndDialog: () => import('../../../components/bpm/task-manual-end'),
     },
     mixins: [],
     props: {
@@ -71,6 +87,7 @@
         dialogTaskTurnVisible: false,
         dialogTaskHistoryVisible: false,
         dialogDefImgVisible: false,
+        dialogTaskManualEndVisible: false,
         taskData: null,
         loading: false,
 
@@ -149,6 +166,9 @@
       },
       handleRejectCallBack() {
         this.$refs.asyncPage.toRejectCallBack()
+      },
+      handleManualEndCallBack() {
+        this.$refs.asyncPage.toManualEndCallBack()
       },
       taskAgree() {
         /**
