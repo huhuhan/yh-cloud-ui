@@ -1,5 +1,5 @@
 <template>
-  <d2-container>
+  <div>
     <h1>没有name值，显示默认该表单</h1>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="活动名称">
@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
     </el-form>
-  </d2-container>
+  </div>
 
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <d2-container>
+  <div>
     <h1>路由：/demo/start.vue</h1>
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="活动名称">
@@ -46,7 +46,7 @@
         <el-button>取消</el-button>
       </el-form-item>
     </el-form>
-  </d2-container>
+  </div>
 
 </template>
 

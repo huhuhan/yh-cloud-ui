@@ -1,5 +1,5 @@
 <template>
-  <d2-container>
+  <div>
     <h1>路由：/demo/demo1.vue</h1>
     <el-form :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
       <el-form-item
@@ -17,7 +17,7 @@
         <el-button @click="resetForm('numberValidateForm')">重置</el-button>
       </el-form-item>
     </el-form>
-  </d2-container>
+  </div>
 
 </template>
 

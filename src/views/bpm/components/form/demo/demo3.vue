@@ -1,5 +1,5 @@
 <template>
-  <d2-container>
+  <div>
     <h1>路由：/demo/demo3.vue</h1>
     <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
       <el-form-item
@@ -30,7 +30,7 @@
         <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
       </el-form-item>
     </el-form>
-  </d2-container>
+  </div>
 
 </template>
 
