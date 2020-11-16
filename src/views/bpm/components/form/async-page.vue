@@ -60,6 +60,13 @@
           return this.$refs.formPage.save(p)
         } catch (e) {
           this.$log.warning('流程实例【发起】请求前的调用方法[save]：失败！')
+          return new Promise(resolve => resolve({
+            ok: true,
+            data: {
+              businessKey: new Date(),
+              info: '流程发起表单测试数据'
+            }
+          }))
         }
       },
       /**

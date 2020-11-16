@@ -1,6 +1,6 @@
 <template>
   <div class="detail-content" v-loading="loading">
-    <flow-nodes-map :actname="flowObj.nodeName"></flow-nodes-map>
+    <!--<flow-nodes-map :actname="flowObj.nodeName"></flow-nodes-map>-->
     <el-row :gutter="20">
       <el-col :span="12">
         <el-button type="success" size="mini" @click="taskAgree">{{isLastTaskNode ? '归档' : '同意'}}</el-button>
