@@ -88,8 +88,8 @@
           if (res.isOk) {
             this.$message.success(res.msg)
             this.close()
-            // this.$parent.close()
-            // this.$parent.refresh()
+            this.$parent.close()
+            this.$parent.refresh()
           } else {
             this.$message.error(res.msg)
           }
