@@ -24,8 +24,15 @@
     </el-form>
 
     <!-- table表格 -->
-    <el-table :key='table.key' :data="table.list" v-loading="table.listLoading" element-loading-text="拼命加载中..."
-              @current-change="handleCurrentRow" highlight-current-row stripe style="width: 100%">
+    <el-table :key='table.key'
+              :data="table.list"
+              v-loading="table.listLoading"
+              element-loading-text="拼命加载中..."
+              @current-change="handleCurrentRow"
+              :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
+              highlight-current-row
+              stripe
+              style="width: 100%">
 
 
       <el-table-column align="center" label="流程名称">

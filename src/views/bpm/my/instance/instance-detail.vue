@@ -4,9 +4,13 @@
       <el-col :span="12">
         <el-button type="primary" size="mini" @click="dialogTaskHistoryVisible = true">历史</el-button>
         <el-button type="primary" size="mini" @click="dialogDefImgVisible = true">流程图</el-button>
-        <el-button type="primary" size="mini" @click="dialogInstanceReminderVisible = true">催办</el-button>
+        <el-button type="primary" size="mini" @click="dialogInstanceReminderVisible = true"
+                   v-if="instanceData && !canNotActions.includes(instance.status)">催办
+        </el-button>
         <!--<el-button type="primary" size="mini" @click="dialogInstanceEndVisible = true">终止</el-button>-->
-        <el-button type="primary" size="mini" @click="dialogInstanceRevokeVisible = true">撤销</el-button>
+        <el-button type="primary" size="mini" @click="dialogInstanceRevokeVisible = true"
+                   v-if="instanceData && !canNotActions.includes(instance.status)">撤销
+        </el-button>
       </el-col>
     </el-row>
 
@@ -49,6 +53,7 @@
 
 <script>
   import {BpmGetInstanceData} from '@/api/bpm/wf'
+  import {BpmInstanceStatus} from "@/api/bpm/constant"
   import asyncPage from '../../components/form/async-page'
 
   export default {
@@ -77,6 +82,7 @@
         dialogInstanceRevokeVisible: false,
         loading: false,
         instanceData: null,
+        canNotActions: [BpmInstanceStatus.revoke.key, BpmInstanceStatus.manualend.key],
 
         //传入异步表单组件的对象
         bizObj: {

@@ -54,21 +54,23 @@
             v-loading="table.listLoading"
             element-loading-text="拼命加载中..."
             highlight-current-row
+            :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
             @current-change="handleCurrentRow"
             stripe
             style="width: 100%"
     >
-      <el-table-column align="center" label="业务编号" width="140">
+      <el-table-column align="center" label="业务编号">
         <template slot-scope="scope">
           <span>{{ scope.row.bizKey}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="流程标题">
+      <el-table-column align="center" label="流程标题" width="400">
         <template slot-scope="scope">
           <span>{{scope.row.subject}}</span>
         </template>
       </el-table-column>
+
       <el-table-column align="center" label="当前节点">
         <template slot-scope="scope">
           <span>{{scope.row.name}}</span>
@@ -133,7 +135,7 @@
 
 <script>
   import {MyToDoTaskList} from '@/api/bpm/wf'
-  import {BpmTaskType} from '@/api/bpm/constant'
+  import {BpmTaskToDoType} from '@/api/bpm/constant'
   import pageMixins from '@/components/my-table-page/page-mixins'
   import {mapActions} from "vuex"
 
@@ -153,7 +155,7 @@
           applier: '',
           adName: ''
         },
-        bpmTaskTypes: BpmTaskType,
+        bpmTaskTypes: BpmTaskToDoType,
         dialogTaskDetailVisible: false,
       }
     },

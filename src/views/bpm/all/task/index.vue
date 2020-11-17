@@ -54,7 +54,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column align="center" label="任务名称">
+            <el-table-column align="center" label="任务节点">
               <template slot-scope="scope">
                 <span>{{scope.row.name}}</span>
               </template>
@@ -69,9 +69,13 @@
 
             <el-table-column align="center" label="状态">
               <template slot-scope="scope">
-                <el-tag type="info" v-if="scope.row.status == 'NORMAL'">普通</el-tag>
-                <el-tag type="success" v-if="scope.row.status == 'DESIGNATE'">指派</el-tag>
-                <el-tag type="warning" v-if="scope.row.status == 'TURN'">转办</el-tag>
+                <el-tag
+                        v-for="btType in bpmTaskTypes"
+                        :key="new Date().getTime()"
+                        :type="btType.css"
+                        v-if="scope.row.status == btType.key"
+                >{{btType.value}}
+                </el-tag>
               </template>
             </el-table-column>
 
@@ -161,6 +165,7 @@
 
 <script>
   import {BpmTaskList, BpmAssignTask} from '@/api/bpm/wf'
+  import {BpmTaskToDoType} from "@/api/bpm/constant"
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
@@ -180,8 +185,9 @@
           zjdFilterCount: 999,
           businessKey: ''
         },
-        dialogTaskUserVisible: false,
+        bpmTaskTypes: BpmTaskToDoType,
 
+        dialogTaskUserVisible: false,
         dialogTaskDetailViewFullscreen: true,
         dialogTaskDetailVisible: false,
         dialogDefImgVisible: false,

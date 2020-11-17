@@ -43,17 +43,17 @@
                     :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
                     style="width: 100%">
 
-            <el-table-column align="center" label="项目编号" width="140">
+            <el-table-column align="center" label="项目编号">
               <template slot-scope="scope">
                 <span :title="scope.row.bizKey">{{scope.row.bizKey}}</span>
               </template>
             </el-table-column>
 
-            <el-table-column align="center" label="流程标题">
+            <!--<el-table-column align="center" label="流程标题">
               <template slot-scope="scope">
                 <span :title="scope.row.subject">{{scope.row.subject}}</span>
               </template>
-            </el-table-column>
+            </el-table-column>-->
 
             <el-table-column align="center" label="流程名称">
               <template slot-scope="scope">
@@ -70,10 +70,11 @@
 
             <el-table-column align="center" label="状态">
               <template slot-scope="scope">
-                <el-tag type="success" v-if="scope.row.status == 'running'">运行中</el-tag>
-                <el-tag type="info" v-if="scope.row.status == 'end'">终止</el-tag>
-                <el-tag type="warning" v-if="scope.row.status == 'draft'">草稿</el-tag>
-                <el-tag type="danger" v-if="scope.row.status == 'back'">驳回</el-tag>
+                <el-tag v-for="instStatus in bpmInstanceStatus"
+                        :type="instStatus.css"
+                        v-if="scope.row.status == instStatus.key">
+                  {{instStatus.value}}
+                </el-tag>
               </template>
             </el-table-column>
 
@@ -175,6 +176,7 @@
 
 <script>
   import {BpmInstanceList, BpmInstanceForbidden, BpmInstanceDelete} from '@/api/bpm/wf'
+  import {BpmInstanceStatus} from "@/api/bpm/constant"
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
@@ -194,6 +196,7 @@
           order: 'ASC', //DESC
         },
         table: {},
+        bpmInstanceStatus: BpmInstanceStatus,
 
         dialogTaskHistoryDialogVisible: false,
         dialogDefImgVisible: false,

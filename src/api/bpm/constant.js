@@ -59,7 +59,7 @@ export const BpmInstanceAction = {
     key: 'revoke',//recover
     value: '撤销',
     css: 'danger',
-    defaultOpinion: '流程撤销，不再运行：subject ！'
+    defaultOpinion: '流程撤销，不再运行！'
   },
 }
 
@@ -71,14 +71,14 @@ export const BpmTaskOpinionStatus = {...BpmInstanceAction, ...BpmTaskAction}
 export const BpmInstanceStatus = {
   running: {
     key: 'running',
-    // value: '运行中'
-    value: '审批中',
+    value: '运行中',
+    // value: '审批中',
     css: 'success'
   },
   end: {
     key: 'end',
-    // value: '已终止'
-    value: '审批完成',
+    value: '已结束',
+    // value: '审批完成',
     css: 'info'
   },
   // draft: {
@@ -103,7 +103,7 @@ export const BpmInstanceStatus = {
 }
 
 
-export const BpmTaskType = {
+export const BpmTaskToDoType = {
   normal: {
     key: 'NORMAL',
     value: '普通',
@@ -115,11 +115,6 @@ export const BpmTaskType = {
     css: 'success'
   },
   turn: {
-    key: 'TURN',
-    value: '转办',
-    css: 'warning'
-  },
-  revoke: {
     key: 'TURN',
     value: '转办',
     css: 'warning'

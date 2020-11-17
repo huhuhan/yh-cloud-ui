@@ -32,8 +32,15 @@
     </el-form>
 
     <!-- table表格 -->
-    <el-table :key='table.key' :data="table.list" v-loading="table.listLoading" element-loading-text="拼命加载中..."
-              @current-change="handleCurrentRow" highlight-current-row stripe style="width: 100%">
+    <el-table :key='table.key'
+              :data="table.list"
+              v-loading="table.listLoading"
+              :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
+              element-loading-text="拼命加载中..."
+              @current-change="handleCurrentRow"
+              highlight-current-row
+              stripe
+              style="width: 100%">
 
 
       <el-table-column align="center" label="业务编号" width="140">
@@ -41,16 +48,16 @@
           <span>{{ scope.row.bizKey}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="流程标题">
+      <!--<el-table-column align="center" label="流程标题">
         <template slot-scope="scope">
           <span>{{scope.row.subject}}</span>
         </template>
-      </el-table-column>
-      <!--<el-table-column align="center" label="流程名称">
+      </el-table-column>-->
+      <el-table-column align="center" label="流程名称">
         <template slot-scope="scope">
           <span>{{scope.row.defName}}</span>
         </template>
-      </el-table-column>-->
+      </el-table-column>
 
       <el-table-column align="center" label="任务节点">
         <template slot-scope="scope">
