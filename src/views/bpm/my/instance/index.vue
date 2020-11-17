@@ -223,22 +223,6 @@
           this.handleRefreshTable()
         })
       },
-      jflxChange(jflx) {
-        switch (jflx) {
-          case "1":
-            return "原址新建"
-          case "2":
-            return "改扩建"
-          case "3":
-            return "异址新建"
-          case "4":
-            return "宅基地流转"
-          case "5":
-            return "宅基地退出"
-          default:
-            return ""
-        }
-      }
     }
   }
 

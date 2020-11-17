@@ -32,26 +32,26 @@ export default {
      * 提供参考，复制到自己的业务组件中
      * 主要更换后端API：PageDataReq
      */
-/*
-    getTableData() {
-      this.table.listLoading = true
-      PageDataReq(this.getTableDataParam()).then(res => {
-        this.table.list = res.records || res.list || res.data
-        this.table.total = res.total
-      }).catch(err => console.log(err)).finally(() => {
-        this.table.listLoading = false
-      })
-    },
-    //其他参数
-    getTableDataParam() {
-      //根据业务修改补充
-      let otherParam = {}
-      return Object.assign({
-        pageNum: this.table.pageNum,
-        pageSize: this.table.pageSize
-      }, this.queryForm, otherParam)
-    },
-*/
+    /*
+        getTableData() {
+          this.table.listLoading = true
+          PageDataReq(this.getTableDataParam()).then(res => {
+            this.table.list = res.records || res.list || res.data
+            this.table.total = res.total
+          }).catch(err => console.log(err)).finally(() => {
+            this.table.listLoading = false
+          })
+        },
+        //其他参数
+        getTableDataParam() {
+          //根据业务修改补充
+          let otherParam = {}
+          return Object.assign({
+            pageNum: this.table.pageNum,
+            pageSize: this.table.pageSize
+          }, this.queryForm, otherParam)
+        },
+    */
     /**
      * 每页数量
      * @param pageSize
@@ -80,14 +80,14 @@ export default {
      * 当前所选行
      * @param row
      */
-    handleCurrentRow(row){
+    handleCurrentRow(row) {
       this.currentRow = row
-      console.log('选择当前行')
+      // console.log('选择当前行')
     },
     /**
      * 刷新表单
      */
-    handleRefreshTable(){
+    handleRefreshTable() {
       this.getTableData()
     }
   }

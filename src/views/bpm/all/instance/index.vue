@@ -13,6 +13,13 @@
               <el-input v-model="queryForm['biz_key_$VRHK']" placeholder="请输入编号"></el-input>
             </el-form-item>
 
+            <el-form-item label="流程状态" prop="status_$VEQ">
+              <el-select v-model="queryForm['status_$VEQ']" placeholder="请选择" clearable style="width:178px;">
+                <el-option v-for="instStatus in bpmInstanceStatus" :label="instStatus.value"
+                           :value="instStatus.key"></el-option>
+              </el-select>
+            </el-form-item>
+
             <div style="float: right">
               <el-form-item>
                 <el-button type="primary" @click="getTableData">

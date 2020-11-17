@@ -18,6 +18,12 @@
                         value-format="yyyy-MM-dd HH:mm:ss" style="width:178px;"></el-date-picker>
       </el-form-item>
 
+      <el-form-item label="办理结果" prop="approveStatus$VEQ">
+        <el-select v-model="queryForm['approveStatus$VEQ']" placeholder="请选择" clearable style="width:178px;">
+          <el-option v-for="action in bpmTaskAction" :label="action.value" :value="action.key"></el-option>
+        </el-select>
+      </el-form-item>
+
       <div style="float: right">
         <el-form-item>
           <el-button type="primary" @click="getTableData">
@@ -161,7 +167,7 @@
     ],
     data() {
       return {
-        actions: BpmTaskAction,
+        bpmTaskAction: BpmTaskAction,
         bpmTaskOpinionStatus: BpmTaskOpinionStatus,
         instanceStatus: BpmInstanceStatus,
 
@@ -182,21 +188,6 @@
     },
     computed: {},
     methods: {
-
-      clickTaskHistory(row) {
-        this.dialogTaskHistoryVisible = !this.dialogTaskHistoryVisible
-        if (this.dialogTaskHistoryVisible) {
-          BpmGetInstanceData(
-            undefined,
-            undefined,
-            row.id
-          ).then(res => {
-            this.instanceData = res.data
-          })
-        }
-      },
-
-
       getTableData() {
         this.table.listLoading = true
         MyApproveList(this.getTableDataParam()).then(res => {
@@ -212,13 +203,19 @@
       getTableDataParam() {
         //根据业务修改补充
         let otherParam = {}
-        // 触发筛选条件
-        let zjdFilter = !!this.queryForm.applier || !!this.queryForm.adName
+        let newQueryForm = {}
+        // 查询字段特殊处理
+        otherParam = Object.assign(otherParam, {
+          'o.status_$VEQ': this.queryForm['approveStatus$VEQ']
+        })
+
+        // 业务触发筛选条件
+        /*let zjdFilter = !!this.queryForm.applier || !!this.queryForm.adName
         this.table.pageSize = zjdFilter ? this.queryForm.zjdFilterCount : this.table.pageSize
-        let newQueryForm = Object.assign({
+        newQueryForm = Object.assign({
           zjdFilter: zjdFilter,
-        }, this.queryForm)
-        //...
+        }, this.queryForm)*/
+
         return Object.assign({
           //参数重写
           offset: (this.table.pageNum - 1) * this.table.pageSize,
@@ -228,22 +225,6 @@
       durationM(duration) {
         return duration > 0 ? this.$moment.duration(duration).humanize() : ''
       },
-      jflxChange(jflx) {
-        switch (jflx) {
-          case "1":
-            return "原址新建"
-          case "2":
-            return "改扩建"
-          case "3":
-            return "异址新建"
-          case "4":
-            return "宅基地流转"
-          case "5":
-            return "宅基地退出"
-          default:
-            return ""
-        }
-      }
     }
   }
 

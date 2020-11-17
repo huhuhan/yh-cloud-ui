@@ -14,6 +14,14 @@
               <el-input v-model="queryForm['businessKey']" placeholder="请输入编号"></el-input>
             </el-form-item>
 
+            <el-form-item label="任务节点" prop="name_$VRHK">
+              <el-input v-model="queryForm['name_$VRHK']" placeholder="请输入"></el-input>
+            </el-form-item>
+
+            <el-form-item label="候选人" prop="assignee_names_$VLK">
+              <el-input v-model="queryForm['assignee_names_$VLK']" placeholder="请输入"></el-input>
+            </el-form-item>
+
             <div style="float: right">
               <el-form-item>
                 <el-button type="primary" @click="getTableData">
