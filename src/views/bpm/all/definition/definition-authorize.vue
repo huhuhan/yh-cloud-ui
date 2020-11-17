@@ -39,7 +39,8 @@
 </template>
 
 <script>
-  import {TargetAuthorizations, BpmFormSelectorList, SaveAuthorizations} from '@/api/bpm/wf'
+  import {TargetAuthorizations, SaveAuthorizations} from '@/api/bpm/wf'
+  import {BpmFormSelectorList} from "@/api/bpm/sys"
 
   export default {
     name: 'definition-authorize',
@@ -51,13 +52,6 @@
       target: String,
     },
     data() {
-      let validatePass2 = (rule, value, callback) => {
-        if (value && !/^[A-Z-a-z]$/.test(value.charAt(0))) {
-          callback(new Error('必须以字母开头!'))
-        } else {
-          callback()
-        }
-      }
       return {
         ref: 'form',
         form: {},
@@ -69,7 +63,11 @@
       }
     },
     created() {
-      this.initOptions()
+    },
+    watch: {
+      target() {
+        this.initOptions()
+      }
     },
     methods: {
       close() {

@@ -28,3 +28,17 @@ export function uploadFile(upLoadFiles) {
 export function sysTemImgUrl(imageFileId) {
   return `/api/${proxyPrefix}/sys/sysFile/download?fileId=${imageFileId}`
 }
+
+
+/**
+ * 下拉筛选表单列表
+ * @param params
+ * @constructor
+ */
+export function BpmFormSelectorList (key, params) {
+  return request({
+    url: proxyPrefix + `/form/formCustDialog/listData_${key}`,
+    method: 'get',
+    params
+  })
+}
