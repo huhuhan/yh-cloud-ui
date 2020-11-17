@@ -52,12 +52,13 @@
 
             <el-table-column align="center" label="状态">
                 <template slot-scope="scope">
-                    <el-tag type="success" v-if="scope.row.status == actions.agree.key">{{actions.agree.value}}</el-tag>
-                    <el-tag type="danger" v-if="scope.row.status == actions.reject.key">{{actions.reject.value}}</el-tag>
-                    <el-tag type="warning" v-if="scope.row.status == actions.turn.key">{{actions.turn.value}}</el-tag>
-                    <el-tag type="info" v-if="scope.row.status == actions.awaiting_check.key">{{actions.awaiting_check.value}}</el-tag>
-                    <el-tag type="info" v-if="scope.row.status == actions.start.key">{{actions.start.value}}</el-tag>
-                    <el-tag type="info" v-if="scope.row.status == actions.end.key">{{actions.end.value}}</el-tag>
+                  <el-tag
+                          v-for="btType in bpmTaskOpinionStatus"
+                          :key="new Date().getTime()"
+                          :type="btType.css"
+                          v-if="scope.row.status == btType.key"
+                  >{{btType.value}}
+                  </el-tag>
                 </template>
             </el-table-column>
 
@@ -88,7 +89,7 @@
 <script>
   import { BpmInstanceOpinion, BpmAssignTask } from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
-  import { BpmTaskAction } from '@/api/bpm/constant'
+  import { BpmTaskAction, BpmTaskOpinionStatus } from '@/api/bpm/constant'
 
   export default {
     name: 'task-history',
@@ -127,6 +128,7 @@
     data () {
       return {
         actions: BpmTaskAction,
+        bpmTaskOpinionStatus: BpmTaskOpinionStatus,
         dialogTaskUserVisible: false
       }
     },

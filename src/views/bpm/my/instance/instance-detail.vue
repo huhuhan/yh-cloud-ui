@@ -5,6 +5,8 @@
         <el-button type="primary" size="mini" @click="dialogTaskHistoryVisible = true">历史</el-button>
         <el-button type="primary" size="mini" @click="dialogDefImgVisible = true">流程图</el-button>
         <el-button type="primary" size="mini" @click="dialogInstanceReminderVisible = true">催办</el-button>
+        <!--<el-button type="primary" size="mini" @click="dialogInstanceEndVisible = true">终止</el-button>-->
+        <el-button type="primary" size="mini" @click="dialogInstanceRevokeVisible = true">撤销</el-button>
       </el-col>
     </el-row>
 
@@ -34,6 +36,14 @@
                               :visible.sync="dialogInstanceReminderVisible"
                               :isInnerDialog="true"></instance-reminder-dialog>
 
+    <!--<instance-end-dialog v-if="instanceData"
+                         :instance="instanceData.instance"
+                         :visible.sync="dialogInstanceEndVisible"
+                         :isInnerDialog="true"></instance-end-dialog>-->
+    <instance-revoke-dialog v-if="instanceData"
+                            :instance="instanceData.instance"
+                            :visible.sync="dialogInstanceRevokeVisible"
+                            :isInnerDialog="true"></instance-revoke-dialog>
   </div>
 </template>
 
@@ -48,6 +58,8 @@
       taskHistoryDialog: () => import('../../components/bpm/task-history'),
       defImgDialog: () => import('../../components/bpm/definition-img'),
       instanceReminderDialog: () => import('../../components/bpm/instance-reminder'),
+      // instanceEndDialog: () => import('../../components/bpm/instance-end'),
+      instanceRevokeDialog: () => import('../../components/bpm/instance-revoke'),
     },
     mixins: [],
     props: {
@@ -61,6 +73,8 @@
         dialogTaskHistoryVisible: false,
         dialogDefImgVisible: false,
         dialogInstanceReminderVisible: false,
+        dialogInstanceEndVisible: false,
+        dialogInstanceRevokeVisible: false,
         loading: false,
         instanceData: null,
 

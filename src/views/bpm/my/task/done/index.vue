@@ -46,13 +46,13 @@
           <span>{{scope.row.subject}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="流程名称">
+      <!--<el-table-column align="center" label="流程名称">
         <template slot-scope="scope">
           <span>{{scope.row.defName}}</span>
         </template>
-      </el-table-column>
+      </el-table-column>-->
 
-      <el-table-column align="center" lab el="任务节点">
+      <el-table-column align="center" label="任务节点">
         <template slot-scope="scope">
           <span>{{scope.row.nodeName}}</span>
         </template>
@@ -87,7 +87,9 @@
 
       <el-table-column align="center" label="办理结果">
         <template slot-scope="scope">
-          <el-tag v-for="btAction in actions" :type="btAction.css" v-if="scope.row.approveStatus == btAction.key">
+          <el-tag v-for="btAction in bpmTaskOpinionStatus"
+                  :type="btAction.css"
+                  v-if="scope.row.approveStatus == btAction.key">
             {{btAction.value}}
           </el-tag>
         </template>
@@ -138,7 +140,7 @@
 
 <script>
   import {MyApproveList} from '@/api/bpm/wf'
-  import {BpmTaskAction, BpmInstanceStatus} from '@/api/bpm/constant'
+  import {BpmTaskAction, BpmInstanceStatus, BpmTaskOpinionStatus} from '@/api/bpm/constant'
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
@@ -153,6 +155,7 @@
     data() {
       return {
         actions: BpmTaskAction,
+        bpmTaskOpinionStatus: BpmTaskOpinionStatus,
         instanceStatus: BpmInstanceStatus,
 
         queryForm: {

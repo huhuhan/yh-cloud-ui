@@ -1,6 +1,5 @@
 /**
  * 流程任务状态、事件
- * @type {{reject: string, agree: string}}
  */
 export const BpmTaskAction = {
   start: {
@@ -43,7 +42,6 @@ export const BpmTaskAction = {
 
 /**
  * 流程实例触发事件类型
- * @type {{reminder: {css: string, value: string, key: string}, start: {css: string, value: string, key: string}}}
  */
 export const BpmInstanceAction = {
   start: {
@@ -60,14 +58,15 @@ export const BpmInstanceAction = {
   revoke: {
     key: 'revoke',//recover
     value: '撤销',
-    css: 'info',
+    css: 'danger',
     defaultOpinion: '流程撤销，不再运行：subject ！'
   },
 }
 
+export const BpmTaskOpinionStatus = {...BpmInstanceAction, ...BpmTaskAction}
+
 /**
  * 流程实例状态
- * @type {{reject: string, agree: string}}
  */
 export const BpmInstanceStatus = {
   running: {
@@ -95,6 +94,11 @@ export const BpmInstanceStatus = {
     key: 'manualend',
     value: '人工终止',
     css: 'danger'
+  },
+  revoke: {
+    key: 'revoke',
+    value: '撤销',
+    css: 'danger'
   }
 }
 
@@ -115,4 +119,11 @@ export const BpmTaskType = {
     value: '转办',
     css: 'warning'
   },
+  revoke: {
+    key: 'TURN',
+    value: '转办',
+    css: 'warning'
+  },
 }
+
+
