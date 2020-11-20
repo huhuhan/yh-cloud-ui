@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import menu from '@/menu/modules/yh-activiti'
+  import menu from '@/menu/modules/yh.act/activiti'
 
   export default {
     data () {

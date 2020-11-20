@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import { traceNodeImg} from '../../../../api/yh.activiti'
+  import { traceNodeImg} from '@/api/yh.act/activti5'
 
   export default {
     name: 'leave-form',

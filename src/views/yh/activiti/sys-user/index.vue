@@ -105,7 +105,7 @@
 </template>
 
 <script>
-  import { aUserList } from '../../../../api/yh.activiti'
+  import { aUserList } from '@/api/yh.act/activti5'
 
   export default {
     data () {

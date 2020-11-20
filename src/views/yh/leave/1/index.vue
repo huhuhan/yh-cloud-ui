@@ -157,8 +157,8 @@
 </template>
 
 <script>
-  import { userLeaveList } from '../../../../api/yh.act.leave'
-  import { claimTask } from '../../../../api/yh.activiti'
+  import { userLeaveList } from '@/api/yh.act/leave'
+  import { claimTask } from '@/api/yh.act/activti5'
   import { mapState } from 'vuex'
 
   import leaveForm from './leave-form'

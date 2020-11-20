@@ -6,7 +6,7 @@ import charts from './modules/charts'
 import components from './modules/components'
 import element from './modules/element'
 import business from './modules/business'*/
-import activiti from './modules/yh-activiti'
+import activiti from './modules/yh.act/activiti'
 import agileBPM from './modules/agilebpm'
 import bpm from './modules/bpm'
 

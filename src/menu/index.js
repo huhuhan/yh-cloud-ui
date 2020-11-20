@@ -15,7 +15,7 @@ import demoD2Crud from './modules/demo-d2-crud'
 // 第三方网页
 import demoFrame from './modules/demo-frame'*/
 // 工作流
-import activiti from './modules/yh-activiti'
+import activiti from './modules/yh.act/activiti'
 // agileBPM
 import agileBPM from './modules/agilebpm'
 import bpm from './modules/bpm'

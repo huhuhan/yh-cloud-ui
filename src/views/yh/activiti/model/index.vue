@@ -153,7 +153,7 @@
 </template>
 
 <script>
-  import { modelList, createModel, deleteModel, deployModel } from '../../../../api/yh.activiti'
+  import { modelList, createModel, deleteModel, deployModel } from '@/api/yh.act/activti5'
   // import editor from './editor'
 
   export default {

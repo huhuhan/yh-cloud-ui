@@ -119,7 +119,7 @@
 </template>
 
 <script>
-  import { runningPSList, updateInstance, deleteInstance } from '../../../../../api/yh.activiti'
+  import { runningPSList, updateInstance, deleteInstance } from '../../../../../api/yh.act/activti5'
   import traceDialog from './../trace-dialog'
 
   export default {

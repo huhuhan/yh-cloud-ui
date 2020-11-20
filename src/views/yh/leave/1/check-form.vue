@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { completeLeaveTask } from '../../../../api/yh.act.leave'
+  import { completeLeaveTask } from '@/api/yh.act/leave'
 
   export default {
     name: 'check-form',

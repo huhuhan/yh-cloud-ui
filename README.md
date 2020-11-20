@@ -50,11 +50,34 @@
 
 ## 系统模块
 
+### 工作流
+
+> 后端服务：[yh-activiti](https://github.com/huhuhan/yh-cloud/tree/master/yh-activiti)，测试用户userId固定为88888888
+
+- **正常登录**：用前端mockJS的固定账户，`src/mock/api/sys.login.js`
+
+  ```js
+  { username: 'adminDemo', password: '111111', userId: '88888888'}
+  ```
+
+- api目录：`src/api/yh.act`
+
+- 路由目录：`src/router/modules/yh.act`
+
+- 菜单目录：`src/menu/modules/yh.act`
+
+- 视图目录：`src/views/yh`
+
+  - 流程相关：`activiti`
+  - 例子项目：`请假Demo`
+
 ### BPM系统
+
+> 后端服务：agilebpm
 
 #### 开发说明
 
-- api目录：`src/api/bpm`
+- **真正登录**：首页菜单-点击`初始化BPM`按钮，登录后端服务的账户
 
 - axios请求配置`src/plugin/axios/index.js`补充一种请求响应码
 
@@ -65,11 +88,11 @@
   } 
   ```
 
-- 菜单文件`src/menu/modules/bpm/index.js`，在`src/menu/index.js`中引入
+- api目录：`src/api/bpm`
 
-- 路由文件`src/router/modules/bpm/index.js`，在`src/router/routes.js`中引入，`rootRoute`参数对应组件`src/views`目录下一级目录名
-
-- 组件模块`src/views/bpm`，整个组件模块目录放在views下
+- 路由目录：`src/router/modules/bpm`
+- 菜单目录：`src/menu/modules/bpm`
+- 视图目录：`src/views/bpm`
   - `src/views/bpm/components`：公共组件
     - components/bpm：流程公共组件
     - components/bpm/detail_temp：流程详情页组件模板，复制到相关页面，修改引用配置，根据业务补充修改
@@ -77,8 +100,6 @@
     - form/async-demo.vue：业务表单，实际业务扩展新建目录区分，比如demo目录
   - `src/views/bpm/my`：个人流程
   - `src/views/bpm/all`: 全局流程
-
-
 
 
 #### 查询条件

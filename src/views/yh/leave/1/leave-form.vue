@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import { addLeave} from '../../../../api/yh.act.leave'
+  import { addLeave} from '@/api/yh.act/leave'
 
   export default {
     name: 'leave-form',

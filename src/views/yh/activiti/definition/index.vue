@@ -114,7 +114,7 @@
 </template>
 
 <script>
-  import { deploymentList, updateDeployment, deleteDeployment, convertDeployment } from '../../../../api/yh.activiti'
+  import { deploymentList, updateDeployment, deleteDeployment, convertDeployment } from '@/api/yh.act/activti5'
 
   export default {
     data () {

@@ -118,7 +118,7 @@
 </template>
 
 <script>
-  import { historyPSList, updateInstance } from '../../../../../api/yh.activiti'
+  import { historyPSList, updateInstance } from '@/api/yh.act/activti5'
   import traceDialog from './../trace-dialog'
   export default {
     components: {
