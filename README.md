@@ -6,8 +6,6 @@
 
 - 对应后端项目[yh-cloud](https://github.com/huhuhan/yh-cloud)
 
-  
-
 ### 项目框架
 
 -  基于D2admin修改
@@ -21,21 +19,14 @@
 
 > 注释都以段落方式为主 /* */
 
-
-
 ### 代理转发
 
 - 配置文件`vue.config.js`已经封装过，参考JSON文件`proxy-gateway.json`
-
-
 
 ### 菜单|路由
 
 - 菜单参考写法：`src/menu/modules/bpm/my-flow.js`
 - 路由参考写法：`src/router/modules/bpm/my-flow.js`
-
-
-
 
 ### 通用组件
 `src/components`目录
@@ -70,6 +61,8 @@
 
   - 流程相关：`activiti`
   - 例子项目：`请假Demo`
+  
+- 静态目录：`public/act`，（流程设计器）
 
 ### BPM系统
 

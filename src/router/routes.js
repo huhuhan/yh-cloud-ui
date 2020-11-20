@@ -7,7 +7,6 @@ import components from './modules/components'
 import element from './modules/element'
 import business from './modules/business'*/
 import activiti from './modules/yh.act/activiti'
-import agileBPM from './modules/agilebpm'
 import bpm from './modules/bpm'
 
 import layoutHeaderAside from '@/layout/header-aside'
@@ -68,7 +67,6 @@ const frameIn = [
   element,
   business,*/
   activiti,
-  agileBPM,
   bpm()
 ]
 

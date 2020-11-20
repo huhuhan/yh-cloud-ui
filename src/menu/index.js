@@ -16,8 +16,6 @@ import demoD2Crud from './modules/demo-d2-crud'
 import demoFrame from './modules/demo-frame'*/
 // 工作流
 import activiti from './modules/yh.act/activiti'
-// agileBPM
-import agileBPM from './modules/agilebpm'
 import bpm from './modules/bpm'
 
 // 菜单 侧边栏
@@ -31,7 +29,6 @@ export const menuAside = [
   demoD2Crud,
   demoFrame,*/
   activiti,
-  agileBPM,
   bpm()
 ]
 
