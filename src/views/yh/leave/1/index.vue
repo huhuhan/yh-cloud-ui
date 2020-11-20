@@ -232,11 +232,12 @@
           type: 'warning',
           center: true
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '已签收!'
-          })
-          claimTask(taskId, this.info.userId).finally(() => {
+          claimTask(taskId, this.info.userId).then(()=>{
+            this.$message({
+              type: 'success',
+              message: '已签收!'
+            })
+          }).finally(() => {
             this.getTableData()
           })
         }).catch(action => {

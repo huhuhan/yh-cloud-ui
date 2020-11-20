@@ -4,11 +4,11 @@
       <el-col :span="12">
         <el-button type="primary" size="mini" @click="dialogTaskHistoryVisible = true">历史</el-button>
         <el-button type="primary" size="mini" @click="dialogDefImgVisible = true">流程图</el-button>
-        <el-button type="primary" size="mini" @click="dialogInstanceReminderVisible = true"
+        <el-button type="warning" size="mini" @click="dialogInstanceReminderVisible = true"
                    v-if="instanceData && !canNotActions.includes(instance.status)">催办
         </el-button>
         <!--<el-button type="primary" size="mini" @click="dialogInstanceEndVisible = true">终止</el-button>-->
-        <el-button type="primary" size="mini" @click="dialogInstanceRevokeVisible = true"
+        <el-button type="danger" size="mini" @click="dialogInstanceRevokeVisible = true"
                    v-if="instanceData && !canNotActions.includes(instance.status)">撤销
         </el-button>
       </el-col>

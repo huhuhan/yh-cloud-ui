@@ -45,7 +45,9 @@
 
             <el-table-column align="center" label="实例ID">
                 <template slot-scope="scope">
-                    <span>{{scope.row.historicProcessInstanceBo.id}}</span>
+                  <span>
+                        <a href="#" @click="handleTraceNode(scope.row.historicProcessInstanceBo.id)">{{scope.row.historicProcessInstanceBo.id}}</a>
+                    </span>
                 </template>
             </el-table-column>
 
@@ -105,13 +107,23 @@
                     style="margin: -10px;">
             </el-pagination>
         </template>
+
+      <!--跟踪节点-->
+      <traceDialog
+              :processInstanceId="processInstanceId"
+              :visible.sync="dialogTraceNodeVisible"></traceDialog>
+
+
     </d2-container>
 </template>
 
 <script>
   import { historyPSList, updateInstance } from '../../../../../api/yh.activiti'
-
+  import traceDialog from './../trace-dialog'
   export default {
+    components: {
+      traceDialog
+    },
     data () {
       return {
         table: {
@@ -128,7 +140,8 @@
           processDefinitionKey: undefined,
           state: undefined
         },
-
+        dialogTraceNodeVisible: false,
+        processInstanceId: null,
       }
     },
     created () {
@@ -175,6 +188,10 @@
       toCancel (formName) {
         this.$refs[formName].resetFields()
       },
+      handleTraceNode (psId) {
+        this.dialogTraceNodeVisible = true
+        this.processInstanceId = psId
+      }
     }
   }
 </script>
