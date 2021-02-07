@@ -52,7 +52,7 @@
   import asyncPage from '../../components/form/async-page'
 
   export default {
-    name: 'instance-detail',
+    name: 'my-instance-detail',
     components: {
       asyncPage,
       taskHistoryDialog: () => import('../../components/bpm/task-history'),

@@ -5,7 +5,7 @@
       <el-col :span="12">
         <el-button type="success" size="mini" @click="taskAgree">{{isLastTaskNode ? '归档' : '同意'}}</el-button>
         <el-button type="danger" size="mini" @click="dialogTaskRejectVisible = true">驳回</el-button>
-        <!--        <el-button type="warning" size="mini" @click="dialogTaskTurnVisible = true">转办</el-button>-->
+        <el-button type="warning" size="mini" @click="dialogTaskTurnVisible = true">转办</el-button>
         <el-button type="primary" size="mini" @click="dialogTaskHistoryVisible = true">历史</el-button>
         <el-button type="primary" size="mini" @click="dialogDefImgVisible = true">流程图</el-button>
         <el-button type="danger" size="mini" @click="dialogTaskManualEndVisible = true">人工终止</el-button>
