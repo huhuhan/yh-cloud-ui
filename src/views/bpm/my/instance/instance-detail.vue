@@ -7,7 +7,6 @@
         <el-button type="warning" size="mini" @click="dialogInstanceReminderVisible = true"
                    v-if="instanceData && !canNotActions.includes(instance.status)">催办
         </el-button>
-        <!--<el-button type="primary" size="mini" @click="dialogInstanceEndVisible = true">终止</el-button>-->
         <el-button type="danger" size="mini" @click="dialogInstanceRevokeVisible = true"
                    v-if="instanceData && !canNotActions.includes(instance.status)">撤销
         </el-button>
@@ -40,10 +39,6 @@
                               :visible.sync="dialogInstanceReminderVisible"
                               :isInnerDialog="true"></instance-reminder-dialog>
 
-    <!--<instance-end-dialog v-if="instanceData"
-                         :instance="instanceData.instance"
-                         :visible.sync="dialogInstanceEndVisible"
-                         :isInnerDialog="true"></instance-end-dialog>-->
     <instance-revoke-dialog v-if="instanceData"
                             :instance="instanceData.instance"
                             :visible.sync="dialogInstanceRevokeVisible"
@@ -63,7 +58,6 @@
       taskHistoryDialog: () => import('../../components/bpm/task-history'),
       defImgDialog: () => import('../../components/bpm/definition-img'),
       instanceReminderDialog: () => import('../../components/bpm/instance-reminder'),
-      // instanceEndDialog: () => import('../../components/bpm/instance-end'),
       instanceRevokeDialog: () => import('../../components/bpm/instance-revoke'),
     },
     mixins: [],
@@ -78,7 +72,6 @@
         dialogTaskHistoryVisible: false,
         dialogDefImgVisible: false,
         dialogInstanceReminderVisible: false,
-        dialogInstanceEndVisible: false,
         dialogInstanceRevokeVisible: false,
         loading: false,
         instanceData: null,
@@ -111,8 +104,9 @@
     },
     methods: {
       async initData() {
-        this.loading = true
+
         if (this.instance) {
+          this.loading = true
           await BpmGetInstanceData(
             undefined,
             undefined,
@@ -138,8 +132,9 @@
               }
             }
           })
+          this.loading = false
         }
-        this.loading = false
+
       },
       handleDemoBtn() {
         this.$emit('closeDialog')
