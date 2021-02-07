@@ -66,6 +66,5 @@ export const menuHeader = [
   /*demoPlayground,
   demoBusiness,*/
   activiti,
-  agileBPM,
   bpm()
 ]
