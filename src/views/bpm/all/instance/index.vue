@@ -107,6 +107,15 @@
 
             <el-table-column fixed="right" align="center" label="操作" width="300">
               <template slot-scope="scope">
+                <el-tooltip content="详情" placement="top" effect="light">
+                  <el-button
+                          size="mini"
+                          type="primary"
+                          @click="dialogInstanceDetailVisible = true;"
+                          icon="el-icon-data-analysis"
+                          plain
+                  ></el-button>
+                </el-tooltip>
                 <el-tooltip content="任务记录" placement="top" effect="light">
                   <el-button
                           size="mini"
@@ -168,6 +177,18 @@
       </el-pagination>
     </template>
 
+    <el-dialog :fullscreen="true"
+               :visible.sync="dialogInstanceDetailVisible"
+               custom-class="act-editor-dialog">
+      <div slot="title" class="dialog-title">
+        <span>实例详情</span>
+      </div>
+      <instanceDetail ref="instanceDetail"
+                      :instance="currentRow"
+                      @closeDialog="dialogInstanceDetailVisible = false"
+                      @refresh="handleRefreshTable"></instanceDetail>
+    </el-dialog>
+
 
     <taskHistoryDialog
             :showAssign="true"
@@ -187,8 +208,9 @@
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
-    name: 'all-instance',
+    name: 'all-instance-list',
     components: {
+      instanceDetail: () => import('./instance-detail'),
       taskHistoryDialog: () => import('../../components/bpm/task-history'),
       defImgDialog: () => import('../../components/bpm/definition-img')
     },
@@ -197,14 +219,13 @@
     ],
     data() {
       return {
-        //重写对象属性
         queryForm: {
           id: undefined,
           order: 'ASC', //DESC
         },
         table: {},
         bpmInstanceStatus: BpmInstanceStatus,
-
+        dialogInstanceDetailVisible: false,
         dialogTaskHistoryDialogVisible: false,
         dialogDefImgVisible: false,
         dialog_instanceId: undefined,
@@ -239,10 +260,6 @@
           offset: (this.table.pageNum - 1) * this.table.pageSize,
           limit: this.table.pageSize
         }, newQueryForm/*this.queryForm*/, otherParam)
-      },
-      handleTaskDetail(row) {
-        this.dialogTaskHistoryDialogVisible = true
-        this.dialog_instanceId = row.id
       },
       durationM(duration) {
         return duration > 0 ? this.$moment.duration(duration).humanize(true) : ''

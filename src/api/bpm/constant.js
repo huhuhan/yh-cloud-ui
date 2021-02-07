@@ -61,6 +61,12 @@ export const BpmInstanceAction = {
     css: 'danger',
     defaultOpinion: '流程撤销，不再运行！'
   },
+  instanceEnd: {
+    key: 'instanceEnd',
+    value: '超管终止',
+    css: 'danger',
+    defaultOpinion: '超管操作，流程终止，不再运行！'
+  },
 }
 
 export const BpmTaskOpinionStatus = {...BpmInstanceAction, ...BpmTaskAction}
@@ -99,7 +105,13 @@ export const BpmInstanceStatus = {
     key: 'revoke',
     value: '撤销',
     css: 'danger'
-  }
+  },
+  // 实际状态，终止后都算manualend
+  instanceend: {
+    key: 'instanceend',
+    value: '超管终止',
+    css: 'danger'
+  },
 }
 
 
