@@ -94,6 +94,7 @@ export function BpmDefinitionDelete(id) {
 /**
  * 流程实例列表
  * @param params
+ * @returns {AxiosPromise}
  * @constructor
  */
 export function BpmInstanceList(params) {
@@ -435,14 +436,43 @@ export function GetMyFlowCounts() {
 
 /**
  * 根据定义流程的id获取流程节点数据
- *
- * @export
- * @param {*} defId 流程定义时的id
- * @returns
+ * @param defId
+ * @returns {AxiosPromise}
+ * @constructor
  */
-export function getFlowElements(defId) {
+export function GetFlowElements(defId) {
   return request({
     url: proxyPrefix + `/bpm/definition/flowElements?defId=${defId}`,
     method: 'get'
+  })
+}
+
+/**
+ * 异常流程实例列表
+ * @param params
+ * @returns {AxiosPromise}
+ * @constructor
+ */
+export function BpmInstanceAbnormalList(params) {
+  return request({
+    url: proxyPrefix + '/bpm/abnormal/listJson',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 重置流程节点
+ * @returns {AxiosPromise}
+ * @constructor
+ */
+export function CheckToResetNode(instId, nextNodeId) {
+  return request({
+    url: proxyPrefix + '/bpm/abnormal/checkFind',
+    method: 'post',
+    data: Qs.stringify({
+      instId,
+      nextNodeId
+    })
   })
 }
