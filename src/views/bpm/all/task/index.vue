@@ -61,7 +61,11 @@
                              :label="item.label"
                              :width="item.width">
               <template slot-scope="scope">
-                <div v-if="item.key === 'status'">
+                <div v-if="item.key === 'bizData'">
+                  <span>{{ scope.row[item.key] ? JSON.parse(scope.row[item.key])[item.prop] : ''}}</span>
+                </div>
+
+                <div v-else-if="item.key === 'status'">
                   <el-tag
                           v-for="btType in bpmTaskTypes"
                           :key="new Date().getTime()"
@@ -73,9 +77,6 @@
                 <div v-else-if="item.key === 'assigneeNames'">
                   <span v-if="scope.row.assigneeNames">{{scope.row.assigneeNames}}</span>
                   <span v-else>-</span>
-                </div>
-                <div v-else-if="item.key === 'bizData'">
-                  <span>{{ scope.row.bizData ? JSON.parse(scope.row.bizData)["businessKey"] : ''}}</span>
                 </div>
                 <span v-else>{{ scope.row[item.key]}}</span>
               </template>
@@ -187,6 +188,7 @@
               key: 'bizData',
               prop: 'businessKey'
             },
+
             subject: {
               label: '流程标题',
               key: 'subject',
@@ -255,7 +257,7 @@
         }, newQueryForm/*this.queryForm*/, otherParam)
       },
       confirmTaskUser(taskUser) {
-        if (taskUser == undefined) {
+        if (taskUser === undefined) {
           this.$message.warning('请选择用户')
           return
         }

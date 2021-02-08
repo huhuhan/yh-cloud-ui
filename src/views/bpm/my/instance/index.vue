@@ -2,22 +2,20 @@
   <d2-container>
     <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini" style="margin-bottom: -25px;">
 
-      <el-form-item label="项目编号" prop="biz_key_$VRHK">
-        <el-input v-model="queryForm['biz_key_$VRHK']" placeholder="请输入编号"></el-input>
+      <el-form-item :label="table.columns.bizKey.label" :prop="`${table.columns.bizKey.prop}$VRHK`">
+        <el-input v-model="queryForm[`${table.columns.bizKey.prop}$VRHK`]" placeholder="请输入"></el-input>
       </el-form-item>
-
-      <!--<el-form-item label="流程名称" prop="def_name_$VRHK">
-        <el-input v-model="queryForm['def_name_$VRHK']" placeholder="请输入名称"></el-input>
-      </el-form-item>-->
 
       <el-form-item label="发起时间大于" prop="create_time_$VGE">
         <el-date-picker v-model="queryForm['create_time_$VGE']" type="datetime" placeholder="选择日期时间"
                         value-format="yyyy-MM-dd HH:mm:ss" style="width:178px;"></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="流程状态" prop="status_$VEQ">
-        <el-select v-model="queryForm['status_$VEQ']" placeholder="请选择" clearable style="width:178px;">
-          <el-option v-for="instStatus in instanceStatus" :label="instStatus.value" :value="instStatus.key"></el-option>
+      <el-form-item :label="table.columns.status.label" :prop="`${table.columns.status.prop}$VEQ`">
+        <el-select v-model="queryForm[`${table.columns.status.prop}$VEQ`]" placeholder="请选择" clearable
+                   style="width:178px;">
+          <el-option v-for="instStatus in bpmInstanceStatus" :label="instStatus.value"
+                     :value="instStatus.key"></el-option>
         </el-select>
       </el-form-item>
 
@@ -45,44 +43,34 @@
               stripe
               style="width: 100%">
 
+      <el-table-column v-for="(item, index) in Object.values(table.columns)"
+                       :key="index"
+                       align="center"
+                       :label="item.label"
+                       :width="item.width">
+        <template slot-scope="scope">
+          <!--业务数据-->
+          <div v-if="item.key === 'bizData'">
+            <span>{{ scope.row[item.key] ? JSON.parse(scope.row[item.key])[item.prop] : '' }}</span>
+          </div>
 
-      <el-table-column align="center" label="业务编号" width="140">
-        <template slot-scope="scope">
-          <span>{{ scope.row.bizKey}}</span>
-        </template>
-      </el-table-column>
-      <!--<el-table-column align="center" label="流程标题">
-        <template slot-scope="scope">
-          &lt;!&ndash; <span>{{scope.row.subject}}</span> &ndash;&gt;
-          <span>{{ JSON.parse(scope.row.bizData)["xm"] }}宅基地申请</span>
-        </template>
-      </el-table-column>-->
-
-      <el-table-column align="center" label="流程名称">
-        <template slot-scope="scope">
-          <span>{{scope.row.defName}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="发起时间" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span>{{scope.row.createTime}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="流程状态(是否挂起)">
-        <template slot-scope="scope">
-          <el-tag v-for="instStatus in instanceStatus" :type="instStatus.css" v-if="scope.row.status == instStatus.key">
-            {{instStatus.value}} {{scope.row.isForbidden ? '（已禁用）' : ''}}
-          </el-tag>
+          <!--流程实例通用数据-->
+          <div v-else-if="item.key === 'isForbidden'">
+            <el-tag type="success" v-if="!scope.row[item.key]">正常</el-tag>
+            <el-tag type="danger" v-if="scope.row[item.key]">挂起</el-tag>
+          </div>
+          <div v-else-if="item.key === 'status'">
+            <el-tag v-for="instStatus in bpmInstanceStatus"
+                    :type="instStatus.css"
+                    v-if="scope.row[item.key] === instStatus.key">
+              {{instStatus.value}}
+            </el-tag>
+          </div>
+          <span v-else-if="item.key === 'duration'">{{durationM(scope.row[item.key])}}</span>
+          <span v-else>{{ scope.row[item.key]}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="持续时间">
-        <template slot-scope="scope">
-          <span>{{durationM(scope.row.duration,scope.row.createTime)}}</span>
-        </template>
-      </el-table-column>
 
       <el-table-column fixed="right" align="center" label="操作" width="250">
         <template slot-scope="scope">
@@ -91,7 +79,7 @@
           <el-button size="mini" type="danger" @click="handleDeleteInstance(scope.row)">删除
           </el-button>
           <el-button size="mini" type="warning" @click="handleToForbidden(scope.row)"
-                     :disabled="scope.row.status == instanceStatus.end.key">
+                     :disabled="scope.row.status === bpmInstanceStatus.end.key">
             {{scope.row.isForbidden ? '激活' : '挂起'}}
           </el-button>
         </template>
@@ -149,9 +137,59 @@
           applier: "",
         },
         //重写对象属性
-        table: {},
+        table: {
+          columns: {
+            // xm: {
+            //   label: '申请人',
+            //   key: 'bizData',
+            //   prop: "xm"
+            // },
+            // adName: {
+            //   label: '行政区划',
+            //   key: 'bizData',
+            //   prop: "adName"
+            // },
+            // businessKey: {
+            //   label: '项目编号',
+            //   key: 'bizData',
+            //   prop: "businessKey"
+            // },
 
-        instanceStatus: BpmInstanceStatus,
+
+            bizKey: {
+              label: '业务编号',
+              key: 'bizKey',
+              prop: "biz_key_"
+            },
+            subject: {
+              label: '流程标题',
+              key: 'subject',
+            },
+            defName: {
+              label: '流程名称',
+              key: 'defName'
+            },
+            isForbidden: {
+              label: '是否挂起',
+              key: 'isForbidden'
+            },
+            status: {
+              label: '流程状态',
+              key: 'status',
+              prop: "status_",
+            },
+            createTime: {
+              label: '创建时间',
+              key: 'createTime'
+            },
+            duration: {
+              label: '持续时间',
+              key: 'duration'
+            },
+          }
+        },
+
+        bpmInstanceStatus: BpmInstanceStatus,
         dialogInstanceDetailVisible: false,
       }
     },
@@ -186,10 +224,7 @@
         }, newQueryForm /*this.queryForm*/, otherParam)
       },
       durationM(duration, createTime) {
-        let newdata = new Date() //当前时间
-        let createTime1 = new Date(createTime.replace(/-/g, "/")) //流程发起时间
-        let num = newdata - createTime1 //求出两个时间的时间差，这是毫秒数
-        return duration > 0 ? this.$moment.duration(duration).humanize() : this.$moment.duration(num).humanize()
+        return duration > 0 ? this.$moment.duration(duration).humanize() : ''
       },
       handleDeleteInstance(row) {
         this.$confirm('确定删除?', '提示', {

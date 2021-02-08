@@ -73,7 +73,7 @@
 
       <el-table-column align="center" label="流程状态">
         <template slot-scope="scope">
-          <el-tag v-for="instStatus in instanceStatus" :type="instStatus.css" v-if="scope.row.status == instStatus.key">
+          <el-tag v-for="instStatus in bpmInstanceStatus" :type="instStatus.css" v-if="scope.row.status == instStatus.key">
             {{instStatus.value}}
           </el-tag>
         </template>
@@ -169,7 +169,7 @@
       return {
         bpmTaskAction: BpmTaskAction,
         bpmTaskOpinionStatus: BpmTaskOpinionStatus,
-        instanceStatus: BpmInstanceStatus,
+        bpmInstanceStatus: BpmInstanceStatus,
 
         queryForm: {
           order: 'ASC', //DESC
