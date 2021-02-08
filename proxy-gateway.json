@@ -8,21 +8,26 @@
     {
       "proxyPrefix": "yh-act-leave",
       "serverName": "",
+      "desc": "【工作流-请假服务】的请求代理",
       "gateway": "http://localhost:9009"
     },
     {
       "proxyPrefix": "yh-act",
       "serverName": "",
+      "desc": "【工作流】的请求代理",
       "gateway": "http://localhost:9205"
-    },
-    {
-      "proxyPrefix": "agile",
-      "serverName": "",
-      "gateway": "http://bpm-api:8271/fw"
     },
     {
       "proxyPrefix": "yh-bpm",
       "serverName": "",
+      "desc": "【BPM系统】的请求代理",
+      "gateway": "http://bpm-api:8271/fw"
+    },
+    {
+      "proxyPrefix": "yh",
+      "noVueAppApi": true,
+      "serverName": "",
+      "desc": "【BPM系统-流程编辑器】的请求代理",
       "gateway": "http://bpm-api:8271/fw"
     }
   ]

@@ -93,7 +93,7 @@
     - form/async-demo.vue：业务表单，实际业务扩展新建目录区分，比如demo目录
   - `src/views/bpm/my`：个人流程
   - `src/views/bpm/all`: 全局流程
-
+- 流程编辑器：`docker/jar`下的压缩包，解压后，修改VUE_APP_BPM_UI_PUBLIC的路径地址即可。（源码[bpm-ui](https://github.com/huhuhan/bpm-ui)）
 
 #### 查询条件
 - 分页：使用`offset、limit`参数分页，默认不传不分页

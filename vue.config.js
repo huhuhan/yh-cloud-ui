@@ -10,7 +10,7 @@ const resolve = dir => require('path').join(__dirname, dir)
 process.env.VUE_APP_VERSION = require('./package.json').version
 process.env.VUE_APP_BUILD_TIME = require('dayjs')().format('YYYY-M-D HH:mm:ss')
 //代理后端网关
-const proxyData = require('./proxy-gateway.json');
+const proxyData = require('./proxy-gateway.json')
 const proxyServers = proxyData.servers || []
 const proxyBaseUrl = proxyData.baseUrl || ''
 
@@ -24,10 +24,15 @@ module.exports = {
   devServer: {
     publicPath, // 和 publicPath 保持一致
     port: 8888,
+    contentBase: [
+      resolve('public'),
+      // 流程设计器解压目录
+    ].concat(process.env.VUE_APP_BPM_UI_PUBLIC.split(',')),
     proxy: (() => {
       const result = {}
       proxyServers.forEach(proxyParam => {
-        let _path = process.env.VUE_APP_API + proxyParam.proxyPrefix
+        let vueAppApi = !proxyParam.noVueAppApi ? process.env.VUE_APP_API : "/"
+        let _path = vueAppApi + proxyParam.proxyPrefix
         result[_path] = {
           // 代理服务
           target: proxyParam.gateway || proxyBaseUrl,
@@ -74,11 +79,11 @@ module.exports = {
         matchColors: [
           ...forElementUI.getElementUISeries(process.env.VUE_APP_ELEMENT_COLOR) // Element-ui主色系列
         ],
-        externalCssFiles: [ './node_modules/element-ui/lib/theme-chalk/index.css' ], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
+        externalCssFiles: ['./node_modules/element-ui/lib/theme-chalk/index.css'], // optional, String or string array. Set external css files (such as cdn css) to extract colors.
         changeSelector: forElementUI.changeSelector
       }])
     config
-      // 开发环境
+    // 开发环境
       .when(process.env.NODE_ENV === 'development',
         // sourcemap不包含列信息
         config => config.devtool('cheap-source-map')
