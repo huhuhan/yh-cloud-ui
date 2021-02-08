@@ -66,7 +66,12 @@
               {{instStatus.value}}
             </el-tag>
           </div>
-          <span v-else-if="item.key === 'duration'">{{durationM(scope.row[item.key])}}</span>
+          <div v-else-if="item.key === 'duration'">
+            <span v-if="scope.row[item.key] > 0">{{durationM(scope.row[item.key])}}</span>
+            <el-tag v-else>
+              {{durationM(scope.row[item.key], scope.row.createTime)}}
+            </el-tag>
+          </div>
           <span v-else>{{ scope.row[item.key]}}</span>
         </template>
       </el-table-column>
@@ -224,7 +229,16 @@
         }, newQueryForm /*this.queryForm*/, otherParam)
       },
       durationM(duration, createTime) {
-        return duration > 0 ? this.$moment.duration(duration).humanize() : ''
+        if (duration > 0) {
+          return this.$moment.duration(duration).humanize()
+        } else {
+          if (createTime) {
+            let createTimeDate = new Date(createTime.replace(/-/g, "/")) //流程发起时间
+            let num = new Date() - createTimeDate //求出两个时间的时间差，这是毫秒数
+            return this.$moment.duration(num).humanize()
+          }
+          return ''
+        }
       },
       handleDeleteInstance(row) {
         this.$confirm('确定删除?', '提示', {

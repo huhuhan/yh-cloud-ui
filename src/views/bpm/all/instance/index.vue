@@ -77,7 +77,12 @@
                     {{instStatus.value}}
                   </el-tag>
                 </div>
-                <span v-else-if="item.key === 'duration'">{{durationM(scope.row[item.key])}}</span>
+                <div v-else-if="item.key === 'duration'">
+                  <span v-if="scope.row[item.key] > 0">{{durationM(scope.row[item.key])}}</span>
+                  <el-tag v-else>
+                    {{durationM(scope.row[item.key], scope.row.createTime)}}
+                  </el-tag>
+                </div>
                 <span v-else>{{ scope.row[item.key]}}</span>
               </template>
             </el-table-column>
@@ -155,8 +160,7 @@
                              :key="index"
                              align="center"
                              :label="item.label"
-                             :width="item.width"
-                             show-overflow-tooltip>
+                             :width="item.width">
               <template slot-scope="scope">
                 <div v-if="item.key === 'isForbidden'">
                   <el-tag type="success" v-if="!scope.row[item.key]">正常</el-tag>
@@ -169,7 +173,12 @@
                     {{instStatus.value}}
                   </el-tag>
                 </div>
-                <span v-else-if="item.key === 'duration'">{{durationM(scope.row[item.key])}}</span>
+                <div v-else-if="item.key === 'duration'">
+                  <span v-if="scope.row[item.key] > 0">{{durationM(scope.row[item.key])}}</span>
+                  <el-tag v-else>
+                    {{durationM(scope.row[item.key], scope.row.createTime)}}
+                  </el-tag>
+                </div>
                 <span v-else>{{ scope.row[item.key]}}</span>
               </template>
             </el-table-column>
@@ -191,15 +200,6 @@
                           type="primary"
                           @click="dialogTaskHistoryVisible = true;dialog_instanceId = scope.row.id"
                           icon="el-icon-tickets"
-                          plain
-                  ></el-button>
-                </el-tooltip>
-                <el-tooltip content="流程图" placement="top" effect="light">
-                  <el-button
-                          size="mini"
-                          type="primary"
-                          @click="dialogDefinitionImgVisible = true;dialog_instanceId = scope.row.id;dialog_definitionId = scope.row.defId"
-                          icon="el-icon-picture-outline"
                           plain
                   ></el-button>
                 </el-tooltip>
@@ -384,8 +384,17 @@
           limit: this.table.pageSize
         }, newQueryForm/*this.queryForm*/, otherParam)
       },
-      durationM(duration) {
-        return duration > 0 ? this.$moment.duration(duration).humanize(true) : ''
+      durationM(duration, createTime) {
+        if (duration > 0) {
+          return this.$moment.duration(duration).humanize()
+        } else {
+          if (createTime) {
+            let createTimeDate = new Date(createTime.replace(/-/g, "/")) //流程发起时间
+            let num = new Date() - createTimeDate //求出两个时间的时间差，这是毫秒数
+            return this.$moment.duration(num).humanize()
+          }
+          return ''
+        }
       },
       handleToForbidden(row) {
         BpmInstanceForbidden(row.id, !row.isForbidden).then(res => {
