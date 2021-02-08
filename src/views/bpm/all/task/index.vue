@@ -9,21 +9,22 @@
                   ref="queryForm"
                   size="mini">
 
-
-            <el-form-item label="项目编号" prop="businessKey">
-              <el-input v-model="queryForm['businessKey']" placeholder="请输入编号"></el-input>
+            <el-form-item :label="table.columns.businessKey.label"
+                          :prop="`${table.columns.businessKey.prop}`">
+              <el-input v-model="queryForm[`${table.columns.businessKey.prop}`]" placeholder="请输入"></el-input>
             </el-form-item>
 
-            <el-form-item label="任务节点" prop="name_$VRHK">
-              <el-input v-model="queryForm['name_$VRHK']" placeholder="请输入"></el-input>
+
+            <el-form-item :label="table.columns.name.label" :prop="`${table.columns.name.prop}$VRHK`">
+              <el-input v-model="queryForm[`${table.columns.name.prop}$VRHK`]" placeholder="请输入"></el-input>
             </el-form-item>
 
-            <el-form-item label="候选人" prop="assignee_names_$VLK">
-              <el-input v-model="queryForm['assignee_names_$VLK']" placeholder="请输入"></el-input>
+            <el-form-item :label="table.columns.assigneeNames.label" :prop="`${table.columns.assigneeNames.prop}$VLK`">
+              <el-input v-model="queryForm[`${table.columns.assigneeNames.prop}$VLK`]" placeholder="请输入"></el-input>
             </el-form-item>
 
-            <div style="float: right">
-              <el-form-item>
+            <el-form-item>
+              <el-button-group>
                 <el-button type="primary" @click="getTableData">
                   <d2-icon name="search"/>
                   查询
@@ -32,7 +33,10 @@
                   <d2-icon name="refresh"/>
                   重置
                 </el-button>
-              </el-form-item>
+              </el-button-group>
+            </el-form-item>
+
+            <div style="float: right">
             </div>
           </el-form>
         </el-col>
@@ -50,50 +54,32 @@
                     :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
                     style="width: 100%">
 
-            <el-table-column align="center" label="项目编号" width="140">
+
+            <el-table-column v-for="(item, index) in Object.values(table.columns)"
+                             :key="index"
+                             align="center"
+                             :label="item.label"
+                             :width="item.width">
               <template slot-scope="scope">
-                <span>{{ scope.row.bizData ? JSON.parse(scope.row.bizData)["businessKey"] : ''}}</span>
+                <div v-if="item.key === 'status'">
+                  <el-tag
+                          v-for="btType in bpmTaskTypes"
+                          :key="new Date().getTime()"
+                          :type="btType.css"
+                          v-if="scope.row.status === btType.key">
+                    {{btType.value}}
+                  </el-tag>
+                </div>
+                <div v-else-if="item.key === 'assigneeNames'">
+                  <span v-if="scope.row.assigneeNames">{{scope.row.assigneeNames}}</span>
+                  <span v-else>-</span>
+                </div>
+                <div v-else-if="item.key === 'bizData'">
+                  <span>{{ scope.row.bizData ? JSON.parse(scope.row.bizData)["businessKey"] : ''}}</span>
+                </div>
+                <span v-else>{{ scope.row[item.key]}}</span>
               </template>
             </el-table-column>
-
-            <el-table-column align="center" label="流程标题">
-              <template slot-scope="scope">
-                <span>{{scope.row.subject}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="任务节点">
-              <template slot-scope="scope">
-                <span>{{scope.row.name}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="候选人">
-              <template slot-scope="scope">
-                <span v-if="scope.row.assigneeNames">{{scope.row.assigneeNames}}</span>
-                <span v-else>-</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="状态">
-              <template slot-scope="scope">
-                <el-tag
-                        v-for="btType in bpmTaskTypes"
-                        :key="new Date().getTime()"
-                        :type="btType.css"
-                        v-if="scope.row.status == btType.key"
-                >{{btType.value}}
-                </el-tag>
-              </template>
-            </el-table-column>
-
-
-            <el-table-column align="center" label="创建时间">
-              <template slot-scope="scope">
-                <span>{{scope.row.createTime}}</span>
-              </template>
-            </el-table-column>
-
 
             <el-table-column fixed="right" align="center" label="操作" width="300">
               <template slot-scope="scope">
@@ -193,6 +179,39 @@
           zjdFilterCount: 999,
           businessKey: ''
         },
+        //重写对象属性
+        table: {
+          columns: {
+            businessKey: {
+              label: '业务编号',
+              key: 'bizData',
+              prop: 'businessKey'
+            },
+            subject: {
+              label: '流程标题',
+              key: 'subject',
+            },
+            name: {
+              label: '任务节点',
+              key: 'name',
+              prop: 'name_'
+            },
+            assigneeNames: {
+              label: '候选人',
+              key: 'assigneeNames',
+              prop: 'assignee_names_'
+            },
+            status: {
+              label: '节点状态',
+              key: 'status',
+            },
+            createTime: {
+              label: '创建时间',
+              key: 'createTime',
+            },
+          }
+        },
+
         bpmTaskTypes: BpmTaskToDoType,
 
         dialogTaskUserVisible: false,
