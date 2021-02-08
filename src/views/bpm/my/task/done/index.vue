@@ -1,30 +1,24 @@
 <template>
   <d2-container>
-    <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini" style="margin-bottom: -25px;">
+    <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini">
 
-      <!--<el-form-item label="流程标题" prop="subject_$VRHK">
-        <el-input v-model="queryForm['subject_$VRHK']" placeholder="请输入名称"></el-input>
-      </el-form-item>-->
-      <el-form-item label="项目编号" prop="biz_key_$VRHK">
-        <el-input v-model="queryForm['biz_key_$VRHK']" placeholder="请输入编号"></el-input>
+      <el-form-item :label="table.columns.bizKey.label" :prop="`${table.columns.bizKey.prop}$VRHK`">
+        <el-input v-model="queryForm[`${table.columns.bizKey.prop}$VRHK`]" placeholder="请输入"></el-input>
       </el-form-item>
-
-      <!-- <el-form-item label="任务节点" prop="task_name_$VRHK">
-        <el-input v-model="queryForm['task_name_$VRHK']" placeholder="请输入名称"></el-input>
-      </el-form-item> -->
 
       <el-form-item label="办理时间大于" prop="approve_time_$VGE">
         <el-date-picker v-model="queryForm['approve_time_$VGE']" type="datetime" placeholder="选择日期时间"
                         value-format="yyyy-MM-dd HH:mm:ss" style="width:178px;"></el-date-picker>
       </el-form-item>
 
-      <el-form-item label="办理结果" prop="approveStatus$VEQ">
-        <el-select v-model="queryForm['approveStatus$VEQ']" placeholder="请选择" clearable style="width:178px;">
+      <el-form-item :label="table.columns.approveStatus.label">
+        <el-select v-model="queryForm[`${table.columns.approveStatus.prop}$VEQ`]" placeholder="请选择" clearable
+                   style="width:178px;">
           <el-option v-for="action in bpmTaskAction" :label="action.value" :value="action.key"></el-option>
         </el-select>
       </el-form-item>
 
-      <div style="float: right">
+      <el-button-group>
         <el-form-item>
           <el-button type="primary" @click="getTableData">
             <d2-icon name="search"/>
@@ -34,7 +28,11 @@
             <d2-icon name="refresh"/>
           </el-button>
         </el-form-item>
+      </el-button-group>
+
+      <div style="float: right">
       </div>
+
     </el-form>
 
     <!-- table表格 -->
@@ -48,65 +46,42 @@
               stripe
               style="width: 100%">
 
+      <el-table-column v-for="(item, index) in Object.values(table.columns)"
+                       :key="index"
+                       align="center"
+                       :label="item.label"
+                       :width="item.width">
+        <template slot-scope="scope">
+          <!--业务数据-->
+          <div v-if="item.key === 'bizData'">
+            <span>{{ scope.row[item.key] ? JSON.parse(scope.row[item.key])[item.prop] : '' }}</span>
+          </div>
 
-      <el-table-column align="center" label="业务编号" width="140">
-        <template slot-scope="scope">
-          <span>{{ scope.row.bizKey}}</span>
-        </template>
-      </el-table-column>
-      <!--<el-table-column align="center" label="流程标题">
-        <template slot-scope="scope">
-          <span>{{scope.row.subject}}</span>
-        </template>
-      </el-table-column>-->
-      <el-table-column align="center" label="流程名称">
-        <template slot-scope="scope">
-          <span>{{scope.row.defName}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="任务节点">
-        <template slot-scope="scope">
-          <span>{{scope.row.nodeName}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="流程状态">
-        <template slot-scope="scope">
-          <el-tag v-for="instStatus in bpmInstanceStatus" :type="instStatus.css" v-if="scope.row.status == instStatus.key">
-            {{instStatus.value}}
-          </el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="发起人">
-        <template slot-scope="scope">
-          <span>{{scope.row.creator}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="办理时间" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span>{{scope.row.approveTime}}</span>
+          <!--流程节点通用数据-->
+          <div v-else-if="item.key === 'status'">
+            <el-tag v-for="instStatus in bpmInstanceStatus"
+                    :type="instStatus.css"
+                    v-if="scope.row.status === instStatus.key">
+              {{instStatus.value}}
+            </el-tag>
+          </div>
+          <div v-else-if="item.key === 'approveStatus'">
+            <el-tag v-for="btAction in bpmTaskOpinionStatus"
+                    :type="btAction.css"
+                    v-if="scope.row.approveStatus === btAction.key">
+              {{btAction.value}}
+            </el-tag>
+          </div>
+          <div v-else-if="item.key === 'durMs'">
+            <span v-if="scope.row[item.key] > 0">{{durationM(scope.row[item.key])}}</span>
+            <!--<el-tag v-else>
+              {{durationM(scope.row[item.key], scope.row.createTime)}}
+            </el-tag>-->
+          </div>
+          <span v-else>{{ scope.row[item.key]}}</span>
         </template>
       </el-table-column>
 
-
-      <el-table-column align="center" label="办理时长">
-        <template slot-scope="scope">
-          <span>{{durationM(scope.row.durMs)}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="办理结果">
-        <template slot-scope="scope">
-          <el-tag v-for="btAction in bpmTaskOpinionStatus"
-                  :type="btAction.css"
-                  v-if="scope.row.approveStatus == btAction.key">
-            {{btAction.value}}
-          </el-tag>
-        </template>
-      </el-table-column>
 
       <el-table-column fixed="right" align="center" label="操作" width="200">
         <template slot-scope="scope">
@@ -172,12 +147,75 @@
         bpmInstanceStatus: BpmInstanceStatus,
 
         queryForm: {
-          order: 'ASC', //DESC
           //业务筛选条件时，范围数量
           zjdFilterCount: 999,
           applier: '',
           adName: ''
         },
+        table: {
+          columns: {
+            // xm: {
+            //   label: '申请人',
+            //   key: 'bizData',
+            //   prop: "xm"
+            // },
+            // adName: {
+            //   label: '行政区划',
+            //   key: 'bizData',
+            //   prop: "adName"
+            // },
+            // businessKey: {
+            //   label: '项目编号',
+            //   key: 'bizData',
+            //   prop: "businessKey"
+            // },
+            // creator: {
+            //   label: '发起人',
+            //   key: 'creator',
+            // },
+            bizKey: {
+              label: '业务编号',
+              key: 'bizKey',
+              prop: "biz_key_"
+            },
+            subject: {
+              label: '流程标题',
+              key: 'subject',
+            },
+            // defName: {
+            //   label: '流程名称',
+            //   key: 'defName'
+            // },
+            nodeName: {
+              label: '任务节点',
+              key: 'nodeName',
+              prop: 'task_name_'
+            },
+            status: {
+              label: '流程状态',
+              key: 'status',
+              prop: "status_",
+            },
+            approveTime: {
+              label: '办理时间',
+              key: 'approveTime'
+            },
+            durMs: {
+              label: '办理时间',
+              key: 'durMs'
+            },
+            approveStatus: {
+              label: '办理结果',
+              key: 'approveStatus',
+              prop: 'o.status_'
+            },
+            // opinion: {
+            //   label: '备注',
+            //   key: 'opinion'
+            // },
+          }
+        },
+
         dialogInstanceDetailVisible: false,
         dialogTaskHistoryVisible: false,
         targetInstanceId: undefined
@@ -201,25 +239,33 @@
       },
       //其他参数
       getTableDataParam() {
+        // 默认分页参数
+        let offset = (this.table.pageNum - 1) * this.table.pageSize
+        let limit = this.table.pageSize
         //根据业务修改补充
         let otherParam = {}
-        let newQueryForm = {}
+        let newQueryForm = this.queryForm
         // 查询字段特殊处理
-        otherParam = Object.assign(otherParam, {
-          'o.status_$VEQ': this.queryForm['approveStatus$VEQ']
-        })
+        // otherParam = Object.assign(otherParam, {
+        // })
 
         // 业务触发筛选条件
-        /*let zjdFilter = !!this.queryForm.applier || !!this.queryForm.adName
-        this.table.pageSize = zjdFilter ? this.queryForm.zjdFilterCount : this.table.pageSize
-        newQueryForm = Object.assign({
-          zjdFilter: zjdFilter,
-        }, this.queryForm)*/
+        let zjdFilter = !!this.queryForm.xm || !!this.queryForm.adName
+        if(zjdFilter){
+          newQueryForm = Object.assign({
+            // 插件不分页，手动分页
+            noPage: zjdFilter ? 'noPage' : 'Page',
+            zjdFilter,
+            zjdOffset: offset,
+            zjdLimit: limit
+          }, this.queryForm)
+        }
+
 
         return Object.assign({
           //参数重写
-          offset: (this.table.pageNum - 1) * this.table.pageSize,
-          limit: this.table.pageSize
+          offset: offset,
+          limit: limit
         }, newQueryForm /*this.queryForm*/, otherParam)
       },
       durationM(duration) {

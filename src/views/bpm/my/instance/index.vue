@@ -1,6 +1,6 @@
 <template>
   <d2-container>
-    <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini" style="margin-bottom: -25px;">
+    <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini">
 
       <el-form-item :label="table.columns.bizKey.label" :prop="`${table.columns.bizKey.prop}$VRHK`">
         <el-input v-model="queryForm[`${table.columns.bizKey.prop}$VRHK`]" placeholder="请输入"></el-input>
@@ -19,8 +19,8 @@
         </el-select>
       </el-form-item>
 
-      <div style="float: right">
-        <el-form-item>
+      <el-form-item>
+        <el-button-group>
           <el-button type="primary" @click="getTableData">
             <d2-icon name="search"/>
             查询
@@ -28,10 +28,11 @@
           <el-button type="default" @click="handleFormReset('queryForm')">
             <d2-icon name="refresh"/>
           </el-button>
-        </el-form-item>
+        </el-button-group>
+      </el-form-item>
+      <div style="float: right">
       </div>
     </el-form>
-
     <!-- table表格 -->
     <el-table :key='table.key'
               :data="table.list"

@@ -5,22 +5,18 @@
             :model="queryForm"
             ref="queryForm"
             size="mini"
-            style="margin-bottom: -25px;"
     >
-      <!--<el-form-item label="流程标题" prop="subject_$VRHK">
-        <el-input v-model="queryForm['subject_$VRHK']" placeholder="请输入名称"></el-input>
-      </el-form-item>-->
-      <el-form-item label="项目编号" prop="biz_key_$VRHK">
-        <el-input v-model="queryForm['biz_key_$VRHK']" placeholder="请输入编号"></el-input>
+      <el-form-item :label="table.columns.bizKey.label" :prop="`${table.columns.bizKey.prop}$VRHK`">
+        <el-input v-model="queryForm[`${table.columns.bizKey.prop}$VRHK`]" placeholder="请输入"></el-input>
       </el-form-item>
 
-       <el-form-item label="任务节点" prop="name_$VRHK">
-        <el-input v-model="queryForm['name_$VRHK']" placeholder="请输入"></el-input>
+      <el-form-item :label="table.columns.name.label" :prop="`${table.columns.name.prop}$VRHK`">
+        <el-input v-model="queryForm[`${table.columns.name.prop}$VRHK`]" placeholder="请输入"></el-input>
       </el-form-item>
 
-      <el-form-item label="创建时间大于" prop="create_time_$VGE">
+      <el-form-item :label="`${table.columns.createTime.label}大于`">
         <el-date-picker
-                v-model="queryForm['create_time_$VGE']"
+                v-model="queryForm[`${table.columns.createTime.prop}$VGE`]"
                 type="datetime"
                 placeholder="选择日期时间"
                 value-format="yyyy-MM-dd HH:mm:ss"
@@ -28,14 +24,14 @@
         ></el-date-picker>
       </el-form-item>
 
-      <!-- <el-form-item label="待办类型">
-        <el-select v-model="queryForm['task.status_$VGE']" placeholder="请选择">
-          <el-option v-for="BTtype in pmTaskToDoType" :label="BTtype.value" :value="BTtype.key"></el-option>
+      <el-form-item :label="table.columns.status.label">
+        <el-select v-model="queryForm[`${table.columns.status.prop}$VEQ`]" placeholder="请选择">
+          <el-option v-for="btType in bpmTaskToDoType" :label="btType.value" :value="btType.key"></el-option>
         </el-select>
-      </el-form-item> -->
+      </el-form-item>
 
-      <div style="float: right">
-        <el-form-item>
+      <el-form-item>
+        <el-button-group>
           <el-button type="primary" @click="getTableData">
             <d2-icon name="search"/>
             查询
@@ -43,8 +39,12 @@
           <el-button type="default" @click="handleFormReset('queryForm')">
             <d2-icon name="refresh"/>
           </el-button>
-        </el-form-item>
+        </el-button-group>
+      </el-form-item>
+
+      <div style="float: right">
       </div>
+
     </el-form>
 
     <!-- table表格 -->
@@ -57,41 +57,39 @@
             :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
             @current-change="handleCurrentRow"
             stripe
-            style="width: 100%"
-    >
-      <el-table-column align="center" label="业务编号">
+            style="width: 100%">
+
+
+      <el-table-column v-for="(item, index) in Object.values(table.columns)"
+                       :key="index"
+                       align="center"
+                       :label="item.label"
+                       :width="item.width">
         <template slot-scope="scope">
-          <span>{{ scope.row.bizKey}}</span>
+          <!--业务数据-->
+          <div v-if="item.key === 'bizData'">
+            <span>{{ scope.row[item.key] ? JSON.parse(scope.row[item.key])[item.prop] : '' }}</span>
+          </div>
+
+          <!--流程节点通用数据-->
+          <div v-else-if="item.key === 'status'">
+            <el-tag v-for="btType in bpmTaskToDoType"
+                    :key="new Date().getTime()"
+                    :type="btType.css"
+                    v-if="scope.row.status === btType.key">
+              {{btType.value}}
+            </el-tag>
+          </div>
+          <span v-else>{{ scope.row[item.key]}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="流程标题" width="400">
+      <el-table-column align="center" label="超时时间" sortable="custom" prop="task.create_time_">
         <template slot-scope="scope">
-          <span>{{scope.row.subject}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="当前节点">
-        <template slot-scope="scope">
-          <span>{{scope.row.name}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="待办类型">
-        <template slot-scope="scope">
-          <el-tag
-                  v-for="btType in pmTaskToDoType"
-                  :key="new Date().getTime()"
-                  :type="btType.css"
-                  v-if="scope.row.status == btType.key"
-          >{{btType.value}}
+          <el-tag v-if="$moment().diff(scope.row.createTime, 'days') >= taskWarningTime" type="danger">
+            {{$moment().diff(scope.row.createTime, 'days')}}天
           </el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="发起时间" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span>{{scope.row.createTime}}</span>
+          <span v-else>{{$moment().diff(scope.row.createTime, 'days')}}天</span>
         </template>
       </el-table-column>
 
@@ -148,21 +146,64 @@
     data() {
       return {
         queryForm: {
-          id: undefined,
-          order: 'ASC', //DESC
           //业务筛选条件时，范围数量
           zjdFilterCount: 999,
           applier: '',
           adName: ''
         },
-        pmTaskToDoType: BpmTaskToDoType,
+        table: {
+          columns: {
+            // adName: {
+            //   label: '行政区划',
+            //   key: 'bizData',
+            //   prop: "adName"
+            // },
+            // businessKey: {
+            //   label: '项目编号',
+            //   key: 'bizData',
+            //   prop: "businessKey"
+            // },
+            bizKey: {
+              label: '业务编号',
+              key: 'bizKey',
+              prop: "biz_key_"
+            },
+            subject: {
+              label: '流程标题',
+              key: 'subject',
+            },
+            name: {
+              label: '任务节点',
+              key: 'name',
+              prop: 'name_'
+            },
+            status: {
+              label: '待办类型',
+              key: 'status',
+              prop: "task.status_",
+            },
+            createTime: {
+              label: '创建时间',
+              key: 'createTime',
+              prop: 'task.create_time_'
+            },
+
+          }
+        },
+
+        bpmTaskToDoType: BpmTaskToDoType,
         dialogTaskDetailVisible: false,
       }
     },
     created() {
       this.getTableData()
     },
-    computed: {},
+    computed: {
+      taskWarningTime() {
+        // 实际获取，可以参考store或后端的配置
+        return 7
+      }
+    },
     methods: {
       ...mapActions("d2admin/account", ["renderRoute"]),
       getTableData() {
@@ -179,20 +220,30 @@
       },
       //其他参数
       getTableDataParam() {
+        // 默认分页参数
+        let offset = (this.table.pageNum - 1) * this.table.pageSize
+        let limit = this.table.pageSize
         //根据业务修改补充
         let otherParam = {}
-        let newQueryForm = {}
+        let newQueryForm = this.queryForm
+
         // 业务触发筛选条件
-        /*let zjdFilter = !!this.queryForm.applier || !!this.queryForm.adName
-        this.table.pageSize = zjdFilter ? this.queryForm.zjdFilterCount : this.table.pageSize
-        newQueryForm = Object.assign({
-          zjdFilter: zjdFilter,
-        }, this.queryForm)*/
+        let zjdFilter = !!this.queryForm.xm || !!this.queryForm.adName
+        if (zjdFilter) {
+          newQueryForm = Object.assign({
+            // 插件不分页，手动分页
+            noPage: zjdFilter ? 'noPage' : 'Page',
+            zjdFilter,
+            zjdOffset: offset,
+            zjdLimit: limit
+          }, this.queryForm)
+        }
+
         //...
         return Object.assign({
           //参数重写
-          offset: (this.table.pageNum - 1) * this.table.pageSize,
-          limit: this.table.pageSize
+          offset: offset,
+          limit: limit
         }, newQueryForm /*this.queryForm*/, otherParam)
       },
       /**
