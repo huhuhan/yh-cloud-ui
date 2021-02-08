@@ -9,8 +9,16 @@
                   ref="queryForm"
                   size="mini">
 
-            <div style="float: right">
-              <el-form-item>
+            <el-form-item :label="table.columns.name.label" :prop="`${table.columns.name.prop}$VRHK`">
+              <el-input v-model="queryForm[`${table.columns.name.prop}$VRHK`]" placeholder="请输入"></el-input>
+            </el-form-item>
+
+            <el-form-item :label="table.columns.key.label" :prop="`${table.columns.key.prop}$VRHK`">
+              <el-input v-model="queryForm[`${table.columns.key.prop}$VRHK`]" placeholder="请输入"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button-group>
                 <el-button type="primary" @click="getTableData">
                   <d2-icon name="search"/>
                   查询
@@ -19,12 +27,20 @@
                   <d2-icon name="refresh"/>
                   重置
                 </el-button>
-                <el-button type="success" @click="dialogDefCreateVisible = true; copyTarget = undefined">
-                  <d2-icon name="plus"/>
-                  新建
-                </el-button>
+              </el-button-group>
+            </el-form-item>
+
+            <div style="float: right">
+              <el-form-item>
+                <el-button-group>
+                  <el-button type="success" @click="dialogDefCreateVisible = true; copyTarget = undefined">
+                    <d2-icon name="plus"/>
+                    新建
+                  </el-button>
+                </el-button-group>
               </el-form-item>
             </div>
+
           </el-form>
         </el-col>
       </el-row>
@@ -41,34 +57,14 @@
                     stripe
                     style="width: 100%">
 
-
-            <el-table-column align="center" label="流程名称">
+            <el-table-column v-for="(item, index) in Object.values(table.columns)"
+                             :key="index"
+                             align="center"
+                             :label="item.label"
+                             :width="item.width"
+                             show-overflow-tooltip>
               <template slot-scope="scope">
-                <span :title="scope.row.name">{{scope.row.name}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="流程KEY">
-              <template slot-scope="scope">
-                <span :title="scope.row.key">{{scope.row.key}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="描述">
-              <template slot-scope="scope">
-                <span :title="scope.row.desc">{{scope.row.desc}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="版本号">
-              <template slot-scope="scope">
-                <span :title="scope.row.desc">{{scope.row.version}}</span>
-              </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="创建时间">
-              <template slot-scope="scope">
-                <span :title="scope.row.createTime">{{scope.row.createTime}}</span>
+                <span>{{ scope.row[item.key]}}</span>
               </template>
             </el-table-column>
 
@@ -206,7 +202,32 @@
           order: 'ASC', //DESC
         },
         //重写对象属性
-        table: {},
+        table: {
+          columns: {
+            name: {
+              label: '流程名称',
+              key: 'name',
+              prop: "name_"
+            },
+            key: {
+              label: '流程KEY',
+              key: 'key',
+              prop: "key_"
+            },
+            desc: {
+              label: '描述',
+              key: 'desc'
+            },
+            version: {
+              label: '当前版本',
+              key: 'version'
+            },
+            createTime: {
+              label: '创建时间',
+              key: 'createTime',
+            },
+          }
+        },
 
         dialogDefCreateVisible: false,
         copyTarget: undefined,
