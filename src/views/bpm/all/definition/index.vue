@@ -71,7 +71,7 @@
 
             <el-table-column fixed="right" align="center" label="操作" width="300">
               <template slot-scope="scope">
-                <el-tooltip content="启动" placement="top" effect="light">
+                <el-tooltip content="启动" placement="top" effect="light" v-if="isSuperAdmin">
                   <el-button
                           size="mini"
                           type="primary"
@@ -117,7 +117,7 @@
                           plain
                   ></el-button>
                 </el-tooltip>
-                <el-tooltip content="删除" placement="top" effect="light">
+                <el-tooltip content="删除" placement="top" effect="light" v-if="isSuperAdmin">
                   <el-button
                           size="mini"
                           type="primary"
@@ -182,6 +182,7 @@
 <script>
   import {BpmDefinitionList, BpmModelerUrl, BpmDefinitionDelete} from '@/api/bpm/wf'
   import pageMixins from '@/components/my-table-page/page-mixins'
+  import {mapGetters} from "vuex"
 
   export default {
     name: 'all-definition',
@@ -248,7 +249,11 @@
     created() {
       this.getTableData()
     },
-    computed: {},
+    computed: {
+      ...mapGetters("d2admin", {
+        isSuperAdmin: "user/isSuperAdmin"
+      }),
+    },
     methods: {
       getTableData() {
         this.table.listLoading = true

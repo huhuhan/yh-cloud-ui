@@ -102,7 +102,7 @@
                           plain
                   ></el-button>
                 </el-tooltip>
-                <el-tooltip content="处理" placement="top" effect="light">
+                <el-tooltip content="处理" placement="top" effect="light"  v-if="isSuperAdmin">
                   <el-button
                           size="mini"
                           type="primary"
@@ -162,6 +162,7 @@
   import {BpmTaskList, BpmAssignTask} from '@/api/bpm/wf'
   import {BpmTaskToDoType} from "@/api/bpm/constant"
   import pageMixins from '@/components/my-table-page/page-mixins'
+  import {mapGetters} from "vuex"
 
   export default {
     name: 'all-task',
@@ -226,6 +227,11 @@
     },
     created() {
       this.getTableData()
+    },
+    computed: {
+      ...mapGetters("d2admin", {
+        isSuperAdmin: "user/isSuperAdmin"
+      }),
     },
     methods: {
       getTableData() {

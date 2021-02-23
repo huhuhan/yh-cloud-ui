@@ -4,6 +4,11 @@ export default {
     // 用户信息
     info: {}
   },
+  getters: {
+    isSuperAdmin (state) {
+      return state.info.id === '1'  || true
+    }
+  },
   actions: {
     /**
      * @description 设置用户数据
