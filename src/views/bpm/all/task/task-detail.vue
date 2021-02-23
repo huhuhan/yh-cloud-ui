@@ -28,12 +28,14 @@
 
     <el-row>
       <!--表单-->
-      <asyncPage v-if="taskData"
+      <asyncPage v-if="taskData" ref="asyncPage"
+                 :bizId="bizObj.id" :bizObj="bizObj" :flowObj="flowObj"
                  :name="taskData.form.formValue"></asyncPage>
     </el-row>
 
     <agreeDialog
             :task="task"
+            :relativeBranchSequence="dialogTaskAgreeRelativeBranchSequence"
             :visible.sync="dialogTaskAgreeVisible"
             :isInnerDialog="true"></agreeDialog>
 
@@ -85,6 +87,7 @@
     data() {
       return {
         dialogTaskAgreeVisible: false,
+        dialogTaskAgreeRelativeBranchSequence: undefined,
         dialogTaskRejectVisible: false,
         dialogTaskTurnVisible: false,
         dialogTaskHistoryVisible: false,
@@ -113,7 +116,22 @@
         })
       },
       handleTaskAgreeDialog() {
-        this.dialogTaskAgreeVisible = true
+        // this.dialogTaskAgreeVisible = true
+
+        /**
+         * 需要验证的表单，重写前置方法，返回true/false
+         */
+        let agreeValidate = this.$refs.asyncPage.toAgreeValidate()
+        agreeValidate.then(r => {
+          // 流程变量：分支、条件并行的分支相对序号
+          this.dialogTaskAgreeRelativeBranchSequence = this.$refs.asyncPage.toGetRelativeBranchSequence()
+          if (r) {
+            this.dialogTaskAgreeVisible = true
+          } else {
+            //message提示由前置方法给出，这里仅日志提示
+            this.$log.warning("表单已实现前置方法【agreeBeforeValidate】，验证不通过")
+          }
+        })
       },
       handleTaskRejectDialog() {
         this.dialogTaskRejectVisible = true

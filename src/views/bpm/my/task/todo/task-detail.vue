@@ -15,13 +15,15 @@
 
     <el-row>
       <!--表单-->
-      <asyncPage v-if="taskData" ref="asyncPage" :name="taskData.form.formValue" :bizId="bizObj.id" :bizObj="bizObj"
-                 :flowObj="flowObj"></asyncPage>
+      <asyncPage v-if="taskData" ref="asyncPage"
+                 :bizId="bizObj.id" :bizObj="bizObj" :flowObj="flowObj"
+                 :name="taskData.form.formValue"></asyncPage>
     </el-row>
 
     <agreeDialog :task="task"
                  :title="isLastTaskNode ? '归档' : '同意'"
                  @callBack="handleAgreeCallBack"
+                 :relativeBranchSequence="dialogTaskAgreeRelativeBranchSequence"
                  :visible.sync="dialogTaskAgreeVisible"
                  :isInnerDialog="true"></agreeDialog>
 
@@ -83,6 +85,7 @@
          * 通用流程弹窗属性
          */
         dialogTaskAgreeVisible: false,
+        dialogTaskAgreeRelativeBranchSequence: undefined,
         dialogTaskRejectVisible: false,
         dialogTaskTurnVisible: false,
         dialogTaskHistoryVisible: false,
@@ -176,6 +179,8 @@
          */
         let agreeValidate = this.$refs.asyncPage.toAgreeValidate()
         agreeValidate.then(r => {
+          // 流程变量：分支、条件并行的分支相对序号
+          this.dialogTaskAgreeRelativeBranchSequence = this.$refs.asyncPage.toGetRelativeBranchSequence()
           if (r) {
             this.dialogTaskAgreeVisible = true
           } else {

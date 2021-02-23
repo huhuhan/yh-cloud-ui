@@ -27,6 +27,11 @@ export const BpmTaskAction = {
     value: '驳回',
     css: 'danger'
   },
+  recycle: {
+    key: 'recycle',
+    value: '回收',
+    css: 'danger'
+  },
   turn: {
     key: 'turn',
     value: '转办',
@@ -61,12 +66,6 @@ export const BpmInstanceAction = {
     css: 'danger',
     defaultOpinion: '流程撤销，不再运行！'
   },
-  instanceEnd: {
-    key: 'instanceEnd',
-    value: '超管终止',
-    css: 'danger',
-    defaultOpinion: '超管操作，流程终止，不再运行！'
-  },
 }
 
 export const BpmTaskOpinionStatus = {...BpmInstanceAction, ...BpmTaskAction}
@@ -77,14 +76,14 @@ export const BpmTaskOpinionStatus = {...BpmInstanceAction, ...BpmTaskAction}
 export const BpmInstanceStatus = {
   running: {
     key: 'running',
-    value: '运行中',
-    // value: '审批中',
+    // value: '运行中',
+    value: '审批中',
     css: 'success'
   },
   end: {
     key: 'end',
-    value: '已结束',
-    // value: '审批完成',
+    // value: '已结束',
+    value: '审批完成',
     css: 'info'
   },
   // draft: {
@@ -105,16 +104,13 @@ export const BpmInstanceStatus = {
     key: 'revoke',
     value: '撤销',
     css: 'danger'
-  },
-  // 实际状态，终止后都算manualend
-  instanceend: {
-    key: 'instanceend',
-    value: '超管终止',
-    css: 'danger'
-  },
+  }
 }
 
-
+/**
+ * 任务待办状态类型
+ * @type {{normal: {css: string, value: string, key: string}, turn: {css: string, value: string, key: string}, designate: {css: string, value: string, key: string}}}
+ */
 export const BpmTaskToDoType = {
   normal: {
     key: 'NORMAL',
@@ -133,4 +129,15 @@ export const BpmTaskToDoType = {
   },
 }
 
-
+/**
+ * 流程变量：分支相对序号(分支、条件并行)，用于条件判断
+ * @type {{third: string, fifth: string, fourth: string, first: string, second: string}}
+ */
+export const BpmRelativeBranchSequence = {
+  first: 'RELATIVE_FIRST',
+  second: 'RELATIVE_SECOND',
+  third: 'RELATIVE_THIRD',
+  fourth: 'RELATIVE_FOURTH',
+  fifth: 'RELATIVE_FIFTH',
+  // 需要再扩充
+}

@@ -122,8 +122,21 @@
           return new Promise(resolve => resolve(true))
         }
       },
+      /**
+       * 流程变量：分支相对序号
+       * 引用【同意】组件时，按需传参
+       * @returns {null|*}
+       */
+      toGetRelativeBranchSequence() {
+        try {
+          return this.$refs.formPage.vsGetRelativeBranchSequence()
+        } catch (e) {
+          this.$log.warning('流程任务【同意】组件的[流程变量-分支相对序号]方法[vsGetRelativeBranchSequence]：失败或未实现！')
+          return null
+        }
+      },
       getComponent() {
-        if (this.name == undefined) {
+        if (this.name === undefined) {
           this.mode = new Promise(
             function (resolve) {
               require([`./async-demo`], resolve)
