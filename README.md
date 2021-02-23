@@ -105,3 +105,23 @@
 >- 详情参考后端项目：ControllerTools类的getQueryFilter方法
 >- 过滤条件枚举QueryOP，前端参考接口：/sys/tools/getResultEnum?path=com.dstz.base.api.query.QueryOP
 >- 状态类型，参考`src/api/bpm/constant.js`
+
+
+### 分支流程
+
+> 适用于有分支网关、条件并行网关的流程，流程脚本由后端接口获取
+
+- 添加以上网关后，需要添加【分支流转目标节点条件设置】
+- 打开设置后，选择【常用脚本】，其中分类【流程脚本】的【第x相对分支】，再添加一个`return`语句，结果如下
+```groovy
+  return relativeBranchScript.isFirstBranch(variableScope)
+``` 
+> 每个分支条件，添加一个【第x相对分支】脚本，不能重复
+
+- 业务表单组件，参考`src/views/bpm/components/form/demo/fzcs.vue`组件开发即可，关键方法**vsGetRelativeBranchSequence**
+
+
+### 驳回流程
+
+- 默认驳回上个节点
+- 存在网关分支的流程，流程编辑器中，选择节点，右下角，设置指定驳回节点，驳回到发起网关的前一节点
