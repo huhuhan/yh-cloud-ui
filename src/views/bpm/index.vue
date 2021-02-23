@@ -59,7 +59,9 @@
           // 登录表单校验失败
           this.$message.success(res.msg)
           if (res.isOk) {
-            util.cookies.set('token', `Bearer-${res.data}`)
+            let token = `Bearer-${res.data}`;
+            util.cookies.set('token', token)
+            util.cookies.set('Authorization', token)
             this.initUser()
           }
         })
