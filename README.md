@@ -1,18 +1,13 @@
 ## 简介
 
-- 前端项目，Vue框架
-
-- 使用总结，例子演示
-
-- 对应后端项目[yh-cloud](https://github.com/huhuhan/yh-cloud)
+> - 前端项目，Vue框架
+> - 集成多个系统例子，功能演示
 
 ### 项目框架
 
--  基于D2admin修改
+-  基于[D2admin](https://github.com/d2-projects/d2-admin)修改
 
-  <a href="https://github.com/d2-projects/d2-admin" target="_blank"><img src="https://raw.githubusercontent.com/FairyEver/d2-admin/master/doc/image/d2-admin@2x.png" width="200"></a>
-
-- 注释D2admin默认demos
+- 注释D2admin源代码的默认demos
   -  路由：src/router/routes.js
   - 菜单：src/menu/index.js
   - 插件组件：src/main.js
@@ -30,6 +25,7 @@
 
 ### 通用组件
 `src/components`目录
+
 - `src/components/my-async-page`：异步引入页面组件
 - `src/components/my-empty-router`：空页面，路由过渡使用
 - `src/components/my-table-page`：通用表格列表页面
@@ -39,9 +35,7 @@
 
 
 
-## 系统模块
-
-### 工作流
+## 系统-工作流
 
 > 后端服务：[yh-activiti](https://github.com/huhuhan/yh-cloud/tree/master/yh-activiti)，测试用户userId固定为88888888
 
@@ -64,9 +58,12 @@
   
 - 静态目录：`public/act`，（流程设计器）
 
-### BPM系统
+
+
+## 系统-BPM
 
 > 后端服务：agilebpm
+> 另个前端：[流程编辑器](https://github.com/huhuhan/bpm-ui)
 
 #### 开发说明
 
@@ -107,7 +104,11 @@
 >- 状态类型，参考`src/api/bpm/constant.js`
 
 
-### 分支流程
+### 功能介绍
+
+- 操作包括：发起、同意、驳回、催办、人工终止、撤销、转办、指派
+
+#### 分支流程
 
 > 适用于有分支网关、条件并行网关的流程，流程脚本由后端接口获取
 
@@ -115,13 +116,13 @@
 - 打开设置后，选择【常用脚本】，其中分类【流程脚本】的【第x相对分支】，再添加一个`return`语句，结果如下
 ```groovy
   return relativeBranchScript.isFirstBranch(variableScope)
-``` 
+```
 > 每个分支条件，添加一个【第x相对分支】脚本，不能重复
 
 - 业务表单组件，参考`src/views/bpm/components/form/demo/fzcs.vue`组件开发即可，关键方法**vsGetRelativeBranchSequence**
 
 
-### 驳回流程
+#### 驳回流程
 
 - 默认驳回上个节点
 - 存在网关分支的流程，流程编辑器中，选择节点，右下角，设置指定驳回节点，驳回到发起网关的前一节点
