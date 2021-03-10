@@ -21,6 +21,7 @@ export default {
       queryForm: {},
       // 当前所选行
       currentRow: null
+      //   needReload: false // 是 否需要刷新，用于控制案件数量发送变动时
     }
   },
   beforeDestroy() {
@@ -110,5 +111,19 @@ export default {
         this.getTableData(param)
       }
     },
+    /**
+     * 保证获取对象属性不异常
+     * @param obj
+     * @param key
+     * @returns {string|*}
+     */
+    confirmObj(obj, key){
+      try {
+        return obj[key]
+      } catch (e) {
+        // console.error(e)
+        return ''
+      }
+    }
   }
 }
