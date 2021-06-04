@@ -41,8 +41,8 @@
 
 - **正常登录**：用前端mockJS的固定账户，`src/mock/api/sys.login.js`
 
-  ```js
-  { username: 'adminDemo', password: '111111', userId: '88888888'}
+  ```json
+  { "username": "adminDemo", "password": "111111", "userId": "88888888"}
   ```
 
 - api目录：`src/api/yh.act`
@@ -126,3 +126,12 @@
 
 - 默认驳回上个节点
 - 存在网关分支的流程，流程编辑器中，选择节点，右下角，设置指定驳回节点，驳回到发起网关的前一节点
+
+
+## Vue 插件示例
+
+### 手写签名
+
+- 文档连接：[signature_pad](https://github.com/szimek/signature_pad)、[vue-signature-pad](https://github.com/neighborhood999/vue-signature-pad/)
+
+- Demo: [Vue Demo](https://codesandbox.io/s/n5qjp3oqv4?file=/src/App.vue)

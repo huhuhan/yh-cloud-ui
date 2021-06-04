@@ -34,6 +34,9 @@ import router from './router'
 import { menuHeader, menuAside } from '@/menu'
 import { frameInRoutes } from '@/router/routes'
 
+// 取消打印生产消息，详情控制台输出的区别
+Vue.config.productionTip = false;
+
 // 核心插件
 Vue.use(d2Admin)
 Vue.use(myPlugin)

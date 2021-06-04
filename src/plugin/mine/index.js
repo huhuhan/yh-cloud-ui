@@ -4,6 +4,9 @@
 // 时间插件
 import moment from 'moment'
 
+// 手写签名
+import VueSignaturePad from 'vue-signature-pad'
+
 export default {
   async install(Vue, options) {
     // echarts
@@ -12,5 +15,7 @@ export default {
     Vue.prototype.$moment = moment
     moment.locale('zh-cn')
     Vue.use(moment)
+
+    Vue.use(VueSignaturePad)
   }
 }

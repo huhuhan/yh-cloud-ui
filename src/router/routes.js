@@ -8,6 +8,7 @@ import element from './modules/element'
 import business from './modules/business'*/
 import activiti from './modules/yh.act/activiti'
 import bpm from './modules/bpm'
+import vue from './modules/vue'
 
 import layoutHeaderAside from '@/layout/header-aside'
 
@@ -67,7 +68,8 @@ const frameIn = [
   element,
   business,*/
   activiti,
-  bpm()
+  bpm(),
+  vue()
 ]
 
 /**

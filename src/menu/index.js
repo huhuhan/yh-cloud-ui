@@ -17,6 +17,7 @@ import demoFrame from './modules/demo-frame'*/
 // 工作流
 import activiti from './modules/yh.act/activiti'
 import bpm from './modules/bpm'
+import vue from './modules/vue'
 
 // 菜单 侧边栏
 export const menuAside = [
@@ -29,7 +30,8 @@ export const menuAside = [
   demoD2Crud,
   demoFrame,*/
   activiti,
-  bpm()
+  bpm(),
+  vue()
 ]
 
 // 菜单 顶栏
@@ -66,5 +68,6 @@ export const menuHeader = [
   /*demoPlayground,
   demoBusiness,*/
   activiti,
-  bpm()
+  bpm(),
+  vue()
 ]
