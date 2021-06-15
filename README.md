@@ -135,3 +135,16 @@
 - 文档连接：[signature_pad](https://github.com/szimek/signature_pad)、[vue-signature-pad](https://github.com/neighborhood999/vue-signature-pad/)
 
 - Demo: [Vue Demo](https://codesandbox.io/s/n5qjp3oqv4?file=/src/App.vue)
+
+
+### 传参加密
+
+- 引入依赖组件
+
+  ```bash
+  npm install jsencrypt
+  ```
+
+- 前端加密，参考`src/views/system/login/page.vue`
+
+- 后端加密，参考`src/mock/api/sys.login.js`

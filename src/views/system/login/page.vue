@@ -125,6 +125,9 @@
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
 import localeMixin from '@/locales/mixin.js'
+import JsEncrypt from 'jsencrypt'
+import {PWD_PUBLIC_KEY} from "@/mock/api/constant"
+
 export default {
   mixins: [
     localeMixin
@@ -220,7 +223,7 @@ export default {
           // 具体需要传递的数据请自行修改代码
           this.login({
             username: this.formLogin.username,
-            password: this.formLogin.password
+            password: this.encodePwd(this.formLogin.password)
           })
             .then(() => {
               // 重定向对象不存在则返回顶层路径
@@ -231,6 +234,12 @@ export default {
           this.$message.error('表单校验失败，请检查')
         }
       })
+    },
+    // RSA公钥加密
+    encodePwd(pwd){
+      let encrypt = new JsEncrypt();
+      encrypt.setPublicKey(PWD_PUBLIC_KEY);
+      return encrypt.encrypt(pwd);
     }
   }
 }
