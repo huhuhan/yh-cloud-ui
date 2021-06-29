@@ -8,6 +8,7 @@ const meta = { auth: true }
 import allFlow from './all-flow'
 import myFlow from './my-flow'
 import flowFrom from './flow-form'
+import base from './base'
 
 export default function () {
   let rootRoute = 'bpm'
@@ -27,6 +28,7 @@ export default function () {
           title: '我的首页'
         }
       },
+      base(pre),
       allFlow(pre),
       myFlow(pre),
       flowFrom(pre)

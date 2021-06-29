@@ -7,24 +7,24 @@ import {proxyPrefix} from './index'
 
 
 // 获取用户管理table列表数据
-export function getUserTableList(params) {
+export function GetUserTableList(params) {
   return request.get(proxyPrefix + '/org/user/listJson', {
     params: params
   })
 }
 
 // 删除用户
-export function deleteUser(params) {
+export function DeleteUser(params) {
   return request.post(proxyPrefix + '/org/user/remove?id=' + params)
 }
 
 // 新增用户
-export function addUser(params) {
+export function SaveUser(params) {
   return request.post(proxyPrefix + '/org/user/save', params)
 }
 
 // 修改用户密码
-export function modifyUser(params) {
+export function ModifyUser(params) {
   let {userId, oldPassword, newPassword} = params
   return request({
     url: proxyPrefix + '/org/user/updateUserPassWorld',
@@ -42,7 +42,7 @@ export function modifyUser(params) {
 }
 
 // 当前用户根据主键id查询分配的部门以及分配的角色
-export function getOrgRelation(params) {
+export function GetOrgRelation(params) {
   return request.get(proxyPrefix + '/org/user/get', {
     params: params
   })

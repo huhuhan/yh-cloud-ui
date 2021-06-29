@@ -7,7 +7,7 @@ import {proxyPrefix} from './index'
 
 
 // 获取表格数据
-export function getDepartmentTree() {
+export function GetDepartmentTree() {
   return request({
     url: proxyPrefix + '/org/group/getTreeData',
     method: 'get'
