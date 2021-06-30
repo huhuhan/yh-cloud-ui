@@ -279,7 +279,6 @@
       },
       openImportDialog() {
         this.importRoleDialogVisible = true
-        this.$refs.upload.clearFiles()
       },
       openCreateRoleDialog() {
         this.modifyRoleDialogVisible = true
