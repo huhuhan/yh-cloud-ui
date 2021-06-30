@@ -46,6 +46,15 @@ export default function (prefix = '') {
           title: '角色管理'
         }
       },
+      {
+        path: 'resource',
+        name: `${namePre}-${act}-resource`,
+        component: _import(`${modulePre}/${act}/resource`),
+        meta: {
+          ...meta,
+          title: '资源管理'
+        }
+      },
     ])(`${myModule}`)
   }
 }

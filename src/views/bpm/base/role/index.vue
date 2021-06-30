@@ -65,9 +65,9 @@
               <el-table-column show-overflow-tooltip :sortable="item.sortable" :min-width="item.width" :key="item.label"
                                :prop="item.prop" :label="item.label">
                 <template slot-scope="scope">
-                  <span v-if="item.prop!='enabled'">{{ scope.row[item.prop] }}</span>
+                  <span v-if="item.prop !== 'enabled'">{{ scope.row[item.prop] }}</span>
                   <div v-else>
-                    <el-switch disabled :value="scope.row[item.prop]==='1'?true:false" active-color="#13ce66"
+                    <el-switch disabled :value="scope.row[item.prop] === '1'" active-color="#13ce66"
                                inactive-color="#23C6C8"></el-switch>
                   </div>
                 </template>

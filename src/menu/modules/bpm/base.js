@@ -23,7 +23,11 @@ export default function (prefix = '') {
         title: '角色管理',
         icon:'history',
       },
-
+      {
+        path: `${pre}/${act}/resource`,
+        title: '资源管理',
+        icon:'history',
+      },
     ])(`${myPre}`)
   }
 }
