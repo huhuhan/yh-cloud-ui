@@ -42,3 +42,16 @@ export function BpmFormSelectorList (key, params) {
     params
   })
 }
+
+/**
+ * 获取拼音
+ * @param params
+ * @constructor
+ */
+export function GetPinyin(params) {
+  return request({
+    url: proxyPrefix + `/sys/tools/pinyin`,
+    method: 'get',
+    params
+  })
+}

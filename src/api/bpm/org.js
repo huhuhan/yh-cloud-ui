@@ -7,7 +7,7 @@ import {proxyPrefix} from './index'
 
 
 // 根据角色id获取该角色下的用户
-export function getGroupUser(params) {
+export function GetGroupUser(params) {
   return request({
     url: proxyPrefix + '/org/orgRelation/roleJson',
     method: 'get',
@@ -16,7 +16,7 @@ export function getGroupUser(params) {
 }
 
 // 分配用户保存
-export function addRoleUser(params) {
+export function SaveRoleUsers(params) {
   return request({
     url: proxyPrefix + '/org/orgRelation/saveRoleUsers',
     method: 'post',
@@ -25,7 +25,7 @@ export function addRoleUser(params) {
 }
 
 // 分配用户删除
-export function removeRoleUser(id) {
+export function RemoveRoleUser(id) {
   return request({
     url: proxyPrefix + '/org/orgRelation/remove',
     method: 'post',
@@ -46,7 +46,7 @@ export function getUserbyGroup(params) {
 }
 
 // 分配用户保存
-export function addGroupUser(params) {
+export function SaveGroupUserRel(params) {
   return request({
     url: proxyPrefix + '/org/orgRelation/saveGroupUserRel',
     method: 'post',

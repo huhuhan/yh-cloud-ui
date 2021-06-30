@@ -1,69 +1,74 @@
 <template>
-    <d2-container>
-        <el-form
-                :inline="true"
-                :model="queryForm"
-                ref="queryForm"
-                size="mini"
-                style="margin-bottom: -25px;">
+  <d2-container>
+    <el-form
+            :inline="true"
+            :model="queryForm"
+            ref="queryForm"
+            size="mini"
+            style="margin-bottom: -25px;">
 
 
-            <div style="float: right">
-                <el-form-item>
-                    <el-button type="primary" @click="getTableData">
-                        <d2-icon name="search"/>
-                        查询
-                    </el-button>
-                    <el-button type="default" @click="handleFormReset('queryForm')">
-                        <d2-icon name="refresh"/>
-                    </el-button>
-                </el-form-item>
-            </div>
-        </el-form>
+      <div style="float: right">
+        <el-form-item>
+          <el-button type="primary" @click="getTableData">
+            <d2-icon name="search"/>
+            查询
+          </el-button>
+          <el-button type="default" @click="handleFormReset('queryForm')">
+            <d2-icon name="refresh"/>
+          </el-button>
+        </el-form-item>
+      </div>
+    </el-form>
 
-        <!-- table表格 -->
-        <el-table :key='table.key'
-                  :data="table.list"
-                  v-loading="table.listLoading"
-                  element-loading-text="拼命加载中..."
-                  highlight-current-row
-                  @current-change="handleCurrentRow"
-                  stripe
-                  style="width: 100%">
+    <!-- table表格 -->
+    <el-table :key='table.key'
+              :data="table.list"
+              v-loading="table.listLoading"
+              element-loading-text="拼命加载中..."
+              highlight-current-row
+              @current-change="handleCurrentRow"
+              @selection-change="handleSelectionChange"
+              stripe
+              style="width: 100%">
 
+      <el-table-column
+              type="selection"
+              width="55">
+      </el-table-column>
 
-            <el-table-column align="center" label="测试字段">
-                <template slot-scope="scope">
-                    <span :title="scope.row.id">{{scope.row.id}}</span>
-                </template>
-            </el-table-column>
-
-
-            <el-table-column fixed="right" align="center" label="操作" width="300">
-                <template slot-scope="scope">
-                    <el-button size="mini" type="primary" @click="handleDetail(scope.row)">查看详情
-                    </el-button>
-                </template>
-            </el-table-column>
-
-        </el-table>
-
-        <!-- footer 分页条 -->
-        <template slot="footer">
-            <el-pagination
-                    background
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentPage"
-                    :current-page.sync="table.pageNum"
-                    :page-sizes="[10,20,30,50]"
-                    :page-size="table.pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="table.total"
-                    style="margin: -10px;">
-            </el-pagination>
+      <el-table-column align="center" label="测试字段">
+        <template slot-scope="scope">
+          <span :title="scope.row.id">{{scope.row.id}}</span>
         </template>
+      </el-table-column>
 
-    </d2-container>
+
+      <el-table-column fixed="right" align="center" label="操作" width="300">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="handleDetail(scope.row)">查看详情
+          </el-button>
+        </template>
+      </el-table-column>
+
+    </el-table>
+
+    <!-- footer 分页条 -->
+    <template slot="footer">
+      <el-pagination
+              background
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentPage"
+              :current-page.sync="table.pageNum"
+              :page-sizes="[10,20,30,50]"
+              :page-size="table.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="table.total"
+              style="margin: -10px;">
+      </el-pagination>
+    </template>
+
+  </d2-container>
 </template>
 
 <script>
@@ -75,7 +80,7 @@
     mixins: [
       pageMixins,
     ],
-    data () {
+    data() {
       return {
         queryForm: {
           id: undefined,
@@ -88,12 +93,12 @@
         },
       }
     },
-    created () {
+    created() {
       this.getTableData()
     },
     computed: {},
     methods: {
-      getTableData () {
+      getTableData() {
         this.table.listLoading = true
         // HadDone(this.getTableDataParam()).then(res => {
         //   this.table.list = res.records || res.list || res.data
@@ -103,7 +108,7 @@
         // })
       },
       //其他参数
-      getTableDataParam () {
+      getTableDataParam() {
         //根据业务修改补充
         let otherParam = {
           loginName: this.info.username
@@ -116,11 +121,11 @@
           pageSize: this.table.pageSize
         }, newQueryForm/*this.queryForm*/, otherParam)
       },
-      handleDetail (row) {
+      handleDetail(row) {
       },
-      handleUpdate (row) {
+      handleUpdate(row) {
       },
-      handleCheck (row) {
+      handleCheck(row) {
       },
 
     }

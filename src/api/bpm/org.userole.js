@@ -49,7 +49,7 @@ export function GetOrgRelation(params) {
 }
 
 // 获取角色管理table列表数据
-export function getRoleTableList(params) {
+export function GetRoleTableList(params) {
   return request.get(proxyPrefix + '/org/role/listJson', {
     params: params
   })
@@ -63,17 +63,17 @@ export function getRoleList(params) {
 }
 
 // 移除角色
-export function deleteRole(params) {
+export function DeleteRole(params) {
   return request.post(proxyPrefix + '/org/role/remove?id=' + params)
 }
 
 // 新增角色
-export function addRole(params) {
+export function SaveRole(params) {
   return request.post(proxyPrefix + '/org/role/save', params)
 }
 
-// 获取角色资源管理平台列表
-export function getResRoleList() {
+// 获取子系统列表
+export function GetSubsystemList() {
   return request.get(proxyPrefix + '/org/subsystem/listJson', {
     params: {
       noPage: 'noPage'
@@ -82,14 +82,14 @@ export function getResRoleList() {
 }
 
 // 获取角色资源管理树形数据
-export function getResRoleTreeList(params) {
+export function GetResRoleTreeList(params) {
   return request.get(proxyPrefix + '/org/resRole/getTreeData', {
     params: params
   })
 }
 
 // 保存角色资源管理树型数据
-export function saveReRoleTreeId(params) {
+export function SaveReRole(params) {
   return request.post(proxyPrefix + '/org/resRole/save', params)
 }
 
@@ -112,7 +112,7 @@ export function deleteSysLog(params) {
  * @param {*} upLoadFiles
  * @returns
  */
-export function importRole(upLoadFiles) {
+export function ImportRole(upLoadFiles) {
   let uploadData = new FormData()
   uploadData.append('file', upLoadFiles)
   return request({

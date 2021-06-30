@@ -30,7 +30,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="归属组织" prop="deptName">
-        <el-input placeholder="请选择归属组织" @focus="openDepartmentDialog" v-model="formGroupName"
+        <el-input placeholder="请选择归属组织" @focus="openDepartmentTreeDialog" v-model="formGroupName"
                   autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="性别" prop="sex">
@@ -152,7 +152,7 @@
       handleReturnDepartment(data) {
         this.selectedDepartments = data
       },
-      openDepartmentDialog() {
+      openDepartmentTreeDialog() {
         this.showDepartmentDialog = true
       },
       // 回显用户数据
@@ -185,9 +185,10 @@
       },
       close() {
         this.form = FORM_COLUMN
-        this.$emit('update:visible', false)
         this.selectedRoles = []
         this.selectedDepartments = []
+        this.$refs[this.ref].resetFields()
+        this.$emit('update:visible', false)
       },
       openInit() {
         this.initUserOrgRelation()

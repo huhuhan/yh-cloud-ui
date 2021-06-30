@@ -15,12 +15,15 @@ export default {
         total: null,
         pageNum: 1,
         pageSize: 10,
-        pages: null
+        pages: null,
+        pageCount: 5
       },
       // 表单查询对象，根据业务补充
       queryForm: {},
       // 当前所选行
-      currentRow: null
+      currentRow: null,
+      // 多选，勾选的行对象集合
+      selectedRows: []
       //   needReload: false // 是 否需要刷新，用于控制案件数量发送变动时
     }
   },
@@ -85,9 +88,16 @@ export default {
      * 当前所选行
      * @param row
      */
-    handleCurrentRow(row) {
+    handleCurrentRow(row, oldRow) {
       this.currentRow = row
       this.$log.default('选择当前行')
+    },
+    /**
+     * 多选勾选行集合
+     * @param val
+     */
+    handleSelectionChange (val) {
+      this.selectedRows = val
     },
     /* *
      * 刷新表单

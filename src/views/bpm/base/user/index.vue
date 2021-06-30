@@ -7,11 +7,11 @@
           <el-col class="page-form">
             <!-- form表单筛选 -->
             <el-form :inline="true" :model="queryForm" ref="queryForm" size="mini">
-              <el-form-item label="昵称" prop="fullname_^VLK">
-                <el-input v-model="queryForm['fullname_^VLK']"></el-input>
+              <el-form-item label="昵称" prop="fullname_^VRHK">
+                <el-input v-model="queryForm['fullname_^VRHK']"></el-input>
               </el-form-item>
-              <el-form-item label="手机号码" prop="mobile_^VLK">
-                <el-input maxlength="11" v-model="queryForm['mobile_^VLK']"></el-input>
+              <el-form-item label="手机号码" prop="mobile_^VRHK">
+                <el-input maxlength="11" v-model="queryForm['mobile_^VRHK']"></el-input>
               </el-form-item>
 
               <el-form-item>
@@ -35,7 +35,7 @@
                       <d2-icon name="plus"/>
                       删除
                     </el-button>
-                    <el-button type="success" @click="openAddUserDialog">
+                    <el-button type="success" @click="openCreateUserDialog">
                       <d2-icon name="plus"/>
                       新建
                     </el-button>
@@ -66,7 +66,7 @@
 
         <el-row>
           <el-col class="page-table">
-            <el-table ref="multipleTable" :data="tableData" v-loading="table.listLoading" tooltip-effect="dark"
+            <el-table ref="multipleTable" :data="table.list" v-loading="table.listLoading" tooltip-effect="dark"
                       :header-cell-style="{ background: '#F5F5F5', color: '#666666' }"
                       :row-style="{ background: '#fff' }" style="width: 100%;" highlight-current-row border
                       @selection-change="handleSelectionChange">
@@ -77,8 +77,7 @@
                   <template slot-scope="scope">
                     <span v-if="item.prop!='status'">{{ scope.row[item.prop] }}</span>
                     <div v-else>
-                      <el-switch disabled @change="handleSwitchChange(scope.row)"
-                                 :value="scope.row[item.prop]?true:false" active-color="#13ce66"
+                      <el-switch disabled :value="scope.row[item.prop]?true:false" active-color="#13ce66"
                                  inactive-color="#23C6C8"></el-switch>
                     </div>
                   </template>
@@ -87,15 +86,15 @@
               <el-table-column fixed="right" align="center" label="操作" min-width="300">
                 <template slot-scope="scope">
                   <el-tooltip content="修改密码" placement="top" effect="light">
-                    <el-button size="mini" type="primary" @click="handleModifyPassword(scope.row)" icon="el-icon-key"
+                    <el-button size="mini" type="primary" @click="openModifyPwdDialog(scope.row)" icon="el-icon-key"
                                plain></el-button>
                   </el-tooltip>
                   <el-tooltip content="编辑" placement="top" effect="light">
-                    <el-button size="mini" type="primary" @click="handleModifyUser(scope.row)" icon="el-icon-edit"
+                    <el-button size="mini" type="primary" @click="openEditUserDialog(scope.row)" icon="el-icon-edit"
                                plain></el-button>
                   </el-tooltip>
                   <el-tooltip content="删除" placement="top" effect="light">
-                    <el-button size="mini" type="primary" @click="handleDeleteUser(scope.row)" icon="el-icon-delete"
+                    <el-button size="mini" type="primary" @click="handleDelete(scope.row)" icon="el-icon-delete"
                                plain></el-button>
                   </el-tooltip>
                 </template>
@@ -202,7 +201,6 @@
           c => !["用户ID", "状态", "性别", "邮箱", "手机"].includes(c.label)
         ),
         checkedColumns: [],
-        tableData: [],
         multipleSelection: [],
         tableColumnDrawerVisible: false,
         modifyUserDialogVisible: false,
@@ -246,19 +244,12 @@
               t.roleNames = roles ? roles.join(",") : ""
             }
           })
-          this.tableData = rawData
+          this.table.list = rawData
           this.table.total = res.total
           this.table.pages = res.page
           this.table.pageSize = res.pageSize
         }).catch(err => console.log(err)).finally(() => {
           this.table.listLoading = false
-        })
-      },
-      toDeleteUser(id, callback) {
-        DeleteUser(id).then(() => {
-          this.getTableData()
-        }).catch(err => console.log(err)).finally(() => {
-          if (callback) callback()
         })
       },
       getTableDataParam() {
@@ -272,28 +263,6 @@
       },
       handleSelectionChange(val) {
         this.multipleSelection = val
-      },
-      handleSwitchChange(row) {
-        let msg = ""
-        if (row.status) {
-          msg = "确认要停用用户吗？"
-        } else {
-          msg = "确认要启用用户吗？"
-        }
-        this.$confirm(msg, "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(() => {
-          let _tableData = this.tableData
-          _tableData.forEach(it => {
-            if (it.id === row.id) {
-              it.status = !row.status
-            }
-          })
-          this.tableData = _tableData
-          this.$message.success("操作成功!")
-        })
       },
       handleCheckedColumnsChange(value) {
         this.checkedColumns = value
@@ -309,7 +278,7 @@
           return a.sort - b.sort
         })
       },
-      handleDeleteUser(row) {
+      handleDelete(row) {
         let id = row.id
         this.$confirm("确认删除？", "提示", {
           confirmButtonText: "确定",
@@ -331,16 +300,23 @@
           this.$message.success("批量删除成功!")
         })
       },
-      handleModifyUser(row) {
+      toDeleteUser(id, callback) {
+        DeleteUser(id).then(() => {
+          this.getTableData()
+        }).catch(err => console.log(err)).finally(() => {
+          if (callback) callback()
+        })
+      },
+      openEditUserDialog(row) {
         this.modifyUserType = 'EDIT'
         this.modifyUserForm = row
         this.modifyUserDialogVisible = true
       },
-      handleModifyPassword(row) {
+      openModifyPwdDialog(row) {
         this.modifyPwdForm.userId = row.id
         this.modifyPwdDialogVisible = true
       },
-      openAddUserDialog() {
+      openCreateUserDialog() {
         this.modifyUserType = 'CREATE'
         this.modifyUserDialogVisible = true
         this.modifyUserForm = {}

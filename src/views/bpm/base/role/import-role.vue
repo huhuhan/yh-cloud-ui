@@ -18,7 +18,7 @@
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <div class="el-upload__tip" slot="tip" style="font-size:14px">只能上传xls/xlsx文件，点击
-        <el-link type="primary" download="用户数据模板.xlsx" :underline="false" href="/bpm/down-template/用户数据模板.xlsx"><em>下载模板</em>
+        <el-link type="primary" download="角色数据模板.xlsx" :underline="false" href="/bpm/down-template/角色数据模板.xlsx"><em>下载模板</em>
         </el-link>
       </div>
     </el-upload>
@@ -34,11 +34,11 @@
 
 <script>
   import {
-    importUser,
+    ImportRole,
   } from "@/api/bpm/org.userole"
 
   export default {
-    name: 'dialog-import-user',
+    name: 'dialog-import-role',
     props: {
       visible: {
         type: Boolean,
@@ -50,7 +50,7 @@
       },
       targetTitle: {
         type: String,
-        default: "导入用户"
+        default: "导入角色"
       },
       target: {
         type: Object,
@@ -84,7 +84,7 @@
       },
       uploadFiles(param) {
         this.loading = true
-        importUser(param.file).then(res => {
+        ImportRole(param.file).then(res => {
           if (res.isOk) {
             this.$message.success('导入成功')
             this.resultHtml = res.msg
