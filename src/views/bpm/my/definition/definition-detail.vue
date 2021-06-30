@@ -32,7 +32,7 @@
 <script>
   import {BpmGetInstanceData, BpmInstanceDoAction} from '@/api/bpm/wf'
   import {BpmInstanceAction} from '@/api/bpm/constant'
-  import asyncPage from '../../components/form/async-page'
+  import asyncPage from '../../form/async-page'
 
   /**
    * 通用流程组件，尽量不要加入业务相关代码、写死业务逻辑

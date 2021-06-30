@@ -139,7 +139,7 @@
         if (this.name === undefined) {
           this.mode = new Promise(
             function (resolve) {
-              require([`./async-demo`], resolve)
+              require([`@/views/bpm/form/async-demo`], resolve)
             }
           )
         } else {

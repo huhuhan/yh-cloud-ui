@@ -49,7 +49,7 @@
 <script>
   import {BpmGetInstanceData} from '@/api/bpm/wf'
   import {BpmInstanceStatus} from "@/api/bpm/constant"
-  import asyncPage from '../../components/form/async-page'
+  import asyncPage from '../../form/async-page'
 
   export default {
     name: 'all-instance-detail',

@@ -19,7 +19,7 @@ export default function (prefix = '') {
   prefix = prefix.endsWith('-') ? prefix.substring(0, prefix.length - 1) : prefix
   let namePre = prefix
   let modulePre = prefix.split('-').join('/')
-  let myModule = 'components/form'
+  let myModule = 'form'
   return {
     path: `${myModule}`,
     name: `${namePre}-${myModule}`,

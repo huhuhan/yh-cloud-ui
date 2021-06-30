@@ -7,7 +7,7 @@ import demoForm from './form/demo'
  * @returns {{path: string, children: *, icon: string, title: string}}
  */
 export default function (prefix = '') {
-  let myPre = 'components/form'
+  let myPre = 'form'
   console.log(`bpm菜单，要求格式如'/yh'，传参前缀：${prefix}`)
   let pre = prefix.endsWith('/') ? prefix.substring(0, prefix.length - 1) : prefix
   return {

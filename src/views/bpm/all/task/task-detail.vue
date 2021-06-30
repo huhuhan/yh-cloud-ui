@@ -64,7 +64,7 @@
 
 <script>
   import {BpmTaskData, BpmImgUrl, BpmStart} from '@/api/bpm/wf'
-  import asyncPage from '../../components/form/async-page'
+  import asyncPage from '../../form/async-page'
 
   export default {
     name: 'task-detail',

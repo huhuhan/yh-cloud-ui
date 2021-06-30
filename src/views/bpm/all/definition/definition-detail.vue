@@ -33,13 +33,13 @@
 
 <script>
   import {BpmGetInstanceData, BpmStart} from '@/api/bpm/wf'
-  import asyncPage from '../../components/form/async-page'
+  import asyncPage from '../../form/async-page'
 
   export default {
     name: 'definition-detail',
     components: {
       asyncPage,
-      formStart: () => import('../../components/form/demo/start'),
+      formStart: () => import('../../form/demo/start'),
       defImgDialog: () => import('../../components/bpm/definition-img')
     },
     mixins: [],
