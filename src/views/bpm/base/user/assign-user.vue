@@ -89,9 +89,6 @@
 
     <!-- 新增用户 弹框 -->
     <dialog-user-index
-            :selectData="{roleId: this.selectRoleId}"
-            :addMethodsType="'role'"
-            @refresh="handleRefreshTable"
             @selectedRows="handleAddUser"
             :isInnerDialog="true"
             :visible.sync="addUserDialogVisible"></dialog-user-index>
@@ -101,10 +98,11 @@
 
 <script>
   import {
-    GetGroupUser,
-    RemoveRoleUser,
+    GetRoleUser,
     SaveRoleUsers,
-    SaveGroupUserRel
+    RemoveRoleUser,
+    GetGroupUser,
+    SaveGroupUser,
   } from "@/api/bpm/org"
   import pageMixins from '@/components/my-table-page/page-mixins'
 
@@ -162,22 +160,16 @@
         })
       },
       handleAddUser(selectedRows) {
-        let data = {
+        let param = {
           userIds: selectedRows.map(item => item.id).join(",")
         }
-        if (this.targetType === ASSIGN_FROM_GROUP) {
-          SaveGroupUserRel(Object.assign({groupId: this.target}, data)).then(res => {
-            this.$message.success(res.msg)
-          }).catch(err => console.log(err)).finally(() => {
-            this.getTableData()
-          })
-        } else if (this.targetType === ASSIGN_FROM_ROLE) {
-          SaveRoleUsers(Object.assign({roleId: this.target}, data)).then(res => {
-            this.$message.success(res.msg)
-          }).catch(err => console.log(err)).finally(() => {
-            this.getTableData()
-          })
-        }
+        param[this.targetType === ASSIGN_FROM_GROUP ? 'groupId' : 'roleId'] = this.target
+        let SaveMethod = this.targetType === ASSIGN_FROM_GROUP ? SaveGroupUser : SaveRoleUsers
+        SaveMethod(param).then(res => {
+          this.$message.success(res.msg)
+        }).catch(err => console.log(err)).finally(() => {
+          this.getTableData()
+        })
       },
       openAddUserDialog() {
         this.addUserDialogVisible = true
@@ -188,7 +180,8 @@
       },
       getTableData() {
         this.table.listLoading = true
-        GetGroupUser(this.getTableDataParam()).then(res => {
+        let Method = this.targetType === ASSIGN_FROM_GROUP ? GetGroupUser : GetRoleUser
+        Method(this.getTableDataParam()).then(res => {
           this.table.list = res.rows
           this.table.total = res.total
         }).catch(err => console.log(err)).finally(() => {
@@ -196,9 +189,8 @@
         })
       },
       getTableDataParam() {
-        let otherParam = {
-          roleId: this.target
-        }
+        let otherParam = {}
+        otherParam[this.targetType === ASSIGN_FROM_GROUP ? 'groupId' : 'roleId'] = this.target
         return Object.assign({
           offset: (this.table.pageNum - 1) * this.table.pageSize,
           limit: this.table.pageSize

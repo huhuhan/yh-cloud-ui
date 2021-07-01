@@ -28,6 +28,11 @@ export default function (prefix = '') {
         title: '资源管理',
         icon:'history',
       },
+      {
+        path: `${pre}/${act}/department`,
+        title: '组织管理',
+        icon:'history',
+      },
     ])(`${myPre}`)
   }
 }

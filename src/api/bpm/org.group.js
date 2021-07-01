@@ -15,7 +15,7 @@ export function GetDepartmentTree() {
 }
 
 // 删除
-export function deleteDepartment(id) {
+export function DeleteDepartment(id) {
   return request({
     url: proxyPrefix + '/org/group/remove',
     method: 'post',
@@ -26,7 +26,7 @@ export function deleteDepartment(id) {
 }
 
 // 新增
-export function addDepartment(params) {
+export function SaveDepartment(params) {
   return request({
     url: proxyPrefix + '/org/group/save',
     method: 'post',
@@ -37,8 +37,7 @@ export function addDepartment(params) {
   })
 }
 
-// 编辑
-export function getIdDepartment(id) {
+export function GetDepartment(id) {
   return request({
     url: proxyPrefix + '/org/group/get',
     method: 'get',

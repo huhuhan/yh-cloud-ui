@@ -55,6 +55,15 @@ export default function (prefix = '') {
           title: '资源管理'
         }
       },
+      {
+        path: 'department',
+        name: `${namePre}-${act}-department`,
+        component: _import(`${modulePre}/${act}/department`),
+        meta: {
+          ...meta,
+          title: '资源管理'
+        }
+      },
     ])(`${myModule}`)
   }
 }
