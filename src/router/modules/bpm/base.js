@@ -64,6 +64,15 @@ export default function (prefix = '') {
           title: '资源管理'
         }
       },
+      {
+        path: 'region',
+        name: `${namePre}-${act}-region`,
+        component: _import(`${modulePre}/${act}/region`),
+        meta: {
+          ...meta,
+          title: '行政区划'
+        }
+      },
     ])(`${myModule}`)
   }
 }

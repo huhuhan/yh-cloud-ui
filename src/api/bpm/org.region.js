@@ -18,9 +18,11 @@ export function getRegions(params) {
  * @param {*} params
  * @returns
  */
-export function getRegionTree(params) {
-  return request.get(proxyPrefix + '/org/region/listJson', {
-    params: params
+export function GetRegionTree(params) {
+  return request({
+    url: proxyPrefix + '/org/region/listJson',
+    method: 'get',
+    params
   })
 }
 
@@ -31,7 +33,7 @@ export function getRegionTree(params) {
  * @param {*} params
  * @returns
  */
-export function getRegionById(params) {
+export function GetRegionById(params) {
   return request.get(proxyPrefix + '/org/region/get', {
     params: params
   })
@@ -44,7 +46,7 @@ export function getRegionById(params) {
  * @param {*} params
  * @returns
  */
-export function getRegionByQuery(params) {
+export function GetRegionData(params) {
   return request.get(proxyPrefix + '/org/region/query', {
     params: params
   })
@@ -57,7 +59,7 @@ export function getRegionByQuery(params) {
  * @param {*} params
  * @returns
  */
-export function deleteXzqh(params) {
+export function DeleteRegion(params) {
   return request({
     url: proxyPrefix + `/org/region?id=${params}`,
     method: 'delete'
@@ -68,10 +70,10 @@ export function deleteXzqh(params) {
  * 添加行政区划数据
  *
  * @export
- * @param {*} params
+ * @param {*} data
  * @returns
  */
-export function addXzqh(data) {
+export function SaveRegion(data) {
   return request.post(proxyPrefix + '/org/region', data)
 }
 
@@ -82,7 +84,7 @@ export function addXzqh(data) {
  * @param {*} upLoadFiles
  * @returns
  */
-export function importXzqh(upLoadFiles) {
+export function ImportRegion(upLoadFiles) {
   let uploadData = new FormData()
   uploadData.append('file', upLoadFiles)
   return request({

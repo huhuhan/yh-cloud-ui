@@ -18,6 +18,14 @@
       <el-form-item label="父级编号">
         <el-input v-model="form.parentId" :disabled="true" autocomplete="off"></el-input>
       </el-form-item>
+      <el-form-item label="行政区划" prop="adCode">
+        <region-tree-select
+                byCode
+                v-model="form.adCode"
+                :defaultLabel="form.adName"
+                @change="handleSelectRegion"
+                placeholder="请选择行政区划"></region-tree-select>
+      </el-form-item>
     </el-form>
 
     <div slot="footer" class="dialog-footer">
@@ -43,7 +51,9 @@
 
   export default {
     name: 'dialog-modify-department',
-    components: {},
+    components: {
+      regionTreeSelect: () => import('../region/region-tree-select')
+    },
     props: {
       visible: {
         type: Boolean,
@@ -67,7 +77,6 @@
         rules: {
           name: [{required: true, message: "请输入组织名称", trigger: "blur"}],
           code: [{required: true, message: "请输入组织编码", trigger: "blur"}],
-          adCode: [{required: true, message: "请选择行政区划", trigger: "change"}]
         },
       }
     },
@@ -77,6 +86,10 @@
       },
     },
     methods: {
+      handleSelectRegion(regionSelected) {
+        this.form.adCode = regionSelected.value
+        this.form.adName = regionSelected.label
+      },
       async initDepartment() {
         if (this.targetType === 'EDIT' && this.target.id) {
           await GetDepartment(this.target.id).then(res => {

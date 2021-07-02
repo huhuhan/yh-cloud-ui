@@ -33,6 +33,11 @@ export default function (prefix = '') {
         title: '组织管理',
         icon:'history',
       },
+      {
+        path: `${pre}/${act}/region`,
+        title: '行政区划',
+        icon:'history',
+      },
     ])(`${myPre}`)
   }
 }

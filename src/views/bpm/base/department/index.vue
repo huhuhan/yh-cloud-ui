@@ -63,6 +63,7 @@
   import pageMixins from '@/components/my-table-page/page-mixins'
 
   export default {
+    name: 'department-index',
     components: {
       dialogModifyDepartment: () => import("./modify-department"),
       dialogAssignUser: () => import("../user/assign-user")
