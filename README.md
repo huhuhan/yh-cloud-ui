@@ -79,7 +79,6 @@
   ```
 
 - api目录：`src/api/bpm`
-
 - 路由目录：`src/router/modules/bpm`
 - 菜单目录：`src/menu/modules/bpm`
 - 视图目录：`src/views/bpm`
@@ -91,7 +90,8 @@
   - `src/views/bpm/my`：个人流程
   - `src/views/bpm/all`: 全局流程
 - 流程编辑器：`docker/jar`下的压缩包，解压后，修改VUE_APP_BPM_UI_PUBLIC的路径地址即可。（源码[bpm-ui](https://github.com/huhuhan/bpm-ui)）
-
+  
+   
 #### 查询条件
 - 分页：使用`offset、limit`参数分页，默认不传不分页
 - 排序：使用`sort、order`参数排序，默认不排序
@@ -107,6 +107,72 @@
 ### 功能介绍
 
 - 操作包括：发起、同意、驳回、催办、人工终止、撤销、转办、指派
+- 流程图要求：开始节点、任务节点、结束节点；节点配置表单、候选人员；其他可选
+
+### 流程配置
+
+> 必须熟悉流程相关代码
+
+1. 配置好流程图，假设节点配置的全局【URL表单】是`/demo/demo`
+
+2. 授权给个人（用户、角色）
+
+3. 在个人的流程页面，选择流程发起，打开【详情】窗口页面
+
+3. 【详情】中引入以下代码，即上面的`async-page.vue`组件
+
+   ```javascript
+   <!--加载业务表单-->
+   <asyncPage v-if="instanceData" :name="instanceData.form.formValue"></asyncPage>
+   ```
+
+   其中主要传参包括如下：
+
+   - name：即当前节点的表单，通过接口获取，主要有以下2个接口
+
+     - 实例详情接口：`/bpm/instance/getInstanceData`
+     - 任务详情接口：`/bpm/task/getTaskData`
+
+   - bizObj：业务对象
+
+   - flowObj：流程对象
+
+     ```javascript
+             //传入异步表单组件的对象，可以构建以下数据，表单中一般需要用到。
+             bizObj: {
+               id: '', //业务对象主键
+               disabled: false, //默认可编辑
+             },
+             flowObj: {
+               from: '任务', //实例、流程
+               id: undefined,
+               taskId: undefined,
+               nodeId: undefined,
+               nodeName: undefined,
+               definitionId: undefined,
+               instanceId: undefined,
+               nodes: [],
+             },
+     ```
+
+4. 通过【详情】页面中的发起（同意、驳回）按钮触发【业务表单】的业务保存接口。（或分两步操作，先点业务保存按钮，再点流程按钮）
+
+   根据需要扩展实现【表单路由】中的前置、后置方法。例如【详情】页的同意按钮触发代码参考如下
+
+   ```javascript
+   	taskAgree() {
+         	//需要验证的表单，实现前置方法，返回true/false
+           let agreeValidate = this.$refs.asyncPage.toAgreeValidate()
+           agreeValidate.then(r => {
+             if (r) {
+               this.dialogTaskAgreeVisible = true
+             } else {
+               //message提示由前置方法给出，这里仅日志提示
+               this.$log.warning("表单已实现前置方法【agreeBeforeValidate】，验证不通过")
+             }
+           })
+         },
+   ```
 
 #### 分支流程
 
